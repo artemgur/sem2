@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Sem2", "Sem2\Sem2.csproj", "{38D6ADF9-EBC5-40AD-94C6-185404500227}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DomainModels", "DomainModels\DomainModels.csproj", "{C9ABCDEF-18E7-4F39-ABCD-E12C5DFC5D80}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{38D6ADF9-EBC5-40AD-94C6-185404500227}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38D6ADF9-EBC5-40AD-94C6-185404500227}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38D6ADF9-EBC5-40AD-94C6-185404500227}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38D6ADF9-EBC5-40AD-94C6-185404500227}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C9ABCDEF-18E7-4F39-ABCD-E12C5DFC5D80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C9ABCDEF-18E7-4F39-ABCD-E12C5DFC5D80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C9ABCDEF-18E7-4F39-ABCD-E12C5DFC5D80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C9ABCDEF-18E7-4F39-ABCD-E12C5DFC5D80}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
