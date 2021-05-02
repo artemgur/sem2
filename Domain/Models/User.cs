@@ -13,6 +13,7 @@ namespace DomainModels.Models
         public string Email { get; private set; }
         public ICollection<Subscription> Subscriptions { get; private set; }
         public bool IsConfirmed { get; private set; }
+        public bool IsAdmin { get; private set; }
 
         private User()
         {
