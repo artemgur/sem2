@@ -11,9 +11,13 @@ namespace DomainModels.Models
         public string Password { get; private set; }
         public byte[] Salt { get; private set; }
         public string Email { get; private set; }
+        
         public ICollection<Subscription> Subscriptions { get; private set; }
         public bool IsConfirmed { get; private set; }
+        
         public bool IsAdmin { get; private set; }
+        
+        public string CardNumber { get; private set; }
 
         private User()
         {
