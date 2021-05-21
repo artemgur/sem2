@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/authorization.css?ver=100">
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-offset-3 col-md-6">
+            <div class="tab" role="tabpanel">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" class="active"><a href="#Section2" aria-controls="home" role="tab" data-toggle="tab">sign up</a></li>
+                </ul>
+                <!-- Tab panes -->
+                <div class="tab-content tabs">
+                    <div role="tabpanel" class="tab-pane fade in active" id="Section2">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label for="inputFirstName">First Name</label>
+                                <input type="text" class="form-control" id="inputFirstName">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputLastName">Last Name</label>
+                                <input type="text" class="form-control" id="inputLastName">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputEmail">Email address</label>
+                                <input type="email" class="form-control" id="inputEmail">
+                            </div>
+                            <div class="form-group phone">
+                                <label for="inputPhone">Phone</label>
+                                <input type="text" class="form-control" id="inputPhone">
+                            </div>
+                            <!--<div class="col-md-6 col-sm-6">-->
+                                <div class="form-group birth">
+                                    <label for="inputBirthday">Birthday</label>
+                                    <input type="text" class="form-control" id="inputBirthday">
+                                </div>
+                            <!--</div>-->
+                            <div class="form-group">
+                                <label for="inputPassword">Password</label>
+                                <input type="password" class="form-control" id="inputPassword">
+                            </div>
+                            <div class="form-group">
+                                <label for="inputConfirmPassword">Confirm Password</label>
+                                <input type="password" class="form-control" id="inputConfirmPassword">
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-default">Sign up</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.col-md-offset-3 col-md-6 -->
+    </div><!-- /.row -->
+</div><!-- /.container -->
+
+<script>
+    document.body.onload = function () {
+        validate();
+    }
+
+    function validate() {
+        let firstName = document.getElementById('inputFirstName');
+        let lastName = document.getElementById('inputLastName');
+        let password = document.getElementById('inputPassword');
+        let confirmPassword = document.getElementById('inputConfirmPassword');
+        let email = document.getElementById('inputEmail');
+        let phone = document.getElementById('inputPhone');
+
+        let lettersRegExp = /^\D*$/m;
+        let emailRegExp = /^\b[a-zA-Z0-9._%+-]+@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/m;
+        let phoneRegExp = /^((8|\+7)[\- ]?)?(\(?\d{3}\)?[\-]?)?[\d\- ]{7,10}$/;
+
+        let firstNameMessage = "Incorrect first name";
+
+        let lastNameMessage = "Incorrect last name";
+
+        let emailMessage = "Incorrect email format";
+
+        let confirmPasswordMessage = "Incorrect password";
+
+        let phoneMessage = "Incorrect phone";
+
+        firstName.oninput = function () {
+            validateInput(firstName, lettersRegExp, firstNameMessage);
+        }
+        lastName.oninput = function () {
+            validateInput(lastName, lettersRegExp, lastNameMessage);
+        }
+        confirmPassword.oninput = function () {
+            validateInput(confirmPassword, password, confirmPasswordMessage);
+        }
+        email.oninput = function () {
+            validateInput(email, emailRegExp, emailMessage);
+        }
+
+        phone.oninput = function (){
+            validateInput(phone, phoneRegExp, phoneMessage);
+        }
+    }
+
+    function validateInput(elem, regExp, messageText) {
+        let val = elem.value
+        let message = document.getElementById(elem.id + "Message");
+        let submitButton = document.getElementById('submit');
+
+        if (val.length > 0) {
+            if (!val.match(regExp)) {
+                message.innerText = messageText;
+                submitButton.onclick = function () {
+                    alert(message.innerText);
+                }
+            } else {
+                message.innerText = "";
+            }
+        } else {
+            message.innerText = "";
+        }
+    }
+</script>
+</body>
+</html>
