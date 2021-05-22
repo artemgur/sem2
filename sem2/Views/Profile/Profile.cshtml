@@ -88,7 +88,7 @@
                         </div>
 
                         <div class="image">
-                            <img src="#" id="upload-img" alt="image" /><br>
+                            <img src="@Url.Content($"~/profile/{Model.Id}/image")?date=@DateTime.Now.ToString()" id="upload-img" alt="image" /><br>
                             <input type='file' id="upload" />
                         </div>
 

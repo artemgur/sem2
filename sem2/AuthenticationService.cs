@@ -53,7 +53,7 @@ namespace sem2
             var claims = new List<Claim>
             {    
                 new Claim(ClaimsIdentity.DefaultNameClaimType, user.Email),
-                new Claim(ClaimsIdentity.DefaultRoleClaimType, user.Role?.Name),
+                new Claim(ClaimsIdentity.DefaultRoleClaimType, "user"/*user.Role?.Name*/),//TODO user.Role is null for some reason
                 new Claim("username", user.Name),
                 new Claim("id",user.Id.ToString())
             };
