@@ -129,7 +129,7 @@ namespace sem2.Controllers
                 return Redirect("~/profile");
             }
 
-            return RedirectToAction("ProfileEdit");
+            return RedirectToAction("Profile");
         }
 
         [Authorize]
@@ -147,13 +147,13 @@ namespace sem2.Controllers
             }
 
             if (!ModelState.IsValid)
-                return RedirectToAction("ProfileEdit");
+                return RedirectToAction("Profile");
             
             user.HashedPassword = AccountController.HashPassword(data.NewPassword);
             _dbContext.SaveChanges();
             TempData["PasswordChangeSuccess"] = true;
 
-            return RedirectToAction("ProfileEdit");
+            return RedirectToAction("Profile");
         }
 
         // [Authorize]
