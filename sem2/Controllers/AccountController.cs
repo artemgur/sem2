@@ -1,16 +1,11 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
+﻿using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DomainModels;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
+using Konscious.Security.Cryptography;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using PinnedMemory;
-using sem2_FSharp;
 using sem2_FSharp.ViewModels.AuthtorizationModels;
 
 namespace sem2.Controllers
@@ -157,9 +152,14 @@ namespace sem2.Controllers
         
         public static string HashPassword(string password)
         {
-            var passwordPinnedMemory = new PinnedMemory<byte>(Encoding.UTF8.GetBytes(password));
-            var argon2 = new Argon2.NetCore.Argon2(passwordPinnedMemory, Encoding.UTF8.GetBytes("considerYourself-Salted"));
-            return argon2.ToString();
+            var argon2 = new Argon2id(Encoding.UTF8.GetBytes(password));
+
+            argon2.Salt = Encoding.UTF8.GetBytes("considerYourself-Salted");
+            argon2.DegreeOfParallelism = 8;
+            argon2.Iterations = 4;
+            argon2.MemorySize = 1024 * 1024;
+
+            return Encoding.UTF8.GetString(argon2.GetBytes(16));
         }
     }
 }

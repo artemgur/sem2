@@ -1,10 +1,5 @@
-﻿using System.Diagnostics;
-using DomainModels;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using sem2.Models;
-using sem2.Models.ViewModels;
-using sem2_FSharp.ViewModels;
 
 namespace sem2.Controllers
 {

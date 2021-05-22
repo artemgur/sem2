@@ -1,14 +1,12 @@
 ﻿using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using DomainModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using sem2_FSharp;
-using sem2_FSharp.ViewModels.AuthtorizationModels;
 using sem2_FSharp.ViewModels.ProfileModels;
 
 namespace sem2.Controllers
