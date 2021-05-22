@@ -6,7 +6,9 @@ using Konscious.Security.Cryptography;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using sem2_FSharp;
 using sem2_FSharp.ViewModels.AuthtorizationModels;
+using sem2_FSharp.ViewModels.ProfileModels;
 
 namespace sem2.Controllers
 {
@@ -37,6 +39,74 @@ namespace sem2.Controllers
         
         [HttpGet]
         public IActionResult Register()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult ResetPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(EmailModel emailModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var email = emailModel.Email;
+                var user = _dbContext.Users.SingleOrDefault(user => user.Email == email);
+                if (user == null)
+                    ModelState.AddModelError("", $"Пользователя с Email: {email} не существует");
+                else
+                {
+                    var userId = user.Id;
+                    var key = _confirmationService.GenerateEmailConfirmationToken(userId);
+                    var success = await _sender.SendEmailAsync(email, "Сброс пароля",
+                        $"Перейдите по ссылке для сброса пароля: \n {Url.Action("NewPassword", "Account", null, Request.Scheme)}?key={key}&userId={userId}");
+                    if (!success)
+                        ModelState.AddModelError("", $"Письмо не может быть отправлено, т.к оно заблокированно по подозрению в спаме.\n {Url.Action("EmailConfirmationEnd", "Account", null, Request.Scheme)}?key={key}&userId={userId}");
+                }
+                return View("ResetPasswordEmail");
+            }
+            return View();
+        }
+        [HttpGet]
+        public async Task<IActionResult> NewPassword(string key, int userId)
+        {
+            var actualUserId = _confirmationService.ConfirmEmail(key);
+            var user = _dbContext.Users.FirstOrDefault(u => u.Id == userId);
+            if (user != null && actualUserId == userId)
+            {
+                await _authenticationService.Authenticate(user,false);
+                return View(new PasswordResetModel{UserId = userId});
+            }
+            ModelState.AddModelError("","Your token is expired. Try again");
+        
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> NewPassword(PasswordResetModel passwordResetModel)
+        {
+            if (ModelState.IsValid && passwordResetModel.NewPassword == passwordResetModel.ConfirmPassword)
+            {
+                var user = _dbContext.Users.ById(passwordResetModel.UserId).FirstOrDefault();
+                if (user == null)
+                {
+                    ModelState.AddModelError("","User doesn't exist");
+                    return View();
+                }
+                user.HashedPassword = HashPassword(passwordResetModel.NewPassword);
+                _dbContext.SaveChanges();
+                return View("PasswordChangeSuccessfull");
+            }
+            return View();
+        }
+
+
+        [HttpPost]
+        public IActionResult ResetPasswordEmail()
         {
             return View();
         }
