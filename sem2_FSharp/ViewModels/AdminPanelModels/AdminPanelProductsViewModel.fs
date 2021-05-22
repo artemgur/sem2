@@ -1,7 +1,7 @@
-namespace WebShop_FSharp.ViewModels.AdminPanelModels
+namespace sem2_FSharp.ViewModels.AdminPanelModels
 
 open System.Collections.Generic
-open WebShop_FSharp.ViewModels
+open sem2_FSharp.ViewModels
 
 type AdminPanelProductsViewModel() =
     [<DefaultValue>]

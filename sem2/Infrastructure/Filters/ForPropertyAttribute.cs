@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WebShop_NULL.Infrastructure.Filters
+namespace sem2.Infrastructure.Filters
 {
     public class ForPropertyAttribute : Attribute
     {

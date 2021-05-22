@@ -1,9 +1,9 @@
 ﻿// using System;
 // using System.Threading.Tasks;
 // using Microsoft.AspNetCore.Mvc.ModelBinding;
-// using WebShop_NULL.Models.ViewModels.AdminPanelModels;
+// using sem2.Models.ViewModels.AdminPanelModels;
 //
-// namespace WebShop_NULL.Infrastructure.AdminPanel
+// namespace sem2.Infrastructure.AdminPanel
 // {
 //     public class CreateProductPropertyInfoBinder : IModelBinder
 //     {

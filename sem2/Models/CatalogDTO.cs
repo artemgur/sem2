@@ -1,8 +1,8 @@
 ﻿// using System;
 // using System.Collections.Generic;
-// using WebShop_NULL.Infrastructure.Filters;
+// using sem2.Infrastructure.Filters;
 //
-// namespace WebShop_NULL.Models
+// namespace sem2.Models
 // {
 //     public class CatalogDTO
 //     {

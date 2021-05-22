@@ -3,7 +3,7 @@
 // using DomainModels;
 // using Microsoft.AspNetCore.Mvc;
 //
-// namespace WebShop_NULL.Infrastructure.Filters
+// namespace sem2.Infrastructure.Filters
 // {
 //     [ModelBinder(BinderType = typeof(FilterModelBinder))]
 //     public abstract class FilterDTO

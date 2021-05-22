@@ -2,10 +2,10 @@
 // using System.Linq;
 // using Microsoft.AspNetCore.Mvc;
 // using Microsoft.AspNetCore.Mvc.ViewComponents;
-// using WebShop_FSharp.ViewModels.CatalogModels;
-// using WebShop_NULL.Models.ViewModels;
+// using sem2_FSharp.ViewModels.CatalogModels;
+// using sem2.Models.ViewModels;
 //
-// namespace WebShop_NULL.Infrastructure.Filters
+// namespace sem2.Infrastructure.Filters
 // {
 //     public class FilterRendererDispatcherViewComponent : ViewComponent
 //     {

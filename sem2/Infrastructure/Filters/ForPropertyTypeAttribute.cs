@@ -1,7 +1,7 @@
 ﻿// using System;
 // using DomainModels;
 //
-// namespace WebShop_NULL.Infrastructure.Filters
+// namespace sem2.Infrastructure.Filters
 // {
 //     public class ForPropertyTypeAttribute : Attribute
 //     {

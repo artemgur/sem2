@@ -1,4 +1,4 @@
-namespace WebShop_FSharp.ViewModels.ProfileModels
+namespace sem2_FSharp.ViewModels.ProfileModels
 
 open System.ComponentModel.DataAnnotations
 

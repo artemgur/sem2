@@ -1,9 +1,9 @@
-﻿// using WebShop_FSharp.ViewModels.CatalogModels;
-// using WebShop_NULL.Infrastructure.Filters.FilterDTOs;
-// using WebShop_NULL.Models.ViewModels;
-// using WebShop_NULL.Models.ViewModels.FilterViewModels;
+﻿// using sem2_FSharp.ViewModels.CatalogModels;
+// using sem2.Infrastructure.Filters.FilterDTOs;
+// using sem2.Models.ViewModels;
+// using sem2.Models.ViewModels.FilterViewModels;
 //
-// namespace WebShop_NULL.Infrastructure.Filters.FilterDTOBuilders
+// namespace sem2.Infrastructure.Filters.FilterDTOBuilders
 // {
 //     public class StringFilterViewModelBuilder : IFilterViewModelBuilder<StringFilterViewModel>
 //     {

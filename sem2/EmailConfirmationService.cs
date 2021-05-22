@@ -3,7 +3,7 @@ using System.Collections.Concurrent;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace WebShop_NULL
+namespace sem2
 {
     public class EmailConfirmationService : IDisposable
     {

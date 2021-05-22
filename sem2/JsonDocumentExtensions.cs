@@ -2,7 +2,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace WebShop_NULL
+namespace sem2
 {
     public static class JsonDocumentExtensions
     {

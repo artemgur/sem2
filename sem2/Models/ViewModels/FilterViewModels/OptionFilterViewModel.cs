@@ -1,9 +1,9 @@
 ﻿// using System.Collections.Generic;
 // using DomainModels;
-// using WebShop_FSharp.ViewModels.CatalogModels;
-// using WebShop_NULL.Infrastructure.Filters;
+// using sem2_FSharp.ViewModels.CatalogModels;
+// using sem2.Infrastructure.Filters;
 //
-// namespace WebShop_NULL.Models.ViewModels.FilterViewModels
+// namespace sem2.Models.ViewModels.FilterViewModels
 // {
 //     [ForPropertyType(PropertyTypeEnum.Option)]
 //     public class OptionFilterViewModel : FilterViewModel

@@ -2,10 +2,10 @@
 // using System.ComponentModel.DataAnnotations;
 // using Microsoft.AspNetCore.Http;
 // using Microsoft.AspNetCore.Mvc;
-// using WebShop_FSharp.ViewModels;
-// using WebShop_NULL.Infrastructure.AdminPanel;
+// using sem2_FSharp.ViewModels;
+// using sem2.Infrastructure.AdminPanel;
 //
-// namespace WebShop_NULL.Models.ViewModels.AdminPanelModels
+// namespace sem2.Models.ViewModels.AdminPanelModels
 // {
 //     [ModelBinder(BinderType = typeof(CreateProductPropertyInfoBinder))]
 //     public class CreateProductPropertyInfo

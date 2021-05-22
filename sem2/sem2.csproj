@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
-        <RootNamespace>WebShop_NULL</RootNamespace>
+        <RootNamespace>sem2</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -22,5 +22,6 @@
       <ProjectReference Include="..\DomainModels\DomainModels.fsproj" />
       <ProjectReference Include="..\sem2_FSharp\sem2_FSharp.fsproj" />
     </ItemGroup>
+
 
 </Project>

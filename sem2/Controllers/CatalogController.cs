@@ -9,14 +9,14 @@
 // using Microsoft.AspNetCore.Authorization;
 // using Microsoft.CodeAnalysis.CSharp;
 // using Microsoft.EntityFrameworkCore;
-// using WebShop_FSharp;
-// using WebShop_FSharp.ViewModels;
-// using WebShop_FSharp.ViewModels.CatalogModels;
-// using WebShop_NULL.Infrastructure.Filters;
-// using WebShop_NULL.Models;
-// using WebShop_NULL.Models.ViewModels;
+// using sem2_FSharp;
+// using sem2_FSharp.ViewModels;
+// using sem2_FSharp.ViewModels.CatalogModels;
+// using sem2.Infrastructure.Filters;
+// using sem2.Models;
+// using sem2.Models.ViewModels;
 //
-// namespace WebShop_NULL.Controllers
+// namespace sem2.Controllers
 // {
 //     public class CatalogController : Controller
 //     {

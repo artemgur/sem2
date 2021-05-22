@@ -1,4 +1,4 @@
-namespace WebShop_FSharp.ViewModels
+namespace sem2_FSharp.ViewModels
 
 type ErrorViewModel(requestId: string) =
     let mutable requestId = requestId

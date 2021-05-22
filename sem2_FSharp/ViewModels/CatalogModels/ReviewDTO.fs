@@ -1,4 +1,4 @@
-namespace WebShop_FSharp.ViewModels.CatalogModels
+namespace sem2_FSharp.ViewModels.CatalogModels
 
 open DomainModels
 

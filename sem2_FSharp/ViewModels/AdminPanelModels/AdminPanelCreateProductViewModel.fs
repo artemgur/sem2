@@ -1,4 +1,4 @@
-namespace WebShop_FSharp.ViewModels.AdminPanelModels
+namespace sem2_FSharp.ViewModels.AdminPanelModels
 //The class depends on binder. Maybe will rewrite binder to F#
 //open System
 //open Microsoft.AspNetCore.Mvc

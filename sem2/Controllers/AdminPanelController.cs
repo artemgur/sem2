@@ -8,13 +8,13 @@
 // using Microsoft.AspNetCore.Hosting;
 // using Microsoft.AspNetCore.Http;
 // using Microsoft.AspNetCore.Mvc;
-// using WebShop_FSharp;
-// using WebShop_FSharp.ViewModels;
-// using WebShop_FSharp.ViewModels.AdminPanelModels;
-// using WebShop_NULL.Models.ViewModels.AdminPanelModels;
+// using sem2_FSharp;
+// using sem2_FSharp.ViewModels;
+// using sem2_FSharp.ViewModels.AdminPanelModels;
+// using sem2.Models.ViewModels.AdminPanelModels;
 // using Property = DomainModels.Property;
 //
-// namespace WebShop_NULL.Controllers
+// namespace sem2.Controllers
 // {
 //     public class AdminPanelController : Controller
 //     {

@@ -2,7 +2,7 @@
 // using System.Linq.Expressions;
 // using DomainModels;
 //
-// namespace WebShop_NULL.Infrastructure.Filters.FilterDTOs
+// namespace sem2.Infrastructure.Filters.FilterDTOs
 // {
 //     [ForPropertyType(PropertyTypeEnum.Decimal)]
 //     public class DecimalFilterDto : FilterDTO

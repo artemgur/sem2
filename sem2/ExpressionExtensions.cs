@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace WebShop_NULL
+namespace sem2
 {
     public static class ExpressionExtensions
     {

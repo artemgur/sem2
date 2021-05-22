@@ -1,4 +1,4 @@
-namespace WebShop_FSharp.ViewModels.AuthtorizationModels
+namespace sem2_FSharp.ViewModels.AuthtorizationModels
 
 open System.ComponentModel.DataAnnotations
 

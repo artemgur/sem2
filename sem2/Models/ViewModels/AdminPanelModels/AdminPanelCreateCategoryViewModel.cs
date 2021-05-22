@@ -3,9 +3,9 @@
 // using System.Text.Json;
 // using DomainModels;
 // using Microsoft.AspNetCore.Mvc;
-// using WebShop_NULL.Infrastructure.AdminPanel;
+// using sem2.Infrastructure.AdminPanel;
 //
-// namespace WebShop_NULL.Models.ViewModels.AdminPanelModels
+// namespace sem2.Models.ViewModels.AdminPanelModels
 // {
 //     [ModelBinder(BinderType = typeof(CreateCategoryPropertyInfoBinder))]
 //     public class CreateCategoryPropertyInfo

@@ -1,7 +1,7 @@
-namespace WebShop_FSharp.ViewModels.CatalogModels
+namespace sem2_FSharp.ViewModels.CatalogModels
 
 open System.Collections.Generic
-open WebShop_FSharp.ViewModels
+open sem2_FSharp.ViewModels
 
 type CatalogViewModel() =
 //    [<DefaultValue>]

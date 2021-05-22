@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using WebShop_NULL.Infrastructure.Filters;
-using WebShop_FSharp;
-// using WebShop_FSharp.Middleware;
+using sem2.Infrastructure.Filters;
+using sem2_FSharp;
+// using sem2_FSharp.Middleware;
 
-namespace WebShop_NULL
+namespace sem2
 {
     public class Startup
     {
@@ -25,10 +25,10 @@ namespace WebShop_NULL
         public void ConfigureServices(IServiceCollection services)
         {
             // services.AddFilters();
-            //services.AddControllersFromAssembly("WebShop_FSharp"); //Uncomment when/if we will actually have F# controllers
+            //services.AddControllersFromAssembly("sem2_FSharp"); //Uncomment when/if we will actually have F# controllers
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationContext>(option =>
-                option.UseNpgsql(connectionString, b => b.MigrationsAssembly("WebShop_NULL")));
+                option.UseNpgsql(connectionString, b => b.MigrationsAssembly("sem2")));
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(options =>
                 {

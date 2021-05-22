@@ -1,4 +1,4 @@
-namespace WebShop_FSharp.ViewModels.AdminPanelModels
+namespace sem2_FSharp.ViewModels.AdminPanelModels
 
 type AdminPanelProductDTO() =
     [<DefaultValue>]

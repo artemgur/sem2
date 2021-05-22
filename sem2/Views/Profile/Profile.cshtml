@@ -1,3 +1,9 @@
+@using sem2_FSharp
+@model sem2_FSharp.ViewModels.ProfileModels.UserViewModel
+@{
+    var isCurrentUser = User.GetId() == Model.Id;
+}
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -16,7 +22,7 @@
     <!-- Bootstrap CSS с CDN-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css" integrity="sha512-P5MgMn1jBN01asBgU0z60Qk4QxiXo86+wlFahKrsQf37c9cro517WzVSPPV1tDKzhku2iJ2FVgL67wG03SGnNA==" crossorigin="anonymous">
 
-    <link rel="stylesheet" href="css/style.css?ver=100">
+    <link rel="stylesheet" href="~/css/style.css?ver=100">
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
 </head>

@@ -1,4 +1,4 @@
-namespace WebShop_FSharp.ViewModels.AdminPanelModels
+namespace sem2_FSharp.ViewModels.AdminPanelModels
 
 type CommandLineResponse(isResponse: bool, isSuccessful: bool, message: string) =
     member val public IsResponse = isResponse with get, set

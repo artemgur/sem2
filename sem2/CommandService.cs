@@ -1,7 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.Linq;
 
-namespace WebShop_NULL
+namespace sem2
 {
     public delegate bool CommandAction(out string message, params string[] args);
     public class CommandService

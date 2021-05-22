@@ -6,7 +6,7 @@
 // using DomainModels;
 // using Microsoft.AspNetCore.Mvc.ModelBinding;
 //
-// namespace WebShop_NULL.Infrastructure.Filters
+// namespace sem2.Infrastructure.Filters
 // {
 //     public class FilterMapper<T>
 //     {

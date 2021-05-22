@@ -4,9 +4,9 @@ using MailKit.Net.Smtp;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MimeKit;
-using WebShop_FSharp;
+using sem2_FSharp;
 
-namespace WebShop_NULL
+namespace sem2
 {
     public class EmailService:IEmailSender
     {

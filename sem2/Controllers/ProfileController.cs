@@ -7,11 +7,11 @@
 // using Microsoft.AspNetCore.Http;
 // using Microsoft.AspNetCore.Mvc;
 // using Microsoft.Extensions.Logging;
-// using WebShop_FSharp;
-// using WebShop_FSharp.ViewModels.AuthtorizationModels;
-// using WebShop_FSharp.ViewModels.ProfileModels;
+// using sem2_FSharp;
+// using sem2_FSharp.ViewModels.AuthtorizationModels;
+// using sem2_FSharp.ViewModels.ProfileModels;
 //
-// namespace WebShop_NULL.Controllers
+// namespace sem2.Controllers
 // {
 //     public class ProfileController : Controller
 //     {

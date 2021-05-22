@@ -2,11 +2,11 @@
 using DomainModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using WebShop_NULL.Models;
-using WebShop_NULL.Models.ViewModels;
-using WebShop_FSharp.ViewModels;
+using sem2.Models;
+using sem2.Models.ViewModels;
+using sem2_FSharp.ViewModels;
 
-namespace WebShop_NULL.Controllers
+namespace sem2.Controllers
 {
     public class HomeController : Controller
     {
@@ -19,12 +19,12 @@ namespace WebShop_NULL.Controllers
 
         public IActionResult Index()
         {
-            return View("home");
+            return View();
         }
-
-        public IActionResult Privacy()
-        {
-            return View("home");
-        }
+        //
+        // public IActionResult Privacy()
+        // {
+        //     return View();
+        // }
     }
 }

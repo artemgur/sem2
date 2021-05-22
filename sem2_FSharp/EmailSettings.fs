@@ -1,4 +1,4 @@
-namespace WebShop_FSharp
+namespace sem2_FSharp
 
 type EmailSettings() =
     
