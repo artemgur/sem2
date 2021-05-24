@@ -1,0 +1,197 @@
+.collapse_image{
+    border-radius: 10px;
+}
+
+.container{
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+.block_with_image{
+    border-radius: 20px;
+    width: 300px;
+    height: 170px;
+    padding-left: 100px;
+    padding-right: 50px;
+}
+.slide{
+    display: inline-block;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+/*.collapse_image:hover{
+    transition-duration: 0.3s;
+    -webkit-transform: scale(1.03);
+    -ms-transform: scale(1.03);
+    transform: scale(1.03);
+}*/
+.collapse{
+    width: 100%;
+    background-color: black;
+    height: 665px;
+}
+.cont{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.buttons{
+    background-color: #615f6c;
+    border-radius: 10rem;
+    width: 100px;
+    height: 50px;
+    border-color: #615f6c;
+}
+.estimation_block{
+    position: relative;
+}
+.estimation_block:hover{
+    transition-duration: 0.3s;
+    -webkit-transform: scale(1.03);
+    -ms-transform: scale(1.03);
+    transform: scale(1.03);
+}
+.estimation{
+    font-size: 12px;
+    font-family: "Comic Sans MS", serif;
+    position: absolute;
+    background-color: greenyellow;
+    width: 40px;
+    height: 25px;
+    border-radius: 5px;
+    text-align: center;
+    vertical-align: center;
+}
+.nav-tabs{
+    border: none;
+}
+.bi-arrows-angle-contract{
+    color: #615f6c;
+}
+.row{
+    margin-right: 0;
+    display: block;
+}
+.arrow{
+    padding-left: 700px;
+    padding-top: 20px;
+    width: 25px;
+    height: 25px;
+}
+.bi-arrows-angle-contract:hover{
+    cursor: pointer;
+    color: #dddddd;
+    width: 25px;
+    height: 25px;
+}
+ul{
+    margin-left: 40%;
+}
+.content_background_details1{
+    /*background: rgb(0, 0, 0);*/
+    /*flex: 1 0 0;*/
+    height: 555px;
+    width: 30%;
+    display: inline-block;
+}
+.content_background_details2{
+    padding-top: 20px;
+    float: right;
+    display: inline-block;
+    position: relative;
+    -webkit-filter: blur(11px);
+    -moz-filter: blur(11px);
+    filter: blur(11px);
+    box-shadow: 0 0 8px 8px black inset;
+}
+.content_background_details2-0{
+    padding-top: 10px;
+    float: right;
+    display: inline-block;
+}
+.film_logo{
+    position: absolute;
+    padding-left: 50px;
+    /*display: inline-block;*/
+}
+.content_background_details2-0-img{
+    box-shadow: inset 5px 5px 5px 5px black;
+}
+.film_rate{
+    padding-left: 50px;
+    position: absolute;
+    padding-top: 190px;
+}
+.rate{
+    color: greenyellow;
+    font-size: 18px;
+    display: inline-block;
+}
+.about_film{
+    font-size: 16px;
+    color: #615f6c;
+    display: inline-block;
+}
+.film_age{
+    color: #615f6c;
+    font-size: 12px;
+    display: inline-block;
+    border: #615f6c 2px solid;
+    border-radius: 5px;
+}
+.film_rate2{
+    padding-left: 100px;
+    position: absolute;
+    padding-top: 140px;
+}
+.film_text{
+    font-size: 18px;
+    width: 600px;
+    padding-top: 40px;
+    color: #dddddd;
+    font-family: "Comic Sans MS", serif;
+}
+.watch{
+    margin-top: 80px;
+    background-color: #f25900;
+    border-color: #f25900;
+    border-radius: 10px;
+    width: 200px;
+    height: 40px;
+}
+.add{
+    background-color: #303030;
+    color: #dddddd;
+    margin-left: 50px;
+    height: 40px;
+    width: 40px;
+    border-color: #303030;
+}
+.roles{
+    display: inline-block;
+    color: #dddddd;
+    margin-left: 700px;
+    position: absolute;
+}
+#main_roles{
+    margin-top: 100px;
+}
+.producer{
+    display: inline-block;
+    color: #dddddd;
+    position: absolute;
+    padding-top: 50px;
+}
+.name{
+    padding-top: 60px;
+    display: inline-block;
+    color: #dddddd;
+    position: absolute;
+}
+.film{
+    position: relative;
+}
+.carousel-inner .carousel-item.active,.carousel-inner .carousel-item-next,.carousel-inner .carousel-item-prev{display:flex}
+.carousel-inner .carousel-item-right.active,.carousel-inner .carousel-item-next{transform:translateX(25%)}
+.carousel-inner .carousel-item-left.active,.carousel-inner .carousel-item-prev{transform:translateX(-25%)}
+.carousel-inner .carousel-item-right,.carousel-inner .carousel-item-left{transform:translateX(0)}
