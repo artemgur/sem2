@@ -51,6 +51,22 @@ namespace sem2.Controllers
             return View();
         }
 
+        public IActionResult GoogleLogin()
+        {
+            string redirectUri = Url.Action("GoogleResponse");
+            var properties = _authenticationService.GetExternalAuthenticationProperties("Google", redirectUri);
+            return new ChallengeResult("Google", properties);
+        }
+
+        public async Task<IActionResult> GoogleResponse()
+        {
+            var result = await _authenticationService.ExternalLogin();
+            if (!result.Succeeded)
+                return RedirectToAction("Login");
+
+            return RedirectToAction("Profile", "Profile");
+        }
+
         [HttpPost]
         public async Task<IActionResult> ResetPassword(EmailModel emailModel)
         {

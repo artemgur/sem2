@@ -16,7 +16,6 @@
       <Compile Include="ViewModels\CatalogModels\ProductViewModel.fs" />
       <Compile Include="ViewModels\CatalogModels\ProductCardDTO.fs" />
       <Compile Include="ViewModels\CatalogModels\CatalogViewModel.fs" />
-      <Folder Include="ViewModels\ProfileModels" />
       <Compile Include="ViewModels\AdminPanelModels\AdminPanelProductDTO.fs" />
       <Compile Include="ViewModels\AdminPanelModels\AdminPanelProductsViewModel.fs" />
       <Compile Include="ViewModels\AdminPanelModels\CommandLineResponse.fs" />
