@@ -1,14 +1,16 @@
 ﻿using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Authentication.Services;
+using Authorization.Services;
 using DomainModels;
 using Konscious.Security.Cryptography;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using sem2_FSharp;
-using sem2_FSharp.ViewModels.AuthtorizationModels;
-using sem2_FSharp.ViewModels.ProfileModels;
+using sem2.DomainModels;
+using sem2.Models.ViewModels;
+using sem2.Models.ViewModels.AccountModels;
 
 namespace sem2.Controllers
 {
@@ -17,18 +19,18 @@ namespace sem2.Controllers
         private readonly ApplicationContext _dbContext;
         private readonly ILogger<AccountController> _logger;
         private readonly IEmailSender _sender;
-        private readonly EmailConfirmationService _confirmationService;
         private readonly AuthenticationService _authenticationService;
+        private readonly UserManager _userManager;
 
         public AccountController(ILogger<AccountController> logger, ApplicationContext dbContext,
-            IEmailSender sender, EmailConfirmationService confirmationService, 
-            AuthenticationService authenticationService)
+            IEmailSender sender,
+            AuthenticationService authenticationService, UserManager userManager)
         {
             _logger = logger;
             _dbContext = dbContext;
             _sender = sender;
-            _confirmationService = confirmationService;
             _authenticationService = authenticationService;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -55,59 +57,45 @@ namespace sem2.Controllers
             if (ModelState.IsValid)
             {
                 var email = emailModel.Email;
-                var user = _dbContext.Users.SingleOrDefault(user => user.Email == email);
-                if (user == null)
+                var result = await _authenticationService.GeneratePasswordResetTokenAsync(email);
+                
+                if (!result.IsSuccessful)
                     ModelState.AddModelError("", $"Пользователя с Email: {email} не существует");
                 else
                 {
-                    var userId = user.Id;
-                    var key = _confirmationService.GenerateEmailConfirmationToken(userId);
                     var success = await _sender.SendEmailAsync(email, "Сброс пароля",
-                        $"Перейдите по ссылке для сброса пароля: \n {Url.Action("NewPassword", "Account", null, Request.Scheme)}?key={key}&userId={userId}");
+                        $"Перейдите по ссылке для сброса пароля: \n {Url.Action("NewPassword", "Account", null, Request.Scheme)}?key={result.Value}&email={email}");
                     if (!success)
-                        ModelState.AddModelError("", $"Письмо не может быть отправлено, т.к оно заблокированно по подозрению в спаме.\n {Url.Action("EmailConfirmationEnd", "Account", null, Request.Scheme)}?key={key}&userId={userId}");
+                        ModelState.AddModelError("", $"Письмо не может быть отправлено, т.к оно заблокированно по подозрению в спаме.\n {Url.Action("NewPassword", "Account", null, Request.Scheme)}?key={result.Value}&email={email}");
                 }
                 return View("ResetPasswordEmail");
             }
             return View();
         }
+
         [HttpGet]
-        public async Task<IActionResult> NewPassword(string key, int userId)
+        public async Task<IActionResult> NewPassword(string key, string email)
         {
-            var actualUserId = _confirmationService.ConfirmEmail(key);
-            var user = _dbContext.Users.FirstOrDefault(u => u.Id == userId);
-            if (user != null && actualUserId == userId)
+            return View(new PasswordResetModel
             {
-                await _authenticationService.Authenticate(user,false);
-                return View(new PasswordResetModel{UserId = userId});
-            }
-            ModelState.AddModelError("","Your token is expired. Try again");
-        
-            return View();
+                Email = email,
+                Key = key
+            });
         }
 
         [HttpPost]
         public async Task<IActionResult> NewPassword(PasswordResetModel passwordResetModel)
         {
-            if (ModelState.IsValid && passwordResetModel.NewPassword == passwordResetModel.ConfirmPassword)
+            if (ModelState.IsValid)
             {
-                var user = _dbContext.Users.ById(passwordResetModel.UserId).FirstOrDefault();
-                if (user == null)
-                {
-                    ModelState.AddModelError("","User doesn't exist");
-                    return View();
-                }
-                user.HashedPassword = HashPassword(passwordResetModel.NewPassword);
-                _dbContext.SaveChanges();
-                return View("PasswordChangeSuccessfull");
+                var result = await _authenticationService.ConfirmPasswordChange(passwordResetModel.Email,
+                    passwordResetModel.Key, passwordResetModel.NewPassword);
+                if(result.Succeeded)
+                    return View("PasswordChangeSuccessfull");
+
+                ModelState.AddIdentityErrors(result.Errors);
+                return View();
             }
-            return View();
-        }
-
-
-        [HttpPost]
-        public IActionResult ResetPasswordEmail()
-        {
             return View();
         }
 
@@ -117,52 +105,46 @@ namespace sem2.Controllers
         {
             if (ModelState.IsValid)
             {
-                User user = await _dbContext.Users.Include(u => u.Role).FirstOrDefaultAsync(u =>
-                    u.Email == model.Email && u.HashedPassword == HashPassword(model.Password));
-                if (user == null)
+                var result = await _authenticationService.Login(new Authentication.Models.LoginModel()
                 {
-                    ModelState.AddModelError("", "Некорректные логин и(или) пароль");
-                }
-                else if (!user.IsConfirmed)
-                {
-                    ModelState.AddModelError("", "Email не подтвержден");
-                }
-                else
-                {
-                    await _authenticationService.Authenticate(user,model.RememberMe != null);
+                    Email = model.Email,
+                    Password = model.Password,
+                    RememberMe = model.RememberMe != null
+                });
+                
+                if(result.Succeeded)
                     return RedirectToAction("Index", "Home");
-                }
+                
+                if(result.RequiresTwoFactor)
+                    ModelState.AddModelError("", "Требуется подтверждение Email адреса");
+                else
+                    ModelState.AddModelError("", "Неверный логин или пароль");
             }
         
             return View(model);
         }
-        
-        // [HttpGet]
-        // public IActionResult Register()
-        // {
-        //     return View("Register");
-        // }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterModel model)
         {
             if (ModelState.IsValid)
             {
-                User user = await _dbContext.Users.FirstOrDefaultAsync(u => u.Email == model.Email);
-                if (user == null)
+                var res = await _authenticationService.RegisterUser(new Authentication.Models.RegisterModel()
                 {
-                    user = new User
+                    Email = model.Email,
+                    Password = model.Password
+                });
+                
+                if (res.result.Succeeded)
+                {
+                    var user = new ApplicationUser()
                     {
-                        Email = model.Email,
-                        Name = model.Name,
-                        Surname = model.Surname,
-                        HashedPassword = HashPassword(model.Password),
-                        IsConfirmed = false
+                        Id = res.id,
+                        FirstName = model.FirstName,
+                        Surname = model.Surname
                     };
-                    UserRole userRole = await _dbContext.UserRoles.FirstOrDefaultAsync(r => r.Name == "user");
-                    if (userRole != null)
-                        user.Role = userRole;
+                    
                     var image = ImageMetadata.DefaultImage;
                     _dbContext.ImageMetadata.Add(image);
                     await _dbContext.SaveChangesAsync();
@@ -182,33 +164,25 @@ namespace sem2.Controllers
         
         public async Task<IActionResult> ConfirmEmail(int userId)
         {
-            var user = _dbContext.Users.FirstOrDefault(u => u.Id == userId);
-            if (user == null)
+            var result = await _authenticationService.GenerateEmailConfimationToken(userId);
+            if (!result.IsSuccessful)
                 return RedirectToAction("Register");
-        
-            if (user.IsConfirmed)
-                return RedirectToAction("Index", "Home"); //TODO: Redirect to Personal page
-            
-            var key = _confirmationService.GenerateEmailConfirmationToken(user.Id);
-            var success = await _sender.SendEmailAsync(user.Email, "Подтверждение Email",
+
+            var key = result.Value;
+            var email = await _userManager.GetEmail(userId);
+            var success = await _sender.SendEmailAsync(email.Value, "Подтверждение Email",
                 $"Перейдите по ссылке для окончания регистрации: \n {Url.Action("EmailConfirmationEnd", "Account", null, Request.Scheme)}?key={key}&userId={userId}");
             if (!success)
                 ModelState.AddModelError("", $"Письмо не может быть отправлено, т.к оно заблокированно по подозрению в спаме.\n {Url.Action("EmailConfirmationEnd", "Account", null, Request.Scheme)}?key={key}&userId={userId}");
             
-            return View(model: user.Email);
+            return View(model: email.Value);
         }
         
         public async Task<IActionResult> EmailConfirmationEnd(string key, int userId)
         {
-            var actualUserId = _confirmationService.ConfirmEmail(key);
-            var user = _dbContext.Users.FirstOrDefault(u => u.Id == userId);
-            if (user != null && actualUserId == userId)
-            {
-                user.IsConfirmed = true;
-                _dbContext.SaveChanges();
-                await _authenticationService.Authenticate(user,false);
-            }
-            else ModelState.AddModelError("","Your token is expired. Try again");
+            var result = await _authenticationService.ConfirmEmail(userId, key);
+            if(!result.Succeeded)
+                ModelState.AddIdentityErrors(result.Errors);
         
             return View(userId);
         }
@@ -217,19 +191,6 @@ namespace sem2.Controllers
         {
             await _authenticationService.Logout();
             return RedirectToAction("Login");
-        }
-        
-        
-        public static string HashPassword(string password)
-        {
-            var argon2 = new Argon2id(Encoding.UTF8.GetBytes(password));
-
-            argon2.Salt = Encoding.UTF8.GetBytes("considerYourself-Salted");
-            argon2.DegreeOfParallelism = 8;
-            argon2.Iterations = 4;
-            argon2.MemorySize = 1024 * 1024;
-
-            return Encoding.UTF8.GetString(argon2.GetBytes(16));
         }
     }
 }

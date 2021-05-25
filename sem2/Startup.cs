@@ -1,12 +1,16 @@
 using System;
+using Authentication;
+using Authorization;
+using Authorization.Models;
+using Authorization.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using sem2_FSharp;
 // using sem2_FSharp.Middleware;
 
 namespace sem2
@@ -22,28 +26,50 @@ namespace sem2
 
         public void ConfigureServices(IServiceCollection services)
         {
-            // services.AddFilters();
-            //services.AddControllersFromAssembly("sem2_FSharp"); //Uncomment when/if we will actually have F# controllers
+            services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
+            var settings = Configuration.GetSection("EmailSettings").Get<EmailSettings>();
+            services.AddSingleton<IEmailSender, EmailService>();
+            services.AddSingleton(settings);
+            
+            services.AddAuthenticationServices(opts =>
+            {
+                opts.ConnectionString = Configuration.GetConnectionString("UserDbConnection");
+                opts.DefaultRole = "user";
+                opts.AddRole("user");
+                opts.AddRole("admin");
+                opts.AddRole("manager");
+            });
+            
+            services.AddAuthentication()
+                .AddGoogle(opts =>
+                {
+                    IConfigurationSection googleAuthNSection =
+                        Configuration.GetSection("Authentication:Google");
+
+                    opts.ClientId = googleAuthNSection["ClientId"];
+                    opts.ClientSecret = googleAuthNSection["ClientSecret"];
+                    opts.SignInScheme = IdentityConstants.ExternalScheme;
+                });
+            
             var connectionString = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<ApplicationContext>(option =>
                 option.UseNpgsql(connectionString, b => b.MigrationsAssembly("sem2")));
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-                .AddCookie(options =>
-                {
-                    options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/Account/Register");
-                    options.AccessDeniedPath = new Microsoft.AspNetCore.Http.PathString("/Account/Login");
-                });
 
             services.AddSingleton<CommandService>();
-            services.AddAuthorization();
-            services.AddScoped<AuthenticationService>();
-            services.Configure<EmailSettings>(Configuration.GetSection("EmailSettings"));
-            services.AddSingleton<IEmailSender, EmailService>();
-            var settings = Configuration.GetSection("EmailSettings").Get<EmailSettings>();
-            services.AddSingleton(settings);
-            services.AddSingleton(serviceProvider =>
-                new EmailConfirmationService(TimeSpan.FromMinutes(5), serviceProvider.GetService<CommandService>())
-            );
+            services.AddAuthorization(opts =>
+            {
+                opts.AddPolicy("HasEditPermission", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.RequireRole("manager", "admin");
+                });
+                opts.AddPolicy("NotBanned", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.AddRequirements();
+                });
+            });
+            
             services.AddControllersWithViews();
             services.AddHttpContextAccessor();
         }

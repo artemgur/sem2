@@ -1,9 +1,10 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
         <RootNamespace>sem2</RootNamespace>
-    </PropertyGroup>
+      <UserSecretsId>b586c267-c773-4969-8746-43ac42f14ed1</UserSecretsId>
+  </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="Konscious.Security.Cryptography.Argon2" Version="1.2.1" />
@@ -19,6 +20,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\Authentication\Authentication.csproj" />
       <ProjectReference Include="..\DomainModels\DomainModels.fsproj" />
       <ProjectReference Include="..\sem2_FSharp\sem2_FSharp.fsproj" />
     </ItemGroup>
