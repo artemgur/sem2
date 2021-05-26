@@ -2,7 +2,7 @@
 
 namespace Authentication.Models
 {
-    public class User : IdentityUser<int>
+    public class ApplicationUser : IdentityUser<int>
     {
         
     }

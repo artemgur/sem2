@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Security.Claims;
+using System.Threading.Tasks;
 using Authentication.Infrastructure;
 using Authentication.Models;
 using Microsoft.AspNetCore.Http;
@@ -8,14 +9,14 @@ namespace Authentication.Services
 {
     public class UserManager
     {
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole<int>> _roleManager;
         private readonly AuthenticationServiceOptions _options;
         private readonly IHttpContextAccessor _httpContextAccessor;
-        private User _user;
+        private ApplicationUser _applicationUser;
 
-        public UserManager(UserManager<User> userManager, SignInManager<User> signInManager, AuthenticationServiceOptions options, RoleManager<IdentityRole<int>> roleManager, IHttpContextAccessor httpContextAccessor)
+        public UserManager(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, AuthenticationServiceOptions options, RoleManager<IdentityRole<int>> roleManager, IHttpContextAccessor httpContextAccessor)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -24,16 +25,18 @@ namespace Authentication.Services
             _httpContextAccessor = httpContextAccessor;
         }
 
-        private async Task<User> GetUser()
+        private async Task<ApplicationUser> GetUser()
         {
-            if (_user == null)
-                _user = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
-            return _user;
+            if (_applicationUser == null)
+                _applicationUser = await _userManager.GetUserAsync(_httpContextAccessor.HttpContext.User);
+            return _applicationUser;
         }
+        
+        
 
-        public async Task<bool> HasRole(string role, User user = null)
+        public async Task<bool> HasRole(string role, ApplicationUser applicationUser = null)
         {
-            return await _userManager.IsInRoleAsync(user ?? await GetUser(), role);
+            return await _userManager.IsInRoleAsync(applicationUser ?? await GetUser(), role);
         }
 
         public async Task<Result<string>> GetEmail(int userId)
@@ -52,6 +55,16 @@ namespace Authentication.Services
 
             var user = await GetUser();
             return Result.Success<string>(user.Email);
+        }
+
+        public Result<int> GetUserId()
+        {
+            var userPrincipal = _httpContextAccessor.HttpContext.User;
+            if(userPrincipal.Identity.IsAuthenticated ||
+               !int.TryParse(userPrincipal.FindFirstValue(ClaimTypes.NameIdentifier), out var res))
+                return Result.Failure<int>("Пользователь не аунтифицирован");
+
+            return Result.Success(res);
         }
     }
 }

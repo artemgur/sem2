@@ -16,7 +16,7 @@ namespace Authentication.Infrastructure
         {
             try
             {
-                var userManager = services.GetRequiredService<UserManager<User>>();
+                var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
                 var rolesManager = services.GetRequiredService<RoleManager<IdentityRole<int>>>();
                 var options = services.GetRequiredService<AuthenticationServiceOptions>();
 
@@ -30,7 +30,7 @@ namespace Authentication.Infrastructure
         }
         
         public static async Task InitializeRolesAsync(
-            UserManager<User> userManager,
+            UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole<int>> roleManager,
             List<string> roles)
         {

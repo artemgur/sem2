@@ -10,12 +10,12 @@ namespace Authentication.Services
 {
     public class AuthenticationService
     {
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly RoleManager<IdentityRole<int>> _roleManager;
         private readonly AuthenticationServiceOptions _options;
 
-        public AuthenticationService(UserManager<User> userManager, SignInManager<User> signInManager, AuthenticationServiceOptions options, RoleManager<IdentityRole<int>> roleManager)
+        public AuthenticationService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, AuthenticationServiceOptions options, RoleManager<IdentityRole<int>> roleManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -42,7 +42,7 @@ namespace Authentication.Services
             if (result.Succeeded)
                 return IdentityResult.Success;
             
-            var newUser = new User()
+            var newUser = new ApplicationUser()
             {
                 Email = info.Principal.FindFirstValue(ClaimTypes.Email),
                 UserName = info.Principal.FindFirstValue(ClaimTypes.Email),
@@ -66,7 +66,7 @@ namespace Authentication.Services
             var user = await _userManager.FindByEmailAsync(email);
             if(user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
                 return Result.Failure<string>("Пользователь не найден");
-
+            
             var code = await _userManager.GeneratePasswordResetTokenAsync(user);
             return Result.Success(code);
         }
@@ -114,7 +114,7 @@ namespace Authentication.Services
 
         public async Task<(IdentityResult result, int id)> RegisterUser(RegisterModel model)
         {
-            var user = new User()
+            var user = new ApplicationUser()
             {
                 UserName = model.Email,
                 Email = model.Email

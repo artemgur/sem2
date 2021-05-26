@@ -8,7 +8,6 @@ using Konscious.Security.Cryptography;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using sem2.DomainModels;
 using sem2.Models.ViewModels;
 using sem2.Models.ViewModels.AccountModels;
 
@@ -154,14 +153,14 @@ namespace sem2.Controllers
                 
                 if (res.result.Succeeded)
                 {
-                    var user = new ApplicationUser()
+                    var user = new User()
                     {
                         Id = res.id,
                         FirstName = model.FirstName,
                         Surname = model.Surname
                     };
                     
-                    var image = ImageMetadata.DefaultImage;
+                    var image = DomainModels.User.DefaultImage;
                     _dbContext.ImageMetadata.Add(image);
                     await _dbContext.SaveChangesAsync();
         

@@ -9,9 +9,9 @@ namespace Authentication.Services
     public class RolesService
     {
         private readonly RoleManager<IdentityRole<int>> _roleManager;
-        private readonly UserManager<User> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public RolesService(RoleManager<IdentityRole<int>> roleManager, UserManager<User> userManager)
+        public RolesService(RoleManager<IdentityRole<int>> roleManager, UserManager<ApplicationUser> userManager)
         {
             _roleManager = roleManager;
             _userManager = userManager;
@@ -44,23 +44,23 @@ namespace Authentication.Services
 
         public async Task<IdentityResult> EditUserRoles(int userId, List<string> roles)
         {
-            User user = await _userManager.FindByIdAsync(userId.ToString());
-            if(user == null)
+            ApplicationUser applicationUser = await _userManager.FindByIdAsync(userId.ToString());
+            if(applicationUser == null)
                 return IdentityResult.Failed(new IdentityError()
                 {
                     Code = "UserNotFound",
                     Description = "Пользователь не найден"
                 });
             
-            var userRoles = await _userManager.GetRolesAsync(user);
+            var userRoles = await _userManager.GetRolesAsync(applicationUser);
             var allRoles = _roleManager.Roles.ToList();
             var addedRoles = roles.Except(userRoles);
             var removedRoles = userRoles.Except(roles);
  
-            var result = await _userManager.AddToRolesAsync(user, addedRoles);
+            var result = await _userManager.AddToRolesAsync(applicationUser, addedRoles);
             if (!result.Succeeded)
                 return result;
-            result = await _userManager.RemoveFromRolesAsync(user, removedRoles);
+            result = await _userManager.RemoveFromRolesAsync(applicationUser, removedRoles);
             return result;
         }
     }

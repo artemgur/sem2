@@ -22,7 +22,7 @@ namespace Authentication
             services.AddDbContext<UserContext>(opt =>
                 opt.UseNpgsql(options.ConnectionString));
 
-            services.AddIdentity<User, IdentityRole<int>>(opts =>
+            services.AddIdentity<ApplicationUser, IdentityRole<int>>(opts =>
                 {
                     opts.User.RequireUniqueEmail = true;
                     opts.SignIn.RequireConfirmedEmail = true;

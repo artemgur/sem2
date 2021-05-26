@@ -1,12 +1,14 @@
 using Microsoft.EntityFrameworkCore;
 using DomainModels;
-using sem2.DomainModels;
 
 namespace sem2
 {
     public class ApplicationContext : DbContext
     {
-        public DbSet<ApplicationUser> Users { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<UserPermission> UserPermissions { get; set; }
+        public DbSet<Permission> Permissions { get; set; }
+        public DbSet<SubscriptionPlan> SubscriptionPlans { get; set; }
         public DbSet<ImageMetadata> ImageMetadata { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options)

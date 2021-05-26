@@ -21,7 +21,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Authentication\Authentication.csproj" />
-      <ProjectReference Include="..\DomainModels\DomainModels.fsproj" />
       <ProjectReference Include="..\sem2_FSharp\sem2_FSharp.fsproj" />
     </ItemGroup>
 

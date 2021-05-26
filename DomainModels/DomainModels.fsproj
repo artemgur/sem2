@@ -5,7 +5,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Compile Include="ImageMetadata.fs" />
       <Compile Include="UserRole.fs" />
       <Compile Include="Subscription.fs" />
       <Compile Include="Genre.fs" />
