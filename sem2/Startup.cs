@@ -46,6 +46,8 @@ namespace sem2
             );
             services.AddControllersWithViews();
             services.AddHttpContextAccessor();
+
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -81,6 +83,7 @@ namespace sem2
                 endpoints.MapControllerRoute(
                     name: "AdminPanel",
                     pattern: "{controller=AdminPanel}/{action=Products}/{id?}");
+                endpoints.MapHub<ChatHub>("/chat");
             });
         }
     }

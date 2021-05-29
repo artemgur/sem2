@@ -21,5 +21,14 @@ namespace sem2.Controllers
         // {
         //     return View();
         // }
+        public IActionResult Shop()
+        {
+            return View("withSubscribe");
+        }
+        
+        public IActionResult AboutFilm()
+        {
+            return View("AboutFilm");
+        }    
     }
 }

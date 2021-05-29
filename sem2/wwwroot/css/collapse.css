@@ -1,22 +1,13 @@
 .collapse_image{
     border-radius: 10px;
 }
-
-.container{
-    width: 100%;
-    margin: 0;
-    padding: 0;
-}
 .block_with_image{
     border-radius: 20px;
     width: 300px;
-    height: 170px;
-    padding-left: 100px;
-    padding-right: 50px;
+    padding-left: 40px;
 }
 .slide{
     display: inline-block;
-    width: 100%;
     margin: 0;
     padding: 0;
 }
@@ -26,7 +17,7 @@
     -ms-transform: scale(1.03);
     transform: scale(1.03);
 }*/
-.collapse{
+.description{
     width: 100%;
     background-color: black;
     height: 665px;
@@ -68,13 +59,9 @@
 .bi-arrows-angle-contract{
     color: #615f6c;
 }
-.row{
-    margin-right: 0;
-    display: block;
-}
 .arrow{
-    padding-left: 700px;
-    padding-top: 20px;
+    /*padding-left: 700px;
+    padding-top: 20px;*/
     width: 25px;
     height: 25px;
 }
@@ -84,7 +71,7 @@
     width: 25px;
     height: 25px;
 }
-ul{
+#pills-tab{
     margin-left: 40%;
 }
 .content_background_details1{
@@ -146,7 +133,7 @@ ul{
 }
 .film_text{
     font-size: 18px;
-    width: 600px;
+    width: 50%;
     padding-top: 40px;
     color: #dddddd;
     font-family: "Comic Sans MS", serif;
@@ -170,7 +157,7 @@ ul{
 .roles{
     display: inline-block;
     color: #dddddd;
-    margin-left: 700px;
+    margin-left: 40%;
     position: absolute;
 }
 #main_roles{
@@ -191,7 +178,16 @@ ul{
 .film{
     position: relative;
 }
+
 .carousel-inner .carousel-item.active,.carousel-inner .carousel-item-next,.carousel-inner .carousel-item-prev{display:flex}
 .carousel-inner .carousel-item-right.active,.carousel-inner .carousel-item-next{transform:translateX(25%)}
 .carousel-inner .carousel-item-left.active,.carousel-inner .carousel-item-prev{transform:translateX(-25%)}
 .carousel-inner .carousel-item-right,.carousel-inner .carousel-item-left{transform:translateX(0)}
+
+@media all and (min-width: 576px) { .film {background-image: url("../images/majorThunder.jpg")}
+    .content_background_details2-0{display: none}
+    .description{height: 70%}}
+@media all and (min-width: 1400px) { .content_background_details2-0-img{box-shadow: inset 5px 5px 5px 5px black;}
+    .content_background_details2-0{padding-top: 10px; float: right; display: inline-block; height: 600px}
+    .film {background-image: none}
+    .description{height: 665px}}

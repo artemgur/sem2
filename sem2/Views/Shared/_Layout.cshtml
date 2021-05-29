@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="~/css/style.css?ver=100">
     <link rel="stylesheet" type="text/css" href="~/css/search.css">
-    @* <link rel="stylesheet" href="~/css/collapse.css?ver=100"> *@
     <link rel="stylesheet" href="~/css/authorization.css?ver=100">
 </head>
 <body>
@@ -46,7 +45,7 @@
                             <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">Мое кино</a>
                         </li> <!-- dropdown -->
                         <li class="nav-item">
-                            <a class="nav-link" href="shop.html">Магазин</a>
+                            <a asp-area="" asp-controller="Home" asp-action="Shop" class="nav-link">Магазин</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="favourite.html">Избранное</a>
