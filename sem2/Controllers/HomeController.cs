@@ -6,10 +6,12 @@ namespace sem2.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationContext context;
 
         public HomeController(ILogger<HomeController> logger, ApplicationContext dbContext)
         {
             _logger = logger;
+            context = dbContext;
         }
 
         public IActionResult Index()
@@ -21,9 +23,9 @@ namespace sem2.Controllers
         // {
         //     return View();
         // }
-        public IActionResult Shop()
+        public IActionResult Catalog()
         {
-            return View("withSubscribe");
+            return View();
         }
         
         public IActionResult AboutFilm()

@@ -1,0 +1,46 @@
+<div class="header-content">
+    <div class="container">
+        <div class="row align-items-center justify-content-between">
+            <div class="message">
+                <div id="content"></div>
+                <script>
+                    function show() {
+                        // выводим сообщения в блок #messages
+                        $.ajax({
+                            url: 'filename.html',
+                            timeout: 10000, // время ожидания загрузки сообщений 10 секунд (или 10000 миллисекунд)
+                            success: function (data) {
+                                $('#content').html(data);
+                            },
+                            error: function () {
+                                $('#content').html("Не удалось загрузить сообщения");
+                            }
+                        });
+                    }
+
+                    var interval = 1000; // количество миллисекунд для авто-обновления сообщений (1 секунда = 1000 миллисекунд)
+
+                    show();
+
+                    setInterval('show()', interval);
+                </script>
+
+                <form id="form">
+                    <input class="input" id="input" type="text" size="30" name="name" placeholder="Имя - 20 знаков"><br>
+                    <textarea class="input" id="textarea" type="text" size="30" name="mess"
+                              placeholder="Сообщение - 200 знаков"></textarea> <br>
+                    <input class="button" type="button" value="Отправить" onClick="send()">
+                </form>
+            </div>
+
+            <div class="col-lg-6">
+                <div class="header-img sec-img">
+                    <img src="images/4.gif" class="img-fluid" alt="header-img">
+                </div>
+            </div> <!-- col -->
+        </div>
+    </div> <!-- Container -->
+</div>	<!-- header-content -->
+
+
+<script src="~/js/send.js"></script>

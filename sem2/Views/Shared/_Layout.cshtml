@@ -45,7 +45,7 @@
                             <a asp-area="" asp-controller="Home" asp-action="Index" class="nav-link">Мое кино</a>
                         </li> <!-- dropdown -->
                         <li class="nav-item">
-                            <a asp-area="" asp-controller="Home" asp-action="Shop" class="nav-link">Магазин</a>
+                            <a asp-area="" asp-controller="Home" asp-action="Catalog" class="nav-link">Магазин</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="favourite.html">Избранное</a>
@@ -89,6 +89,31 @@
     </header>
 
 @RenderBody()
+
+<footer id="footer">
+    <div class="container">
+        <div class="row footer-top">
+            <div class="col-md-6">
+                <div id="information">
+                    <h2>FilmMediaHD</h2>
+                    <p class="italic">If you have any problems or questions, please contact us by phone, email  or at the address:</p>
+                    <div class="infomation">
+                        <p><i class="fa fa-phone"></i> Telephone: +8 946 552 97 36</p>
+                        <p><i class="fa fa-envelope-o"></i> Email: filmmedia@gmail.com</p>
+                        <p><i class="fa fa-map"></i> Address: Kazan, st.Pushkina 32</p>
+                        <p><i class="fa fa-clock-o"></i> 8:00 - 20:00, Monday - Saturday, Sunday - closed</p>
+                        <p><i class="fa fa-comment"></i><a href="supportChat.html">Связаться с поддержкой</a></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <iframe id="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2243.0713484921584!2d49.12397771590237!3d55.79199898056382!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x415ead13c469b355%3A0x6eaecda0bd9d795b!2z0YPQuy4g0J_Rg9GI0LrQuNC90LAsIDMyLCDQmtCw0LfQsNC90YwsINCg0LXRgdC_LiDQotCw0YLQsNGA0YHRgtCw0L0sIDQyMDAxNQ!5e0!3m2!1sru!2sru!4v1617977468445!5m2!1sru!2sru" width="450" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
+        </div>
+    </div>
+    <!-- End container -->
+</footer>
+
 
 </div>
 </body>
