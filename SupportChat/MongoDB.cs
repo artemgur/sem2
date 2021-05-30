@@ -32,22 +32,22 @@ namespace SupportChat
             await messagesCollection.InsertOneAsync(new MessageDTO {UserId = userId, Message = text, Time = DateTime.Now, IsMessageFromUser = isMessageFromUser});
         }
 
-        public async Task<List<int>> GetActiveUsers()
+        public async Task<List<int>> GetNotAnsweredUsers()
         {
             return (await activeUsersCollection.FindAsync(x => true)).ToList();
         }
 
-        public async Task AddActiveUser(int id)
+        public async Task AddNotAnsweredUser(int id)
         {
             await activeUsersCollection.InsertOneAsync(id);
         }
 
-        public async Task RemoveActiveUser(int id)
+        public async Task RemoveNotAnsweredUser(int id)
         {
             await activeUsersCollection.DeleteOneAsync(x => x == id);
         }
 
-        public async Task ClearActiveUsers()
+        public async Task ClearNotAnsweredUsers()
         {
             await activeUsersCollection.DeleteManyAsync(x => true);
         }

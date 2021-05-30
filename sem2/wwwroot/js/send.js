@@ -15,7 +15,7 @@ function send() {
     connection.invoke("Send", message).catch(function (err) {
         return console.error(err.toString());
     });
-    add_message_to_page(name, message)
+    //add_message_to_page(name, message)
     
     return false;
 }
