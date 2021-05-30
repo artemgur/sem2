@@ -1,7 +1,7 @@
 using System;
 using MongoDB.Bson.Serialization.Attributes;
 
-namespace sem2
+namespace SupportChat
 {
     public class MessageDTO//Id?
     {
@@ -11,5 +11,7 @@ namespace sem2
         public int UserId;
         [BsonElement("time")]
         public DateTime Time;
+        [BsonElement("isMessageFromUser")]
+        public bool IsMessageFromUser;
     }
 }

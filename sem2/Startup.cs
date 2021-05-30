@@ -7,6 +7,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using sem2_FSharp;
+using SupportChat;
+
 // using sem2_FSharp.Middleware;
 
 namespace sem2

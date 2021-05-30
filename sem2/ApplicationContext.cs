@@ -14,6 +14,7 @@ namespace sem2
         // public DbSet<UserImage> UserImages { get; set; }
         public DbSet<UserRole> UserRoles { get; set; }
         public DbSet<ImageMetadata> ImageMetadata { get; set; }
+        public DbSet<Film> Films { get; set; }
 
         public ApplicationContext(DbContextOptions<ApplicationContext> options)
             : base(options)

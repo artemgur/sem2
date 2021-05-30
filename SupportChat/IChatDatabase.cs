@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace sem2
+namespace SupportChat
 {
     public interface IChatDatabase
     {

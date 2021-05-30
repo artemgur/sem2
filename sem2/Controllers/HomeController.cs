@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using sem2.Models;
 
 namespace sem2.Controllers
 {
@@ -25,12 +27,13 @@ namespace sem2.Controllers
         // }
         public IActionResult Catalog()
         {
-            return View();
+            var films = context.Films.Select(x => x.Id);//TODO DTO?
+            return View(films);
         }
         
-        public IActionResult AboutFilm()
+        public IActionResult AboutFilm(int id)
         {
-            return View("AboutFilm");
+            return View("AboutFilm", context.Films.Single(x => x.Id == id));
         }    
     }
 }

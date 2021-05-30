@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MongoDB.Driver;
 
-namespace sem2
+namespace SupportChat
 {
     public class MongoDB: IChatDatabase
     {
@@ -23,9 +23,9 @@ namespace sem2
             return messagesOfUser.ToList().OrderBy(x => x.Time);
         }
 
-        public async Task AddMessage(int userId, string text)
+        public async Task AddMessage(int userId, string text, bool isMessageFromUser)
         {
-            await collection.InsertOneAsync(new MessageDTO {UserId = userId, Message = text, Time = DateTime.Now});
+            await collection.InsertOneAsync(new MessageDTO {UserId = userId, Message = text, Time = DateTime.Now, IsMessageFromUser = isMessageFromUser});
         }
     }
 }

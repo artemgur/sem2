@@ -1,7 +1,8 @@
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 
-namespace sem2
+namespace SupportChat
 {
     public class ChatHub: Hub
     {
@@ -16,6 +17,18 @@ namespace sem2
         {
             await Clients.Caller.SendAsync("Receive", message, Context.ConnectionId);
             //database.AddMessage()
+        }
+        
+        public override async Task OnConnectedAsync()
+        {
+            await Clients.All.SendAsync("Notify", $"{Context.ConnectionId} вошел в чат");
+            await base.OnConnectedAsync();
+        }
+        
+        public override async Task OnDisconnectedAsync(Exception exception)
+        {
+            await Clients.All.SendAsync("Notify", $"{Context.ConnectionId} покинул в чат");
+            await base.OnDisconnectedAsync(exception);
         }
     }
 }

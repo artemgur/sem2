@@ -1,22 +1,32 @@
 .collapse_image{
     border-radius: 10px;
 }
+/*#multiCarousel{
+    float: left;
+    margin-left: -100px;
+    padding-left: 0;
+    width: 120%;
+}*/
+@media all and (min-width: 576px) { #multiCarousel{margin-left: -50px; padding-left: 0; width: 120%; margin-top: 60px}
+}
+@media all and (min-width: 1400px) {
+    #multiCarousel {
+        margin-left: -100px;
+        padding-left: 0;
+        width: 120%;
+        margin-top: 60px
+    }
+}
 .block_with_image{
     border-radius: 20px;
-    width: 300px;
-    padding-left: 40px;
+    width: 350px;
+    padding-left: 0
 }
 .slide{
     display: inline-block;
     margin: 0;
     padding: 0;
 }
-/*.collapse_image:hover{
-    transition-duration: 0.3s;
-    -webkit-transform: scale(1.03);
-    -ms-transform: scale(1.03);
-    transform: scale(1.03);
-}*/
 .description{
     width: 100%;
     background-color: black;

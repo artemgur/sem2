@@ -1,7 +1,22 @@
+var connection = null
+
+document.onload = function (){
+    connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+    connection.on('Receive', function (message, userName) {
+
+        console.log(message);
+        console.log(userName);
+    });
+}
+
 function send() {
     name =  document.forms["first"].elements["name"].value ;
 
-    mess =  document.forms["first"].elements["mess"].value ;
+    message =  document.forms["first"].elements["mess"].value ;
+
+    connection.invoke("Send", name, message).catch(function (err) {
+        return console.error(err.toString());
+    });
 
     $.post( "https://dwweb.ru/__a-data/__all_for_scripts/__examples/js/chat/submit.php",  { name,mess,},
 

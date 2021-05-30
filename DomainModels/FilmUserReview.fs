@@ -1,16 +1,17 @@
 ﻿namespace DomainModels
 
-open System
 open System.Collections.Generic;
 open System.ComponentModel.DataAnnotations
 
 [<CLIMutable>]
-type (*Film =
+type Film =
     {
         [<Key>]
         Id:int
         Name:string
         Description:string
+        ShortDescription:string
+        Info:string//2021, приключения, боевик&ensp;  Россия&ensp;  2 ч 16 мин&ensp;
         Price:decimal
         Rating:decimal
         
@@ -21,12 +22,12 @@ type (*Film =
         InFavoritesOfUsers:ICollection<User>
         
         
-        Reviews:ICollection<Review>
+        //Reviews:ICollection<Review>
         
         
-        Genres: ICollection<Genre>
+        //Genres: ICollection<Genre>
     }
-and [<CLIMutable>]*) User =
+and [<CLIMutable>] User =
     {
         [<Key>]
         Id:int

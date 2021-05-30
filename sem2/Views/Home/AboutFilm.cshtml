@@ -1,3 +1,5 @@
+@model DomainModels.Film
+
 <link rel="stylesheet" href="~/css/collapse.css?ver=100">
 <div class="header-content">
     <div class="container">
@@ -15,19 +17,19 @@
                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                     <div class="film">
                         <div class="film_logo">
-                            <img src="~/images/major_logo.webp" style="height: 158px; width: 160px" alt="img">
+                            <img src="@Url.Content($"~/filmLogos/{Model.Id}/image")" style="height: 158px; width: 160px" alt="img">
                         </div>
                         <div class="film_rate">
-                            <div class="rate">
-                                7.3&ensp;&ensp;
-                            </div>
+                            @* <div class="rate"> *@
+                            @*     7.3&ensp;&ensp; *@
+                            @* </div> *@
                             <div class="about_film">
-                                2021, приключения, боевик&ensp;  Россия&ensp;  2 ч 16 мин&ensp;
+                                @Model.Info
                             </div>
-                            <div class="film_age">
-                                12+
-                            </div>
-                            <p class="film_text">Юноша выдумывает язык, чтобы выжить в концлагере. Драма о Холокосте от автора «Дома из песка и тумана»</p>
+                            @* <div class="film_age"> *@
+                            @*     12+ *@
+                            @* </div> *@
+                            <p class="film_text">@Model.ShortDescription</p>
                             <button class="watch">Начать просмотр</button>
                             <button class="add">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-fill" viewBox="0 0 16 16">
@@ -37,23 +39,23 @@
                         </div>
                         <div class="content_background_details1"></div>
                         <div class="content_background_details2-0">
-                            <img class="content_background_details2-0-img" src="~/images/majorThunder.jpg" style="height: 400px; width:500px" alt="img">
+                            <img class="content_background_details2-0-img" src="@Url.Content($"~/filmBackground/{Model.Id}/image")" style="height: 400px; width:500px" alt="img">
                         </div>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                     <div class="content_background_details">
                         <div class="film_logo">
-                            <img src="~/images/major_logo.webp" style="height: 110px; width: 130px" alt="img">
+                            <img src="@Url.Content($"~/filmLogos/{Model.Id}/image")" style="height: 110px; width: 130px" alt="img">
                         </div>
                         <div class="content_background_details2">
-                            <img src="~/images/majorThunder.jpg" style="height: 400px" alt="img">
+                            <img src="@Url.Content($"~/filmBackground/{Model.Id}/image")" style="height: 400px" alt="img">
                         </div>
                         <div class="film_rate2">
-                            <div class="rate">
-                                7.3&ensp;
-                            </div>
-                            <p class="film_text">1942 год, оккупированная Европа. Оказавшись в концлагере, бельгиец еврейского происхождения Жиль Кремье выдает себя за перса — для него это единственная возможность остаться в живых. Это ложь действительно спасает ему жизнь, но Жиль еще не представляет, какой ценой. Довольные таким редким уловом немецкие солдаты приводят Жиля к концлагерному повару Клаусу Коху, который мечтает, как только закончи…</p>
+                            @* <div class="rate"> *@
+                            @*     7.3&ensp; *@
+                            @* </div> *@
+                            <p class="film_text">@Model.Description</p>
                         </div>
                         <div class="content_background_details1"></div>
                         <div class="roles">

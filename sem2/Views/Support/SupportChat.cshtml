@@ -25,12 +25,19 @@
                     setInterval('show()', interval);
                 </script>
 
-                <form id="form">
-                    <input class="input" id="input" type="text" size="30" name="name" placeholder="Имя - 20 знаков"><br>
-                    <textarea class="input" id="textarea" type="text" size="30" name="mess"
-                              placeholder="Сообщение - 200 знаков"></textarea> <br>
-                    <input class="button" type="button" value="Отправить" onClick="send()">
-                </form>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <form id="form">
+                        <input class="input" id="input" type="text" size="30" name="name" placeholder="Имя - 20 знаков"><br>
+                        <textarea class="input" id="textarea" type="text" size="30" name="mess"
+                                  placeholder="Сообщение - 200 знаков"></textarea> <br>
+                        <input class="button" type="button" value="Отправить" onClick="send()">
+                    </form>
+                }
+                else
+                {
+                    <p>Только зарегистрированные пользователи могут обращаться в техподдержку</p>
+                }
             </div>
 
             <div class="col-lg-6">
@@ -42,5 +49,5 @@
     </div> <!-- Container -->
 </div>	<!-- header-content -->
 
-
+<script src="https://cdn.jsdelivr.net/npm/@@microsoft/signalr/dist/browser/signalr.min.js"></script>
 <script src="~/js/send.js"></script>
