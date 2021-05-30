@@ -10,4 +10,8 @@
       <PackageReference Include="MongoDB.Driver" Version="2.12.3" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\sem2_FSharp\sem2_FSharp.fsproj" />
+    </ItemGroup>
+
 </Project>

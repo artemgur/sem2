@@ -1,12 +1,22 @@
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using sem2_FSharp;
+using SupportChat;
 
 namespace sem2.Controllers
 {
     public class SupportController: Controller
     {
-        public IActionResult SupportChat()
+        private readonly IChatDatabase chatDatabase;
+        
+        public SupportController(IChatDatabase chatDatabase)
         {
-            return View();
+            this.chatDatabase = chatDatabase;
+        }
+        
+        public async Task<ViewResult> SupportChat()
+        {
+            return View(await chatDatabase.GetMessages(User.GetId()));
         }
     }
 }

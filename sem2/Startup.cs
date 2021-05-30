@@ -49,6 +49,8 @@ namespace sem2
             services.AddControllersWithViews();
             services.AddHttpContextAccessor();
 
+            services.AddScoped<IChatDatabase, SupportChat.MongoDB>();
+            
             services.AddSignalR();
         }
 

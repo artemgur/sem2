@@ -3,9 +3,7 @@ var connection = null
 document.onload = function (){
     connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
     connection.on('Receive', function (message, userName) {
-
-        console.log(message);
-        console.log(userName);
+        document.getElementById("message_container").innerHTML += `<div class="message"><div class="content">${message}</div></div>`
     });
 }
 
