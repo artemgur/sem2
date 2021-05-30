@@ -7,6 +7,6 @@ namespace SupportChat
     {
         public Task<IOrderedEnumerable<MessageDTO>> GetMessages(int userId);
 
-        public Task AddMessage(int userId, string text);
+        public Task AddMessage(int userId, string text, bool isMessageFromUser);
     }
 }
