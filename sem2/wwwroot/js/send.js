@@ -3,7 +3,7 @@ var connection = null
 document.onload = function (){
     connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
     connection.on('Receive', function (message, userName) {
-        document.getElementById("message_container").innerHTML += `<div class="message"><div class="content">${message}</div></div>`
+        add_message_to_page(userName, message)
     });
 }
 
@@ -12,14 +12,27 @@ function send() {
 
     message =  document.forms["first"].elements["mess"].value ;
 
-    connection.invoke("Send", name, message).catch(function (err) {
+    connection.invoke("Send", message).catch(function (err) {
         return console.error(err.toString());
     });
+    add_message_to_page(name, message)
+    
+    return false;
+}
 
-    $.post( "https://dwweb.ru/__a-data/__all_for_scripts/__examples/js/chat/submit.php",  { name,mess,},
+function add_message_to_page(name, message){
+    document.getElementById("message_container").innerHTML += `<div class="message"><div class="content">${message}</div></div>`
+}
 
-        function( data ) { $( ".show_rezult" ).html(data); }
+function sendAdmin(userId) {
+    name =  document.forms["first"].elements["name"].value ;
 
-    );
+    message =  document.forms["first"].elements["mess"].value ;
+
+    connection.invoke("SendAdmin", message, userId).catch(function (err) {
+        return console.error(err.toString());
+    });
+    add_message_to_page(name, message)
+
     return false;
 }

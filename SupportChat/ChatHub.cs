@@ -12,18 +12,23 @@ namespace SupportChat
         private readonly IChatDatabase database;
 
         private readonly Dictionary<int, int> listeners;
+
+        private readonly Dictionary<(int, int), string> connectionIds;
         
         public ChatHub(IChatDatabase database)
         {
             this.database = database;
             database.ClearActiveUsers();
             listeners = new Dictionary<int, int>();
+            connectionIds = new Dictionary<int, string>();
         }
 
         public async Task ListenUser(int user)
         {
             if (Context.User.HasClaim("support", ""))
             {
+                connectionIds[(Context.User.GetId(), int.MinValue)] = Context.ConnectionId;
+
                 await database.RemoveActiveUser(user);
                 listeners.Add(user, Context.User.GetId());
             }
@@ -35,10 +40,19 @@ namespace SupportChat
             //database.AddMessage()
         }
         
+        public async Task SendAdmin(string message, int userId)
+        {
+            await Clients.Caller.SendAsync("Receive", message, Context.ConnectionId);
+            //database.AddMessage()
+        }
+        
         public override async Task OnConnectedAsync()
         {
             if (!Context.User.HasClaim("support", ""))
+            {
+                connectionIds[(Context.User.GetId(), int.MinValue)] = Context.ConnectionId;
                 await database.AddActiveUser(Context.User.GetId());
+            }
             //await Clients.All.SendAsync("Notify", $"{Context.ConnectionId} вошел в чат");
             await base.OnConnectedAsync();
         }

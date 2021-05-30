@@ -18,5 +18,17 @@ namespace sem2.Controllers
         {
             return View(await chatDatabase.GetMessages(User.GetId()));
         }
+
+        public async Task<ViewResult> SupportAdminSelect()
+        {
+            if (User.HasClaim("support", ""))
+                return View();
+            return View("SupportChat");
+        }
+
+        public async Task<ViewResult> SupportAdmin(int userId)
+        {
+            return View(userId);
+        }
     }
 }
