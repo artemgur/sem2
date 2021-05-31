@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using sem2_FSharp;
 using sem2.Models;
+using sem2.Views;
 
 namespace sem2.Controllers
 {
@@ -24,7 +25,7 @@ namespace sem2.Controllers
                 HttpContext.Response.StatusCode = 400;
                 return "{}";
             }
-            return JsonConvert.SerializeObject(FilmDTO.FromFilm(film));
+            return JsonConvert.SerializeObject(FilmHelpers.FromFilm(film));
         }
     }
 }

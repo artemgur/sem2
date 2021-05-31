@@ -16,11 +16,11 @@ type Film =
 //        Rating:decimal
         
         
-        LogoId:int
-        Logo:ImageMetadata
-        
-        BackgroundId:int
-        Background:ImageMetadata
+//        LogoId:int
+//        Logo:ImageMetadata
+//        
+//        BackgroundId:int
+//        Background:ImageMetadata
         
         InFavoritesOfUsers:ICollection<User>
         

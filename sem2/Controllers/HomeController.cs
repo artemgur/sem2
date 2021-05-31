@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using sem2_FSharp;
 using sem2.Models;
+using sem2.Views;
 
 namespace sem2.Controllers
 {
@@ -28,7 +29,7 @@ namespace sem2.Controllers
         // }
         public IActionResult Catalog()
         {
-            var films = context.Films.Select(x => x.Id);//TODO DTO?
+            var films = context.Films.Select(x => FilmHelpers.FromFilm(x));//TODO DTO?
             return View(films);
         }
 
@@ -38,36 +39,39 @@ namespace sem2.Controllers
             var user = context.Users.ById(userId).FirstOrDefault();
             if (user == null)
                 return RedirectToAction("Index", "Home");
-            var films = user.FavoriteFilms.Select(x => x.Id);
+            var films = user.FavoriteFilms.Select(x => FilmHelpers.FromFilm(x));
             return View("Catalog", films);
         }
         
+        [Route("~/AboutFilm/{id:int}")]
         public IActionResult AboutFilm(int id)
         {
-            var film = context.Films.Single(x => x.Id == id);
-            var dto = FilmDTO.FromFilm(film);
+            var film = context.Films.ById(id).SingleOrDefault();
+            if (film == null)
+                return RedirectToAction("Catalog");
+            var dto = FilmHelpers.FromFilm(film);
             return View("AboutFilm", dto);
         }
         
-        [HttpGet("~/filmLogos/{userId}/image")]
-        public IActionResult GetLogo(int filmId)
-        {
-            var data = context.Films.LogoById(filmId).FirstOrDefault();
-            if (data == null)
-                return BadRequest();
-
-            return File(data.ImagePath, data.ContentType);
-        }
-        
-        [HttpGet("~/filmBackgrounds/{userId}/image")]
-        public IActionResult GetBackground(int filmId)
-        {
-            var data = context.Films.BackgroundById(filmId).FirstOrDefault();
-            if (data == null)
-                return BadRequest();
-
-            return File(data.ImagePath, data.ContentType);
-        }
+        // [HttpGet("~/filmLogos/{userId}/image")]
+        // public IActionResult GetLogo(int filmId)
+        // {
+        //     var data = context.Films.LogoById(filmId).FirstOrDefault();
+        //     if (data == null)
+        //         return BadRequest();
+        //
+        //     return File(data.ImagePath, data.ContentType);
+        // }
+        //
+        // [HttpGet("~/filmBackgrounds/{userId}/image")]
+        // public IActionResult GetBackground(int filmId)
+        // {
+        //     var data = context.Films.BackgroundById(filmId).FirstOrDefault();
+        //     if (data == null)
+        //         return BadRequest();
+        //
+        //     return File(data.ImagePath, data.ContentType);
+        // }
         
         [Route("~/add_to_favorite")]
         public void AddToFavorite([FromQuery (Name = "filmId")] int filmId = -1)
@@ -83,6 +87,12 @@ namespace sem2.Controllers
                 return;
             user.FavoriteFilms.Add(film);
             context.SaveChanges();
+        }
+
+        public IActionResult Search(string query)
+        {
+            var films = context.Films.Where(x => x.Name.Contains(query)).Select(x => FilmHelpers.FromFilm(x));
+            return View("Catalog", films);
         }
     }
 }
