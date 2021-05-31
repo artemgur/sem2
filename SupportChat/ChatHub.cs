@@ -60,6 +60,10 @@ namespace SupportChat
         
         public override async Task OnConnectedAsync()
         {
+            if (GetUserId() == -1)
+            {
+                return;
+            }
             if (!Context.User.HasSupportClaim())
             {
                 clientGroup[GetUserId()] = Guid.NewGuid().ToString();

@@ -23,8 +23,8 @@
                 @if (User.Identity.IsAuthenticated)
                 {
                     <form id="form">
-                        <input class="input" id="input" type="text" size="30" name="name" placeholder="Имя - 20 знаков"><br>
-                        <textarea class="input" id="textarea" type="text" size="30" name="mess"
+                        @* <input class="input" id="name_input" type="text" size="30" name="name" placeholder="Имя - 20 знаков"><br> *@
+                        <textarea class="input" id="message_input" type="text" size="30" name="mess"
                                   placeholder="Сообщение - 200 знаков"></textarea> <br>
                         <input class="button" type="button" value="Отправить" onClick="send()">
                     </form>
@@ -35,7 +35,7 @@
                 }
             <div class="col-lg-6">
                 <div class="header-img sec-img">
-                    <img src="images/4.gif" class="img-fluid" alt="header-img">
+                    <img src="~/images/4.gif" class="img-fluid" alt="header-img">
                 </div>
             </div> <!-- col -->
         </div>

@@ -31,21 +31,21 @@ namespace sem2.Controllers
             var films = context.Films.Select(x => x.Id);//TODO DTO?
             return View(films);
         }
+
+        public IActionResult Favorite()
+        {
+            var userId = User.GetId();
+            var user = context.Users.ById(userId).FirstOrDefault();
+            if (user == null)
+                return RedirectToAction("Index", "Home");
+            var films = user.FavoriteFilms.Select(x => x.Id);
+            return View("Catalog", films);
+        }
         
         public IActionResult AboutFilm(int id)
         {
             var film = context.Films.Single(x => x.Id == id);
-            var dto = new FilmDTO
-            {
-                Id = film.Id,
-                Info = film.Info,
-                Name = film.Name,
-                Producer = film.Producer,
-                LongDescription = film.LongDescription,
-                OriginalName = film.OriginalName,
-                ShortDescription = film.ShortDescription,
-                Actors = film.Actors.Split(',')
-            };
+            var dto = FilmDTO.FromFilm(film);
             return View("AboutFilm", dto);
         }
         
@@ -67,6 +67,22 @@ namespace sem2.Controllers
                 return BadRequest();
 
             return File(data.ImagePath, data.ContentType);
+        }
+        
+        [Route("~/add_to_favorite")]
+        public void AddToFavorite([FromQuery (Name = "filmId")] int filmId = -1)
+        {
+            if (filmId == -1)
+                return;
+            var userId = User.GetId();
+            var user = context.Users.ById(userId).FirstOrDefault();
+            if (user == null)
+                return;
+            var film = context.Films.ById(filmId).SingleOrDefault();
+            if (film == null)
+                return;
+            user.FavoriteFilms.Add(film);
+            context.SaveChanges();
         }
     }
 }

@@ -50,7 +50,7 @@ and [<CLIMutable>] User =
         Role:UserRole
         RoleId:int
         
-//        FavoriteFilms:ICollection<Film>
+        FavoriteFilms:ICollection<Film>
         
         TotalPayment:decimal
         

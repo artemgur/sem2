@@ -9,7 +9,7 @@ namespace SupportChat
     public class MongoDB: IChatDatabase
     {
         private readonly IMongoCollection<MessageDTO> messagesCollection;
-        private readonly IMongoCollection<int> activeUsersCollection;
+        private readonly IMongoCollection<IntDTO> activeUsersCollection;
         
         
         //"mongodb+srv://mongodb:5nAA6B8RV6daPwtJ@mongodb.1yxjx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
@@ -20,7 +20,7 @@ namespace SupportChat
             var client = new MongoClient(connectionString);
             var database = client.GetDatabase("supportMessages");
             messagesCollection = database.GetCollection<MessageDTO>("messages");
-            activeUsersCollection = database.GetCollection<int>("messages");
+            activeUsersCollection = database.GetCollection<IntDTO>("messages");
         }
         
         public async Task<IOrderedEnumerable<MessageDTO>> GetMessages(int userId)
@@ -36,17 +36,17 @@ namespace SupportChat
 
         public async Task<List<int>> GetNotAnsweredUsers()
         {
-            return (await activeUsersCollection.FindAsync(x => true)).ToList();
+            return (await activeUsersCollection.FindAsync(x => true)).ToList().Select(x => x.Value).ToList();
         }
 
         public async Task AddNotAnsweredUser(int id)
         {
-            await activeUsersCollection.InsertOneAsync(id);
+            await activeUsersCollection.InsertOneAsync(new IntDTO{Value = id});
         }
 
         public async Task RemoveNotAnsweredUser(int id)
         {
-            await activeUsersCollection.DeleteOneAsync(x => x == id);
+            await activeUsersCollection.DeleteOneAsync(x => x.Value == id);
         }
 
         public async Task ClearNotAnsweredUsers()
