@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using DomainModels;
 
 namespace sem2.Models
 {
@@ -12,5 +13,11 @@ namespace sem2.Models
         public string Producer;
         public string OriginalName;
         public string[] Actors;
+
+        public int LogoId;
+        public ImageMetadata Logo;
+
+        public int BackgroundId;
+        public ImageMetadata Background;
     }
 }

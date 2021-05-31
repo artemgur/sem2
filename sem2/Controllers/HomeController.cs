@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using sem2_FSharp;
 using sem2.Models;
 
 namespace sem2.Controllers
@@ -46,6 +47,26 @@ namespace sem2.Controllers
                 Actors = film.Actors.Split(',')
             };
             return View("AboutFilm", dto);
-        }    
+        }
+        
+        [HttpGet("~/filmLogos/{userId}/image")]
+        public IActionResult GetLogo(int filmId)
+        {
+            var data = context.Films.LogoById(filmId).FirstOrDefault();
+            if (data == null)
+                return BadRequest();
+
+            return File(data.ImagePath, data.ContentType);
+        }
+        
+        [HttpGet("~/filmLogos/{userId}/image")]
+        public IActionResult GetBackground(int filmId)
+        {
+            var data = context.Films.BackgroundById(filmId).FirstOrDefault();
+            if (data == null)
+                return BadRequest();
+
+            return File(data.ImagePath, data.ContentType);
+        }
     }
 }

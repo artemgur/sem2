@@ -26,7 +26,7 @@ namespace sem2
         {
             // services.AddFilters();
             //services.AddControllersFromAssembly("sem2_FSharp"); //Uncomment when/if we will actually have F# controllers
-            var connectionString = Configuration.GetConnectionString("DefaultConnection");
+            var connectionString = Configuration.GetConnectionString("ArtemgurLocal");
             services.AddDbContext<ApplicationContext>(option =>
                 option.UseNpgsql(connectionString, b => b.MigrationsAssembly("sem2")));
             services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

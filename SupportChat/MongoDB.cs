@@ -13,8 +13,10 @@ namespace SupportChat
         
         
         //"mongodb+srv://mongodb:5nAA6B8RV6daPwtJ@mongodb.1yxjx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority"
-        public MongoDB(string connectionString)
+        public MongoDB()
         {
+            var connectionString =
+                "mongodb+srv://mongodb:5nAA6B8RV6daPwtJ@mongodb.1yxjx.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";//TODO 
             var client = new MongoClient(connectionString);
             var database = client.GetDatabase("supportMessages");
             messagesCollection = database.GetCollection<MessageDTO>("messages");
