@@ -59,7 +59,7 @@ namespace sem2.Controllers
             return File(data.ImagePath, data.ContentType);
         }
         
-        [HttpGet("~/filmLogos/{userId}/image")]
+        [HttpGet("~/filmBackgrounds/{userId}/image")]
         public IActionResult GetBackground(int filmId)
         {
             var data = context.Films.BackgroundById(filmId).FirstOrDefault();
