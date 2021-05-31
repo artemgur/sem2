@@ -33,7 +33,19 @@ namespace sem2.Controllers
         
         public IActionResult AboutFilm(int id)
         {
-            return View("AboutFilm", context.Films.Single(x => x.Id == id));
+            var film = context.Films.Single(x => x.Id == id);
+            var dto = new FilmDTO
+            {
+                Id = film.Id,
+                Info = film.Info,
+                Name = film.Name,
+                Producer = film.Producer,
+                LongDescription = film.LongDescription,
+                OriginalName = film.OriginalName,
+                ShortDescription = film.ShortDescription,
+                Actors = film.Actors.Split(',')
+            };
+            return View("AboutFilm", dto);
         }    
     }
 }

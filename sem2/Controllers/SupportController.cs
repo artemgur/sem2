@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using sem2_FSharp;
+using sem2.Models;
 using SupportChat;
 
 namespace sem2.Controllers
@@ -14,14 +15,16 @@ namespace sem2.Controllers
             this.chatDatabase = chatDatabase;
         }
         
-        public async Task<ViewResult> SupportChat()
+        public async Task<ViewResult> SupportChat(int? userId = null)
         {
-            return View(await chatDatabase.GetMessages(User.GetId()));
+            if (User.HasSupportClaim() && userId != null)
+                return View(new SupportChatDTO{Messages = await chatDatabase.GetMessages(userId.Value), UserId = userId});
+            return View(new SupportChatDTO{Messages = await chatDatabase.GetMessages(User.GetId()), UserId = null});
         }
 
         public async Task<ViewResult> SupportAdminSelect()
         {
-            if (User.HasClaim("support", ""))
+            if (User.HasSupportClaim())
                 return View();
             return View("SupportChat");
         }

@@ -25,7 +25,7 @@ namespace SupportChat
 
         public async Task ListenUser(int user)
         {
-            if (Context.User.HasClaim("support", ""))
+            if (Context.User.HasSupportClaim())
             {
                 supportConnectionGroup[Context.ConnectionId] = clientGroup[user];
         
@@ -36,7 +36,7 @@ namespace SupportChat
         
         public async Task Send(string message)
         {
-            if (!Context.User.HasClaim("support", ""))
+            if (!Context.User.HasSupportClaim())
             {
                 await Clients.Group(clientGroup[GetUserId()]).SendAsync("Receive", message, Context.ConnectionId);
                 await database.AddMessage(GetUserId(), message, true);
@@ -60,7 +60,7 @@ namespace SupportChat
         
         public override async Task OnConnectedAsync()
         {
-            if (!Context.User.HasClaim("support", ""))
+            if (!Context.User.HasSupportClaim())
             {
                 clientGroup[GetUserId()] = Guid.NewGuid().ToString();
                 await database.AddNotAnsweredUser(GetUserId());
@@ -70,7 +70,7 @@ namespace SupportChat
         
         public override async Task OnDisconnectedAsync(Exception exception)
         {
-            if (!Context.User.HasClaim("support", ""))
+            if (!Context.User.HasSupportClaim())
             {
                 var group = clientGroup[GetUserId()];
                 clientGroup.Remove(GetUserId());

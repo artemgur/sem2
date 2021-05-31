@@ -36,3 +36,9 @@ function sendAdmin(userId) {
 
     return false;
 }
+
+function adminInit(user_id){
+    connection.invoke("Listen", userId).catch(function (err) {
+        return console.error(err.toString());
+    });
+}

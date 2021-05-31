@@ -9,17 +9,21 @@ type Film =
         [<Key>]
         Id:int
         Name:string
-        Description:string
+        LongDescription:string
         ShortDescription:string
         Info:string//2021, приключения, боевик&ensp;  Россия&ensp;  2 ч 16 мин&ensp;
-        Price:decimal
-        Rating:decimal
+//        Price:decimal
+//        Rating:decimal
         
         
-        ImageId:int
-        Image:ImageMetadata
+//        ImageId:int
+//        Image:ImageMetadata
         
         InFavoritesOfUsers:ICollection<User>
+        
+        Producer:string
+        OriginalName:string
+        Actors:string
         
         
         //Reviews:ICollection<Review>

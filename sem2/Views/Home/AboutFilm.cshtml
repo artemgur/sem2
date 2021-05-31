@@ -1,4 +1,4 @@
-@model DomainModels.Film
+@model FilmDTO
 
 <link rel="stylesheet" href="~/css/collapse.css?ver=100">
 <div class="header-content">
@@ -55,27 +55,20 @@
                             @* <div class="rate"> *@
                             @*     7.3&ensp; *@
                             @* </div> *@
-                            <p class="film_text">@Model.Description</p>
+                            <p class="film_text">@Model.LongDescription</p>
                         </div>
                         <div class="content_background_details1"></div>
                         <div class="roles">
                             <p id="main_roles"><p style="color: #7f8291; font-size: 14px">В главных ролях<p>
-                            Науэль Перес Бискаярт<br>
-                            Ларс Айдингер<br>
-                            Йонас Най<br>
-                            Давид Шюттер<br>
-                            Александр Байер<br>
-                            Андреас Хофер<br>
-                            Леони Бенеш<br>
-                            Луиза-Селин Гаффрон<br>
-                            Нико Эрентайт<br>
-                            Джузеппе Скиллачи<br>
-                        </p>
+                                @foreach (var film in Model.Actors)
+                                {
+                                    <p>@film</p>
+                                }
                             <p class="producer"><p style="color: #7f8291; font-size: 14px">Режиссеры<p>
-                            Вадим Перельман<br>
+                            @Model.Producer<br>
                         </p>
                             <p class="name"><p style="color: #7f8291; font-size: 14px">Оригинальное название<p>
-                            Persian Lessons
+                            @Model.OriginalName
                         </p>
                         </div>
                     </div>
