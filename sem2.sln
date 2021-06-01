@@ -8,6 +8,7 @@ EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "sem2_FSharp", "sem2_FSharp\sem2_FSharp.fsproj", "{9DF79D42-D627-4C1F-9479-5E84E987407B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Authentication", "Authentication\Authentication.csproj", "{CF71EDB2-94F0-4209-9F57-A871771D1F07}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SupportChat", "SupportChat\SupportChat.csproj", "{FC080F00-4BF4-45AA-940E-D9E03A5F8280}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +24,17 @@ Global
 		{9DF79D42-D627-4C1F-9479-5E84E987407B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9DF79D42-D627-4C1F-9479-5E84E987407B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9DF79D42-D627-4C1F-9479-5E84E987407B}.Release|Any CPU.Build.0 = Release|Any CPU
+
 		{CF71EDB2-94F0-4209-9F57-A871771D1F07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CF71EDB2-94F0-4209-9F57-A871771D1F07}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CF71EDB2-94F0-4209-9F57-A871771D1F07}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CF71EDB2-94F0-4209-9F57-A871771D1F07}.Release|Any CPU.Build.0 = Release|Any CPU
+
+		{FC080F00-4BF4-45AA-940E-D9E03A5F8280}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC080F00-4BF4-45AA-940E-D9E03A5F8280}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC080F00-4BF4-45AA-940E-D9E03A5F8280}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC080F00-4BF4-45AA-940E-D9E03A5F8280}.Release|Any CPU.Build.0 = Release|Any CPU
+
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -12,6 +12,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using sem2.Infrastructure.Services;
+using sem2_FSharp;
+using SupportChat;
 
 // using sem2_FSharp.Middleware;
 
@@ -35,11 +37,11 @@ namespace sem2
             
             services.AddAuthenticationServices(opts =>
             {
-                opts.ConnectionString = Configuration.GetConnectionString("UserDbConnection");
+                opts.ConnectionString = Configuration.GetConnectionString("LocalUserTest");
                 opts.DefaultRole = "user";
                 opts.AddRole("user");
                 opts.AddRole("admin");
-                opts.AddRole("manager");
+                opts.AddRole("support");
             });
             
             services.AddAuthentication()
@@ -53,7 +55,7 @@ namespace sem2
                     opts.SignInScheme = IdentityConstants.ExternalScheme;
                 });
             
-            var connectionString = Configuration.GetConnectionString("DefaultConnection");
+            var connectionString = Configuration.GetConnectionString("LocalTest");
             services.AddDbContext<ApplicationContext>(option =>
                 option.UseNpgsql(connectionString, b => b.MigrationsAssembly("sem2")));
 
@@ -76,6 +78,10 @@ namespace sem2
             services.AddScoped<IPaymentService, FakePaymentService>();
             services.AddControllersWithViews();
             services.AddHttpContextAccessor();
+
+            services.AddScoped<IChatDatabase, SupportChat.MongoDB>();
+            
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -109,6 +115,7 @@ namespace sem2
                 endpoints.MapControllerRoute(
                     name: "AdminPanel",
                     pattern: "{controller=AdminPanel}/{action=Products}/{id?}");
+                endpoints.MapHub<ChatHub>("/chat");
             });
         }
     }

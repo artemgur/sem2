@@ -21,6 +21,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Authentication\Authentication.csproj" />
       <ProjectReference Include="..\sem2_FSharp\sem2_FSharp.fsproj" />
+      <ProjectReference Include="..\SupportChat\SupportChat.csproj" />
     </ItemGroup>
 
 

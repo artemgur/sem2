@@ -1,0 +1,10 @@
+using DomainModels;
+
+namespace sem2.Models
+{
+    public class FilmImageDTO
+    {
+        public int Id;
+        public ImageMetadata Image;
+    }
+}
