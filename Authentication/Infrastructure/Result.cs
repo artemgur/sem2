@@ -39,5 +39,14 @@ namespace Authentication.Infrastructure
         {
             Value = value;
         }
+
+        public bool TryGetValue(out T value)
+        {
+            value = default;
+            if (IsSuccessful)
+                value = Value;
+
+            return IsSuccessful;
+        }
     }
 }

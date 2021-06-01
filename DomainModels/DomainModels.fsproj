@@ -5,14 +5,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Compile Include="UserRole.fs" />
-      <Compile Include="Subscription.fs" />
-      <Compile Include="Genre.fs" />
-      <Compile Include="FilmUserReview.fs" />
-      <Compile Include="ApplicationContext.fs" />
-    </ItemGroup>
-
-    <ItemGroup>
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.3" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Tools.DotNet" Version="2.0.3" />
       <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.2" />

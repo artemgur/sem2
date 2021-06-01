@@ -1,7 +1,5 @@
 namespace sem2_FSharp.ViewModels.CatalogModels
 
-open DomainModels
-
 type FilterViewModel() =
     [<DefaultValue>]
     val mutable private propertyId : int

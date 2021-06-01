@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 using Authentication.Services;
 using Authorization.Services;
 using DomainModels;
-using Konscious.Security.Cryptography;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -63,6 +63,9 @@ namespace sem2.Controllers
             if (!result.Succeeded)
                 return RedirectToAction("Login");
 
+            var user = _dbContext.Users.FirstOrDefault(u => u.Id == result.UserId);
+            if (user == null)
+                await CreateUser(result.UserEmail, result.UserId);
             return RedirectToAction("Profile", "Profile");
         }
 
@@ -78,14 +81,15 @@ namespace sem2.Controllers
                     ModelState.AddModelError("", $"Пользователя с Email: {email} не существует");
                 else
                 {
+                    string keyHtmlVersion = HttpUtility.UrlEncode(result.Value);
                     var success = await _sender.SendEmailAsync(email, "Сброс пароля",
-                        $"Перейдите по ссылке для сброса пароля: \n {Url.Action("NewPassword", "Account", null, Request.Scheme)}?key={result.Value}&email={email}");
+                        $"Перейдите по ссылке для сброса пароля: \n {Url.Action("NewPassword", "Account", null, Request.Scheme)}?key={keyHtmlVersion}&email={email}");
                     if (!success)
-                        ModelState.AddModelError("", $"Письмо не может быть отправлено, т.к оно заблокированно по подозрению в спаме.\n {Url.Action("NewPassword", "Account", null, Request.Scheme)}?key={result.Value}&email={email}");
+                        ModelState.AddModelError("", $"Письмо не может быть отправлено, т.к оно заблокированно по подозрению в спаме.\n {Url.Action("NewPassword", "Account", null, Request.Scheme)}?key={keyHtmlVersion}&email={email}");
                 }
-                return View("ResetPasswordEmail");
+                return View("ResetPasswordEmail", email);
             }
-            return View();
+            return View(new EmailModel());
         }
 
         [HttpGet]
@@ -101,6 +105,11 @@ namespace sem2.Controllers
         [HttpPost]
         public async Task<IActionResult> NewPassword(PasswordResetModel passwordResetModel)
         {
+            var model = new PasswordResetModel
+            {
+                Email = passwordResetModel.Email,
+                Key = passwordResetModel.Key
+            };
             if (ModelState.IsValid)
             {
                 var result = await _authenticationService.ConfirmPasswordChange(passwordResetModel.Email,
@@ -109,9 +118,9 @@ namespace sem2.Controllers
                     return View("PasswordChangeSuccessfull");
 
                 ModelState.AddIdentityErrors(result.Errors);
-                return View();
+                return View(model);
             }
-            return View();
+            return View(model);
         }
 
         [HttpPost]
@@ -153,28 +162,33 @@ namespace sem2.Controllers
                 
                 if (res.result.Succeeded)
                 {
-                    var user = new User()
-                    {
-                        Id = res.id,
-                        FirstName = model.FirstName,
-                        Surname = model.Surname
-                    };
-                    
-                    var image = DomainModels.User.DefaultImage;
-                    _dbContext.ImageMetadata.Add(image);
-                    await _dbContext.SaveChangesAsync();
-        
-                    user.Image = image;
-                    _dbContext.Users.Add(user);
-                    await _dbContext.SaveChangesAsync();
-        
-                    return Redirect($"{Url.Action("ConfirmEmail")}?userId={user.Id}");
+                    await CreateUser(model.Email, res.id, model.FirstName, model.Surname);
+                    return Redirect($"{Url.Action("ConfirmEmail")}?userId={res.id}");
                 }
                 else
-                    ModelState.AddModelError("", "Некорректные логин и(или) пароль");
+                    ModelState.AddIdentityErrors(res.result.Errors);
             }
         
             return View(model);
+        }
+
+        private async Task CreateUser(string email, int id, string firstName = "", string surName = "")
+        {
+            var user = new User()
+            {
+                Id = id,
+                FirstName = firstName,
+                Surname = surName,
+                Email = email
+            };
+                    
+            var image = DomainModels.User.DefaultImage;
+            _dbContext.ImageMetadata.Add(image);
+            await _dbContext.SaveChangesAsync();
+        
+            user.Image = image;
+            _dbContext.Users.Add(user);
+            await _dbContext.SaveChangesAsync();
         }
         
         public async Task<IActionResult> ConfirmEmail(int userId)
@@ -184,11 +198,12 @@ namespace sem2.Controllers
                 return RedirectToAction("Register");
 
             var key = result.Value;
+            string keyHtmlVersion = HttpUtility.UrlEncode(key);
             var email = await _userManager.GetEmail(userId);
             var success = await _sender.SendEmailAsync(email.Value, "Подтверждение Email",
-                $"Перейдите по ссылке для окончания регистрации: \n {Url.Action("EmailConfirmationEnd", "Account", null, Request.Scheme)}?key={key}&userId={userId}");
+                $"Перейдите по ссылке для окончания регистрации: \n {Url.Action("EmailConfirmationEnd", "Account", null, Request.Scheme)}?key={keyHtmlVersion}&userId={userId}");
             if (!success)
-                ModelState.AddModelError("", $"Письмо не может быть отправлено, т.к оно заблокированно по подозрению в спаме.\n {Url.Action("EmailConfirmationEnd", "Account", null, Request.Scheme)}?key={key}&userId={userId}");
+                ModelState.AddModelError("", $"Письмо не может быть отправлено, т.к оно заблокированно по подозрению в спаме.\n {Url.Action("EmailConfirmationEnd", "Account", null, Request.Scheme)}?key={keyHtmlVersion}&userId={userId}");
             
             return View(model: email.Value);
         }

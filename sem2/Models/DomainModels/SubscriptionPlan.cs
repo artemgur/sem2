@@ -12,7 +12,10 @@ namespace DomainModels
         public decimal Price { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
-        
+
+        public int ImageId { get; set; }
+        public ImageMetadata Image { get; set; }
+
         public ICollection<Permission> ProvidedPermissions { get; set; }
     }
 }

@@ -19,6 +19,7 @@ namespace DomainModels
         public int ImageId { get; set; }
         public ImageMetadata Image { get; set; }
 
+        public string Email { get; set; }
         public string FirstName { get; set; }
         public string Surname { get; set; }
         

@@ -1,8 +1,9 @@
-@using sem2_FSharp
-@using sem2_FSharp.ViewModels.ProfileModels
-@model sem2_FSharp.ViewModels.ProfileModels.UserViewModel
+@using Authentication.Infrastructure
+@using Microsoft.AspNetCore.Mvc.Rendering
+@model sem2.ViewModels.ProfileModels.UserViewModel
 @{
     var isCurrentUser = User.GetId() == Model.Id;
+    Layout = null;
 }
 
 <!doctype html>
@@ -89,11 +90,11 @@
                         </div>
 
                         <div class="image">
-                            <img src="@Url.Content($"~/profile/{Model.Id}/image")?date=@DateTime.Now.ToString()" id="upload-img" alt="image" /><br>
-                            <form id="upload-container" class="form-group" method="POST" action="profile/uploadImage">
+                            <img src="@Url.Content($"~/{Model.ImagePath}")" id="upload-img" alt="image" /><br>
+                            <form id="upload-container" class="form-group" method="POST" action="profile/uploadImage" enctype="multipart/form-data">
                                 @* <img id="upload-image" src="~/images/upload.svg"> *@
                                 <div>
-                                    <input id="file-input" type="file" name="file" multiple>
+                                    <input id="file-input" type="file" name="image" multiple>
                                     <label for="file-input">Выберите фото</label>
                                     <span>или перетащите его сюда</span>
                                 </div>
@@ -107,20 +108,17 @@
                                     <div class="row">
                                         <div class="col-md-6 col-sm-6">
                                             <div class="form-group">
-                                                @Html.LabelFor(m => m.Name, "Имя")
-                                                @Html.EditorFor(m => m.Name, new {htmlAttributes = new {@class = "form-control"}, placeholder = Model.Name})
-                                                @Html.ValidationMessageFor(m => m.Name)
+                                                @Html.LabelFor(m => m.FirstName, "Имя")
+                                                @Html.EditorFor(m => m.FirstName, new {htmlAttributes = new {@class = "form-control"}})
+                                                @Html.ValidationMessageFor(m => m.FirstName)
                                             </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group">
                                                 @Html.LabelFor(m => m.Surname, "Фамилия")
-                                                @Html.EditorFor(m => m.Surname, new {htmlAttributes = new {@class = "form-control"}, placeholder = Model.Surname})
+                                                @Html.EditorFor(m => m.Surname, new {htmlAttributes = new {@class = "form-control"}})
                                                 @Html.ValidationMessageFor(m => m.Surname)
                                             </div>
-                                        </div>
-                                        <div class="col-md-6 col-sm-6">
-                                            <div class="form-group">Время окончания подписки:</div>
                                         </div>
                                         <div class="col-md-12 col-sm-12">
                                             <button class="alt fancy-button" type="submit">Update</button>
@@ -128,7 +126,6 @@
                                     </div>
                                 </div>
                             </form>
-                            @Html.Partial("EditPasswordPartial", new PasswordChangeModel())
                         </div>
                     </div>
                 </article>

@@ -60,7 +60,7 @@ namespace Authentication.Services
         public Result<int> GetUserId()
         {
             var userPrincipal = _httpContextAccessor.HttpContext.User;
-            if(userPrincipal.Identity.IsAuthenticated ||
+            if(!userPrincipal.Identity.IsAuthenticated ||
                !int.TryParse(userPrincipal.FindFirstValue(ClaimTypes.NameIdentifier), out var res))
                 return Result.Failure<int>("Пользователь не аунтифицирован");
 

@@ -52,6 +52,52 @@ namespace sem2.Infrastructure.Services
             return result;
         }
 
+        private IEnumerable<SubscriptionPlan> GetUserSubscriptions(int userId)
+        {
+            var result = _dbContext.Users
+                .Where(user => user.Id == userId)
+                .SelectMany(user => user.UserPermissions)
+                .Select(perm => perm.PermissionProvider)
+                .ToList()
+                .GroupBy(plan => plan.Id)
+                .Select(plans => plans.First())
+                .ToList();
+
+            return result;
+        }
+
+        public async IAsyncEnumerable<(SubscriptionPlan plan, DateTime end)> GetUserSubscriptionsWithDate()
+        {
+            var userIdResult = _userManager.GetUserId();
+            if (!userIdResult.IsSuccessful)
+                yield break;
+
+            var userId = userIdResult.Value;
+            var subs = GetUserSubscriptions(userId);
+            foreach (var sub in subs)
+            {
+                var dateEnd = await GetUserSubscriptionExpireDate(userId, sub.Id);
+                if(dateEnd != null && dateEnd.Value > DateTime.Now)
+                    yield return (sub, dateEnd.Value);
+            }
+        }
+
+        public async Task<DateTime?> GetUserSubscriptionExpireDate(int userId, int planId)
+        {
+            var userPermissions = _dbContext.Users
+                .Where(user => user.Id == userId)
+                .SelectMany(user => user.UserPermissions)
+                .Where(perm => perm.PermissionProviderId == planId)
+                .ToList();
+
+            var maxDate = DateTime.MinValue;
+            foreach(var perm in userPermissions)
+                if (perm.PeriodEnd > maxDate)
+                    maxDate = perm.PeriodEnd;
+
+            return maxDate;
+        }
+        
         public async Task<bool> HasSubscriptionPlan(int planId)
         {
             var userIdResult = _userManager.GetUserId();
@@ -67,6 +113,16 @@ namespace sem2.Infrastructure.Services
                 .ToList();
 
             return !(await CheckUserPermissions(userPermissions));
+        }
+
+        public Result<decimal> GetPlanPrice(int planId)
+        {
+            var subPlan = _dbContext.SubscriptionPlans
+                .FirstOrDefault(plan => plan.Id == planId);
+            if(subPlan == null)
+                return Result.Failure<decimal>("План не найден.");
+
+            return Result.Success(subPlan.Price);
         }
 
         public async Task<Result> AddPlanToUser(int planId)
@@ -130,7 +186,7 @@ namespace sem2.Infrastructure.Services
         {
             var allRemoved = true;
             foreach(var userPermission in userPermissions)
-                if (userPermission.PeriodEnd >= DateTime.Now)
+                if (userPermission.PeriodEnd <= DateTime.Now)
                     _dbContext.UserPermissions.Remove(userPermission);
                 else allRemoved = false;
 

@@ -7,8 +7,6 @@
 
     <ItemGroup>
       <Compile Include="NullCoalescing.fs" />
-      <Compile Include="QueryableExtensions.fs" />
-      <Compile Include="EmailSettings.fs" />
       <Compile Include="IdentityExtensions.fs" />
       <Compile Include="ViewModels\ErrorViewModel.fs" />
       <Compile Include="ViewModels\CatalogModels\ReviewDTO.fs" />
@@ -21,10 +19,6 @@
       <Compile Include="ViewModels\AdminPanelModels\CommandLineResponse.fs" />
       <Compile Include="ViewModels\AdminPanelModels\AdminPanelCreateProductViewModel.fs" />
       <Compile Include="ViewModels\AdminPanelModels\AdminPanelCreateCategoryViewModel.fs" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\DomainModels\DomainModels.fsproj" />
     </ItemGroup>
 
     <ItemGroup>

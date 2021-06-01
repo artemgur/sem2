@@ -11,6 +11,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using sem2.Infrastructure.Services;
+
 // using sem2_FSharp.Middleware;
 
 namespace sem2
@@ -69,7 +71,9 @@ namespace sem2
                     policy.AddRequirements();
                 });
             });
-            
+
+            services.AddScoped<PermissionService>();
+            services.AddScoped<IPaymentService, FakePaymentService>();
             services.AddControllersWithViews();
             services.AddHttpContextAccessor();
         }
@@ -96,9 +100,7 @@ namespace sem2
 
             app.UseAuthentication();
             app.UseAuthorization();
-            
-            //app.UseMiddleware<CitiesMiddleware>();
-            
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
