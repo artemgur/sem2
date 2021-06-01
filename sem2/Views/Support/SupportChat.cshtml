@@ -1,0 +1,44 @@
+@using SupportChat
+@model SupportChatDTO
+
+<script src="https://cdn.jsdelivr.net/npm/@@microsoft/signalr/dist/browser/signalr.min.js"></script>
+<script src="~/js/send.js"></script>
+
+@if (Context.User.HasSupportClaim() && Model.UserId != null)
+{
+    <script>adminInit(@Model)</script>
+}
+
+<div class="header-content">
+    <div class="container">
+        <div class="row align-items-center justify-content-between">
+            <div id="message_container">
+                @foreach (var message in Model.Messages)
+                {
+                    <div class="message">
+                        <div class="content">@message.Message<br>@message.Time.ToString()</div>
+                    </div>
+                }
+            </div>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <form id="form">
+                        @* <input class="input" id="name_input" type="text" size="30" name="name" placeholder="Имя - 20 знаков"><br> *@
+                        <textarea class="input" id="message_input" type="text" size="30" name="mess"
+                                  placeholder="Сообщение - 200 знаков"></textarea> <br>
+                        <input class="button" type="button" value="Отправить" onClick="send()">
+                    </form>
+                }
+                else
+                {
+                    <p>Только зарегистрированные пользователи могут обращаться в техподдержку</p>
+                }
+            <div class="col-lg-6">
+                <div class="header-img sec-img">
+                    <img src="~/images/4.gif" class="img-fluid" alt="header-img">
+                </div>
+            </div> <!-- col -->
+        </div>
+    </div> <!-- Container -->
+</div>	<!-- header-content -->
+

@@ -1,32 +1,40 @@
 ﻿namespace DomainModels
 
-open System
 open System.Collections.Generic;
 open System.ComponentModel.DataAnnotations
 
 [<CLIMutable>]
-type (*Film =
+type Film =
     {
         [<Key>]
         Id:int
         Name:string
-        Description:string
-        Price:decimal
-        Rating:decimal
+        LongDescription:string
+        ShortDescription:string
+        Info:string//2021, приключения, боевик&ensp;  Россия&ensp;  2 ч 16 мин&ensp;
+//        Price:decimal
+//        Rating:decimal
         
         
-        ImageId:int
-        Image:ImageMetadata
+//        LogoId:int
+//        Logo:ImageMetadata
+//        
+//        BackgroundId:int
+//        Background:ImageMetadata
         
         InFavoritesOfUsers:ICollection<User>
         
+        Producer:string
+        OriginalName:string
+        Actors:string
         
-        Reviews:ICollection<Review>
+        
+        //Reviews:ICollection<Review>
         
         
-        Genres: ICollection<Genre>
+        //Genres: ICollection<Genre>
     }
-and [<CLIMutable>]*) User =
+and [<CLIMutable>] User =
     {
         [<Key>]
         Id:int
@@ -42,7 +50,7 @@ and [<CLIMutable>]*) User =
         Role:UserRole
         RoleId:int
         
-//        FavoriteFilms:ICollection<Film>
+        FavoriteFilms:ICollection<Film>
         
         TotalPayment:decimal
         

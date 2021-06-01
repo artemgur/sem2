@@ -7,6 +7,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using sem2_FSharp;
+using SupportChat;
+
 // using sem2_FSharp.Middleware;
 
 namespace sem2
@@ -46,6 +48,10 @@ namespace sem2
             );
             services.AddControllersWithViews();
             services.AddHttpContextAccessor();
+
+            services.AddScoped<IChatDatabase, SupportChat.MongoDB>();
+            
+            services.AddSignalR();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -81,6 +87,7 @@ namespace sem2
                 endpoints.MapControllerRoute(
                     name: "AdminPanel",
                     pattern: "{controller=AdminPanel}/{action=Products}/{id?}");
+                endpoints.MapHub<ChatHub>("/chat");
             });
         }
     }
