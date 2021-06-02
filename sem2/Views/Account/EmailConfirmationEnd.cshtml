@@ -3,14 +3,15 @@
 @{
     Layout = "_AccountLayout";
 }
-    
+
 <div>
     @if (ViewData.ModelState.IsValid)
     {
-            <p class="lead text-center">Регистрация завершена успешно.</p>
+            <p class="lead text-center email-confirmation-text">Регистрация завершена успешно.</p>
     }
     else
     {
-            <p class="lead text-center">Срок действия ключа подтверждения истек, <a href="@Url.Action("ConfirmEmail")?userId=@Model">попробуйте еще раз</a></p>
+            <p class="lead text-center email-confirmation-text">Срок действия ключа подтверждения истек, <a href="@Url.Action("ConfirmEmail")?userId=@Model">попробуйте еще раз</a></p>
     }
+    <a asp-area="" asp-controller="Home" asp-action="Index">На главную</a>
 </div>
