@@ -1,4 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Net.Mime;
+using System.Threading.Tasks;
+using Authentication.Models;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Authentication.Infrastructure
 {
@@ -6,13 +11,48 @@ namespace Authentication.Infrastructure
     {
         public string ConnectionString { get; set; }
         private List<string> _roles = new List<string>();
-        public IEnumerable<string> Roles => _roles;
+        private List<UserBuilder> _users = new List<UserBuilder>();
+        internal IEnumerable<string> Roles => _roles;
+        internal IEnumerable<UserBuilder> Users => _users;
         public string DefaultRole = null;
 
         public AuthenticationServiceOptions AddRole(string roleName)
         {
             _roles.Add(roleName);
             return this;
+        }
+
+        public AuthenticationServiceOptions AddUser(Action<UserBuilder> userBuilder)
+        {
+            var userBuilderObj = new UserBuilder();
+            userBuilder(userBuilderObj);
+            _users.Add(userBuilderObj);
+            return this;
+        }
+    }
+
+    public class UserBuilder
+    {
+        private Func<int, UserBuilder, IServiceProvider, Task> _buildHandler;
+        public string Email = "";
+        public string Password = "";
+        private List<string> _roles = new List<string>();
+        internal IEnumerable<string> Roles => _roles;
+
+        public void AddRole(string roleName)
+        {
+            _roles.Add(roleName);
+        }
+
+        public void ContinueWith(Func<int, UserBuilder, IServiceProvider, Task> buildHander)
+        {
+            _buildHandler += buildHander;
+        }
+
+        internal async Task ExternalBuild(int id, IServiceProvider serviceProvider)
+        {
+            if(_buildHandler != null)
+                await _buildHandler.Invoke(id, this, serviceProvider);
         }
     }
 }

@@ -11,9 +11,9 @@ namespace SupportChat
     {
         private readonly IChatDatabase database;
 
-        private static readonly Dictionary<int, int?> UsersToSupport = new();
+        private static readonly Dictionary<int, int?> UsersToSupport = new Dictionary<int, int?>();
 
-        private static readonly Dictionary<int, DateTime> UserLastMessage = new();
+        private static readonly Dictionary<int, DateTime> UserLastMessage = new Dictionary<int, DateTime>();
 
         private const int UserTimeoutSeconds = 20 * 60; //20 min
 
