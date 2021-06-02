@@ -12,15 +12,7 @@
                 @foreach (var filmGroup in Model.Select(x => x.Id).GroupByN(3))
                 {
                     <div class="carousel-item @activeString">
-                        @* <a class="btn d-block col-4" href="@Url.Content($"~/AboutFilm/{filmId}")" aria-expanded="false" aria-controls="collapseExample"> *@
-                        @*     <div class="block_with_image"> *@
-                        @*         <div class="estimation_block"> *@
-                        @*             <p class="estimation">7,4</p> *@
-                        @*             <img class="img-fluid" src="@Url.Content(FilmHelpers.BackgroundImagePath(filmId))" alt=""> *@
-                        @*         </div> *@
-                        @*     </div> *@
-                        @* </a> *@
-                            <div class="row <!--no-gutters-->">
+                        <div class="row <!--no-gutters-->">
                                 <div class="col-4 item">
                                     <a class="btn d-block col-4" href="@Url.Content($"~/AboutFilm/{filmGroup[0]}")" aria-expanded="false" aria-controls="collapseExample">
                                         <div class="block_with_image">
