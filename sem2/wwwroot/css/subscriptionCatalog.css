@@ -1,0 +1,112 @@
+.subscriptions-container{
+    background-color: rgba(0,0,0,0.1);
+    width: 100%;
+    border-radius: 0.5rem;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+.subscriptions-container .subscription-item:nth-child(n+2){
+    margin-top: 10px;
+}
+
+.subscription-item{
+    display: grid;
+    width: 100%;
+    height: 128px;
+    background-color: rgba(0,0,0,0.1);
+    border-radius: 0.25rem;
+    grid-template-columns: 128px 2.7fr 1.5fr 1.5fr;
+    grid-template-rows: 1fr 2fr;
+    gap: 5px 10px;
+    grid-template-areas:
+    "Image Name Info Button"
+    "Image Desc Info Button";
+    padding: 10px;
+    transition: background-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+    font-family: Calibri, serif;
+}
+
+.ImageSub {
+    grid-area: Image;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.NameSub {
+    grid-area: Name;
+    font-size: 1.5rem;
+    padding-left: 25px;
+    line-height: 2rem;
+}
+
+.DescSub {
+    grid-area: Desc;
+    padding-left: 25px;
+    font-size: 1.02rem;
+    line-height: 1.5rem;
+    overflow-y: auto;
+}
+
+.DescSub::-webkit-scrollbar {
+    display: none;
+}
+
+.InfoSub {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    grid-area: Info;
+}
+
+.PriceSub {
+    grid-area: Price;
+    display: flex;
+    align-items: flex-end;
+    /*justify-content: center;*/
+    font-size: larger;
+    color: rgba(255,255,255,0.8);
+    line-height: 20px;
+    margin-left: 1rem;
+}
+.DurationSub {
+    grid-area: Duration;
+    display: flex;
+    align-items: flex-start;
+    flex-direction: column;
+    /*justify-content: center;*/
+    font-size: larger;
+    color: rgba(255,255,255,0.8);
+    line-height: 20px;
+    margin-left: 1rem;
+}
+.ButtonSub {
+    grid-area: Button;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.btn-lg{
+    padding: 7px 20px 7px 20px;
+}
+
+.btn-lg.disabled{
+    background-color: rgb(230, 148, 85);
+    box-shadow: 0px 25px 35px rgba(230, 148, 85, 0.3);
+}
+
+.imgSub-fit{
+    object-fit: contain;
+    width: 128px;
+    height: 96px;
+}
+
+.subscription-item:hover{
+    background-color: rgb(28, 28, 71);
+    box-shadow: 0 0 10px 3px rgba(48, 48, 128, 0.6);
+}
+
+.header-content{
+    padding-top: 120px;
+}

@@ -1,0 +1,35 @@
+﻿@model sem2.ViewModels.SubscriptionModels.SubscriptionViewModel
+
+<div class="subscription-item">
+    <div class="ImageSub">
+        <img src="@Url.Content($"~/{Model.ImagePath}")" class="imgSub-fit">
+    </div>
+    <div class="NameSub">
+        <b>@Model.Name</b>
+    </div>
+    <div class="DescSub">
+        @Model.Description
+    </div>
+    <div class="InfoSub">
+        <div class="PriceSub">Цена: <b class="ml-2">@Model.Price руб</b></div>
+        <div class="DurationSub mt-1">
+            <div>
+                Длительность: <b class="ml-2">@Model.Duration дней</b>
+            </div>
+            @if (Model.IsUserSubscribed)
+            {
+                <div class="mt-1">
+                    Действует до: <b class="ml-2">@Model.EndPeriodDate.ToString("dd.MM.yyyy")</b>
+                </div>
+            }
+        </div>
+    </div>
+    @if (Model.IsUserSubscribed)
+    {
+        <div class="ButtonSub"><a class="btn-lg disabled">Подписка оформлена</a></div>
+    }
+    else
+    {
+        <div class="ButtonSub"><a href="@Url.Content($"~/subscribe/{Model.Id}")" class="btn-lg">Оформить подписку</a></div>
+    }
+</div>
