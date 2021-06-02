@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using Authentication.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using sem2_FSharp;
 using sem2.Models;

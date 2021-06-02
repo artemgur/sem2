@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using Authentication.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using sem2_FSharp;
@@ -10,12 +11,12 @@ namespace sem2.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ApplicationContext context;
+        private readonly ApplicationContext _context;
 
         public HomeController(ILogger<HomeController> logger, ApplicationContext dbContext)
         {
             _logger = logger;
-            context = dbContext;
+            _context = dbContext;
         }
 
         public IActionResult Index()
@@ -29,14 +30,16 @@ namespace sem2.Controllers
         // }
         public IActionResult Catalog()
         {
-            var films = context.Films.Select(x => FilmHelpers.FromFilm(x));//TODO DTO?
+            var films = _context.Films
+                .Select(x => FilmHelpers.FromFilm(x))
+                .ToList();//TODO DTO?
             return View(films);
         }
 
         public IActionResult Favorite()
         {
             var userId = User.GetId();
-            var user = context.Users.ById(userId).FirstOrDefault();
+            var user = _context.Users.FirstOrDefault(u => u.Id == userId);
             if (user == null)
                 return RedirectToAction("Index", "Home");
             var films = user.FavoriteFilms.Select(x => FilmHelpers.FromFilm(x));
@@ -46,7 +49,7 @@ namespace sem2.Controllers
         [Route("~/AboutFilm/{id:int}")]
         public IActionResult AboutFilm(int id)
         {
-            var film = context.Films.ById(id).SingleOrDefault();
+            var film = _context.Films.SingleOrDefault(f => f.Id == id);
             if (film == null)
                 return RedirectToAction("Catalog");
             var dto = FilmHelpers.FromFilm(film);
@@ -79,19 +82,23 @@ namespace sem2.Controllers
             if (filmId == -1)
                 return;
             var userId = User.GetId();
-            var user = context.Users.ById(userId).FirstOrDefault();
+            var user = _context.Users.FirstOrDefault(u => u.Id == userId);
             if (user == null)
                 return;
-            var film = context.Films.ById(filmId).SingleOrDefault();
+            var film = _context.Films.SingleOrDefault(f => f.Id == filmId);
             if (film == null)
                 return;
             user.FavoriteFilms.Add(film);
-            context.SaveChanges();
+            _context.SaveChanges();
         }
 
         public IActionResult Search(string query)
         {
-            var films = context.Films.Where(x => x.Name.Contains(query)).Select(x => FilmHelpers.FromFilm(x));
+            query = query.ToLower();
+            var films = _context.Films
+                .Where(x => x.Name.ToLower().Contains(query))
+                .Select(x => FilmHelpers.FromFilm(x))
+                .ToList();
             return View("Catalog", films);
         }
     }

@@ -1,6 +1,8 @@
-﻿@using sem2.Views
+@using sem2.Views
 @model FilmDTO
 
+
 @* <a href="@Url.Content($"~/AboutFilm/{Model.Id}")"> *@
-<img class="card_logo" src="@Url.Content(FilmHelpers.LogoImagePath(Model.Id))" alt="Denim Jeans" style="width:100%">
+<img class="card_logo" src="@Url.Content($"~/{FilmHelpers.LogoImagePath(Model.Id)}")" alt="" style="width:100%">
 @* </a> *@
+

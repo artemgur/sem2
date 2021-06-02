@@ -13,6 +13,9 @@
     <!-- Bootstrap CSS с CDN-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css" integrity="sha512-P5MgMn1jBN01asBgU0z60Qk4QxiXo86+wlFahKrsQf37c9cro517WzVSPPV1tDKzhku2iJ2FVgL67wG03SGnNA==" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+        <script src="~/lib/jquery-validation/dist/additional-methods.min.js"></script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
     <link rel="stylesheet" href="~/css/style.css?ver=100">
     <link rel="stylesheet" type="text/css" href="~/css/search.css">
     <link rel="stylesheet" href="~/css/authorization.css?ver=100">
@@ -33,12 +36,12 @@
                     <span class="brand-text">FilmMediaHD</span>
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-						<span class="navbar-icon">
-							<i class="fas fa-bars"></i>
-                             <svg style="color: #7c98e7" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
-                                 <path fill-rule="evenodd" d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
-                             </svg>
-						</span>
+                    <span class="navbar-icon">
+                        <i class="fas fa-bars"></i>
+                        <svg style="color: #7c98e7" xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-list" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M2.5 11.5A.5.5 0 0 1 3 11h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 7h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4A.5.5 0 0 1 3 3h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
+                        </svg>
+                    </span>
                 </button>
                 <div class="collapse navbar-collapse justify-content-end" id="navbarTogglerDemo01">
                     <ul class="navbar-nav">
@@ -89,33 +92,35 @@
 
     </header>
 
-@RenderBody()
+    @RenderBody()
 
-<footer id="footer">
-    <div class="container">
-        <div class="row footer-top">
-            <div class="col-md-6">
-                <div id="information">
-                    <h2>FilmMediaHD</h2>
-                    <p class="italic">If you have any problems or questions, please contact us by phone, email  or at the address:</p>
-                    <div class="infomation">
-                        <p><i class="fa fa-phone"></i> Telephone: +8 946 552 97 36</p>
-                        <p><i class="fa fa-envelope-o"></i> Email: filmmedia@gmail.com</p>
-                        <p><i class="fa fa-map"></i> Address: Kazan, st.Pushkina 32</p>
-                        <p><i class="fa fa-clock-o"></i> 8:00 - 20:00, Monday - Saturday, Sunday - closed</p>
-                        <p><i class="fa fa-comment"></i><a asp-area="" asp-controller="Support" asp-action="SupportChat">Связаться с поддержкой</a></p>
+    <footer id="footer">
+        <div class="container">
+            <div class="row footer-top">
+                <div class="col-md-6">
+                    <div id="information">
+                        <h2>FilmMediaHD</h2>
+                        <p class="italic">If you have any problems or questions, please contact us by phone, email  or at the address:</p>
+                        <div class="infomation">
+                            <p><i class="fa fa-phone"></i> Telephone: +8 946 552 97 36</p>
+                            <p><i class="fa fa-envelope-o"></i> Email: filmmedia@gmail.com</p>
+                            <p><i class="fa fa-map"></i> Address: Kazan, st.Pushkina 32</p>
+                            <p><i class="fa fa-clock-o"></i> 8:00 - 20:00, Monday - Saturday, Sunday - closed</p>
+                            <p><i class="fa fa-comment"></i><a asp-area="" asp-controller="Support" asp-action="SupportChat">Связаться с поддержкой</a></p>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="col-md-6">
-                <iframe id="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2243.0713484921584!2d49.12397771590237!3d55.79199898056382!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x415ead13c469b355%3A0x6eaecda0bd9d795b!2z0YPQuy4g0J_Rg9GI0LrQuNC90LAsIDMyLCDQmtCw0LfQsNC90YwsINCg0LXRgdC_LiDQotCw0YLQsNGA0YHRgtCw0L0sIDQyMDAxNQ!5e0!3m2!1sru!2sru!4v1617977468445!5m2!1sru!2sru" width="450" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                <div class="col-md-6">
+                    <iframe id="map" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2243.0713484921584!2d49.12397771590237!3d55.79199898056382!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x415ead13c469b355%3A0x6eaecda0bd9d795b!2z0YPQuy4g0J_Rg9GI0LrQuNC90LAsIDMyLCDQmtCw0LfQsNC90YwsINCg0LXRgdC_LiDQotCw0YLQsNGA0YHRgtCw0L0sIDQyMDAxNQ!5e0!3m2!1sru!2sru!4v1617977468445!5m2!1sru!2sru" width="450" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
             </div>
         </div>
-    </div>
-    <!-- End container -->
-</footer>
+        <!-- End container -->
+    </footer>
 
 
 </div>
 </body>
 </html>
+
+@RenderSection("Scripts", false)

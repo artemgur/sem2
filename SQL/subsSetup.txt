@@ -1,0 +1,8 @@
+INSERT INTO "SubscriptionPlans" ("Duration", "Price", "Name", "Description", "ImageId") VALUES
+(30, 1000, 'testSubName', 'testSubDesc', 1);
+
+INSERT INTO "Permissions" ("Name", "Description") VALUES
+('WatchPermission', 'Разрешение на просмотр фильмов');
+
+INSERT INTO "PermissionSubscriptionPlan" ("ProvidedById", "ProvidedPermissionsName") VALUES
+(1, 'WatchPermission');
