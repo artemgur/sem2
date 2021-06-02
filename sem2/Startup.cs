@@ -3,6 +3,7 @@ using Authentication;
 using Authorization;
 using Authorization.Models;
 using Authorization.Services;
+using DomainModels;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -34,17 +35,52 @@ namespace sem2
             var settings = Configuration.GetSection("EmailSettings").Get<EmailSettings>();
             services.AddSingleton<IEmailSender, EmailService>();
             services.AddSingleton(settings);
-            
+
             services.AddAuthenticationServices(opts =>
-            {
-                opts.ConnectionString = Configuration.GetConnectionString("LocalUserTest");
-                opts.DefaultRole = "user";
-                opts.AddRole("user");
-                opts.AddRole("admin");
-                opts.AddRole("support");
-            });
-            
-            services.AddAuthentication()
+                {
+                    opts.ConnectionString = Configuration.GetConnectionString("LocalUserTest");
+                    opts.DefaultRole = "user";
+                    opts.AddRole("user");
+                    opts.AddRole("admin");
+                    opts.AddRole("support");
+                    
+                    opts.AddUser(userBuilder =>
+                    {
+                        userBuilder.Email = "support@itis.sem2.ru";
+                        userBuilder.Password = "Qwerty1.";
+                        userBuilder.AdditionalInfo["FirstName"] = "Artur";
+                        userBuilder.AdditionalInfo["Surname"] = "Zagitov";
+                        userBuilder.AddRole("support");
+                    });
+                },
+                async (id, userInfo, serviceProvider) =>
+                {
+                    var dbContext = serviceProvider.GetService<ApplicationContext>();
+                    string firstName = "";
+                    if (userInfo.AdditionalInfo.ContainsKey("FirstName"))
+                        firstName = userInfo.AdditionalInfo["FirstName"];
+                    
+                    string surname = "";
+                    if (userInfo.AdditionalInfo.ContainsKey("Surname"))
+                        surname = userInfo.AdditionalInfo["Surname"];
+                    var user = new User()
+                    {
+                        Id = id,
+                        FirstName = firstName,
+                        Surname = surname,
+                        Email = userInfo.Email
+                    };
+                    
+                    var image = DomainModels.User.DefaultImage;
+                    dbContext.ImageMetadata.Add(image);
+                    await dbContext.SaveChangesAsync();
+        
+                    user.Image = image;
+                    dbContext.Users.Add(user);
+                    await dbContext.SaveChangesAsync();
+                });
+
+        services.AddAuthentication()
                 .AddGoogle(opts =>
                 {
                     IConfigurationSection googleAuthNSection =

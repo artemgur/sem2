@@ -37,6 +37,7 @@ namespace Authentication.Infrastructure
         public string Email = "";
         public string Password = "";
         private List<string> _roles = new List<string>();
+        public Dictionary<string, string> AdditionalInfo = new Dictionary<string, string>();
         internal IEnumerable<string> Roles => _roles;
 
         public void AddRole(string roleName)
@@ -44,9 +45,9 @@ namespace Authentication.Infrastructure
             _roles.Add(roleName);
         }
 
-        public void ContinueWith(Func<int, UserBuilder, IServiceProvider, Task> buildHander)
+        public void ContinueWith(Func<int, UserBuilder, IServiceProvider, Task> buildHandler)
         {
-            _buildHandler += buildHander;
+            _buildHandler += buildHandler;
         }
 
         internal async Task ExternalBuild(int id, IServiceProvider serviceProvider)

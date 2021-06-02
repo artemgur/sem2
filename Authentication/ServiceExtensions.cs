@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Authentication.Infrastructure;
 using Authentication.Models;
 using Authentication.Services;
@@ -12,10 +13,14 @@ namespace Authentication
     {
         public static IServiceCollection AddAuthenticationServices(
             this IServiceCollection services,
-            Action<AuthenticationServiceOptions> optionsBuilder)
+            Action<AuthenticationServiceOptions> optionsBuilder, 
+            Func<int, UserBuilder, IServiceProvider, Task> buildHandler = null)
         {
             var options = new AuthenticationServiceOptions();
             optionsBuilder(options);
+            if(buildHandler != null)
+                foreach(var userBuilder in options.Users)
+                    userBuilder.ContinueWith(buildHandler);
 
             services.AddSingleton(options);
 
