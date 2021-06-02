@@ -5,59 +5,64 @@
     var isCurrentUser = User.GetId() == Model.Id;
 }
 
-    <div class="theme-container container">
-        <div class="gst-spc3 row">
-            <main class="col-md-9 col-sm-8 blog-wrap margin-top-60px">
-                <article class="" itemscope="itemscope" itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
-                    <div class="account-details-wrap">
-                        <div class="heading-2">
-                            <h3 class="title-3 fsz-18">My Account Information</h3>
-                        </div>
+<div class="theme-container container">
+    <div class="gst-spc3 row">
+        <main class="col-md-9 col-sm-8 blog-wrap">
+            <article class="" itemscope="itemscope" itemtype="http://schema.org/BlogPosting" itemprop="blogPost">
+                <div class="account-details-wrap">
+                    <div class="heading-2">
+                        <h3 class="title-3 fsz-18">My Account Information</h3>
+                    </div>
 
-                        <div class="image">
-                            <img src="@Url.Content($"~/{Model.ImagePath}")" id="upload-img" alt="image" /><br>
-                            <form id="upload-container" class="form-group" method="POST" action="profile/uploadImage" enctype="multipart/form-data">
-                                @* <img id="upload-image" src="~/images/upload.svg"> *@
-                                <div>
-                                    <input id="file-input" class="file-input-hidden" type="file" name="image" multiple>
-                                    <label for="file-input">Выберите фото</label>
-                                    <span>или перетащите его сюда</span>
-                                </div>
-                                <button class="alt fancy-button" type="submit">Update</button>
-                            </form>
-                        </div>
+                    <div class="image">
+                        <img src="@Url.Content($"~/{Model.ImagePath}")" id="upload-img" alt="image" /><br>
+                        <form id="upload-container" class="form-group" method="POST" action="profile/uploadImage" enctype="multipart/form-data">
+                            @* <img id="upload-image" src="~/images/upload.svg"> *@
+                            <div>
+                                <input id="file-input" class="file-input-hidden" type="file" name="image" multiple>
+                                <label for="file-input">Выберите фото</label>
+                                <span>или перетащите его сюда</span>
+                            </div>
+                            <button class="alt fancy-button" type="submit">Update</button>
+                        </form>
+                    </div>
 
-                        <div class="account-box">
-                            <form action="@Url.Action("ProfileEdit", "Profile")" method="post" class="form-delivery">
-                                <div class = "box">
-                                    <div class="row">
-                                        <div class="col-md-6 col-sm-6">
-                                            <div class="form-group">
-                                                @Html.LabelFor(m => m.FirstName, "Имя")
-                                                @Html.EditorFor(m => m.FirstName, new {htmlAttributes = new {@class = "form-control"}})
-                                                @Html.ValidationMessageFor(m => m.FirstName)
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                @Html.LabelFor(m => m.Surname, "Фамилия")
-                                                @Html.EditorFor(m => m.Surname, new {htmlAttributes = new {@class = "form-control"}})
-                                                @Html.ValidationMessageFor(m => m.Surname)
-                                            </div>
-                                        </div>
-                                        <div class="col-md-12 col-sm-12">
-                                            <button class="alt fancy-button" type="submit">Update</button>
+                    <div class="account-box">
+                        <form action="@Url.Action("ProfileEdit", "Profile")" method="post" class="form-delivery">
+                            <div class = "box">
+                                <div class="row">
+                                    <div class="col-md-6 col-sm-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.FirstName, "Имя")
+                                            @Html.EditorFor(m => m.FirstName, new {htmlAttributes = new {@class = "form-control"}})
+                                            @Html.ValidationMessageFor(m => m.FirstName)
                                         </div>
                                     </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            @Html.LabelFor(m => m.Surname, "Фамилия")
+                                            @Html.EditorFor(m => m.Surname, new {htmlAttributes = new {@class = "form-control"}})
+                                            @Html.ValidationMessageFor(m => m.Surname)
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12 col-sm-12">
+                                        <button class="alt fancy-button" type="submit">Update</button>
+                                    </div>
                                 </div>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                     </div>
-                </article>
-            </main>
-        </div>
+                </div>
+            </article>
+        </main>
     </div>
+</div>
 
+<style>
+    .site-header{
+        position: initial;
+    }
+</style>
 <script>
     function readURL(e) {
         if (this.files && this.files[0]) {

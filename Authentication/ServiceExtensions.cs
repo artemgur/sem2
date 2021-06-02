@@ -27,6 +27,8 @@ namespace Authentication
                     opts.User.RequireUniqueEmail = true;
                     opts.SignIn.RequireConfirmedEmail = true;
                 })
+                .AddRoles<IdentityRole<int>>()
+                .AddRoleManager<RoleManager<IdentityRole<int>>>()
                 .AddEntityFrameworkStores<UserContext>()
                 .AddDefaultTokenProviders();
 

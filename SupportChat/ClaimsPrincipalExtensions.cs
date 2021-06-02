@@ -6,7 +6,6 @@ namespace SupportChat
 {
     public static class ClaimsPrincipalExtensions
     {
-        //TODO Артур
-        public static bool HasSupportClaim(this ClaimsPrincipal user) => user.GetId() == 3;
+        public static bool HasSupportClaim(this ClaimsPrincipal user) => user.IsInRole("support");
     }
 }
