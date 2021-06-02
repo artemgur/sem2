@@ -49,6 +49,7 @@ namespace Authentication.Services
             if (existingUser != null)
             {
                 await _signInManager.SignInAsync(existingUser, false);
+                await _userManager.AddLoginAsync(existingUser, info);
                 return ExternalLoginResult.Success(existingUser.Id, existingUser.Email);
             }
             
@@ -62,6 +63,9 @@ namespace Authentication.Services
             var createResult = await _userManager.CreateAsync(newUser);
             if (!createResult.Succeeded)
                 return ExternalLoginResult.Failed(createResult);
+            
+            if(_options.DefaultRole != null)
+                await _userManager.AddToRoleAsync(newUser, _options.DefaultRole);
 
             var idResult = await _userManager.AddLoginAsync(newUser, info);
             if (!idResult.Succeeded)
@@ -134,7 +138,7 @@ namespace Authentication.Services
             var id = user.Id;
             if(result.Succeeded)
                 if(_options.DefaultRole != null)
-                    result = await _userManager.AddToRolesAsync(user, new []{_options.DefaultRole});
+                    result = await _userManager.AddToRoleAsync(user, _options.DefaultRole);
             return (result, id);
         }
 
