@@ -1,6 +1,7 @@
 var connection = null
 
-async function init() { //TODO button should appear to disconnect
+async function init() {
+    //TODO кнопка должна становиться активной
     connection = new signalR.HubConnectionBuilder().withUrl("/chat").build();
     connection.on('Receive', function (message) {
         add_message_to_page(message)
@@ -28,6 +29,7 @@ async function send(userId) {
 }
 
 async function disconnect(userId){
+    //TODO кнопка должна становиться неактивной
     connection.invoke("Disconnect", userId).catch(function (err) {
         return console.log(err.toString());
     });

@@ -1,4 +1,3 @@
-@using SupportChat
 @model SupportChatDTO
 
 <script src="https://cdn.jsdelivr.net/npm/@@microsoft/signalr/dist/browser/signalr.min.js"></script>
@@ -11,7 +10,7 @@
                 @foreach (var message in Model.Messages)
                 {
                     <div class="message">
-                        <div class="content">@message.Message<br>@message.Time.ToString()</div>
+                        <div class="content">@message.Message</div>
                     </div>
                 }
             </div>
