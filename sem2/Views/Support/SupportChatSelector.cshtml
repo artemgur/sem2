@@ -1,0 +1,14 @@
+@{
+    Layout = "_Layout";
+}
+
+<form asp-action="SupportChat" method="post">
+    <select id="chat_selector" name="userId"></select>
+    <input type="submit">
+</form>
+
+<script src="https://cdn.jsdelivr.net/npm/@@microsoft/signalr/dist/browser/signalr.min.js"></script>
+<script src="~/js/supportChatSelector.js"></script>
+<script>
+    run()
+</script>

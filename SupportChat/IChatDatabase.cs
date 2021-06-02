@@ -10,12 +10,6 @@ namespace SupportChat
 
         public Task AddMessage(int userId, string text, bool isMessageFromUser);
 
-        public Task<List<int>> GetNotAnsweredUsers();
-        
-        public Task AddNotAnsweredUser(int id);
-
-        public Task RemoveNotAnsweredUser(int id);
-        
-        public Task ClearNotAnsweredUsers();
+        public Task RemoveAllUserMessages(int userId);
     }
 }

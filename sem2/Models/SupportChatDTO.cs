@@ -5,6 +5,6 @@ namespace sem2.Models
     public class SupportChatDTO
     {
         public IOrderedEnumerable<SupportChat.MessageDTO> Messages;
-        public int? UserId;
+        public int UserId = -1;
     }
 }

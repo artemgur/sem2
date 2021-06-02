@@ -79,9 +79,7 @@ namespace sem2
             services.AddControllersWithViews();
             services.AddHttpContextAccessor();
 
-            services.AddScoped<IChatDatabase, SupportChat.MongoDB>();
-            
-            services.AddSignalR();
+            services.AddSupportChat();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
