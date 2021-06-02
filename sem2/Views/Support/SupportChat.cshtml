@@ -21,8 +21,9 @@
                         @* <input class="input" id="name_input" type="text" size="30" name="name" placeholder="Имя - 20 знаков"><br> *@
                         <textarea class="input" id="message_input" type="text" size="30" name="mess"
                                   placeholder="Сообщение - 200 знаков"></textarea> <br>
-                        <input class="button" type="button" value="Отправить" onClick="send()">
+                        <input class="button" type="button" value="Отправить" onClick="send(@Model.UserId)">
                     </form>
+                    <button class="button" onclick="disconnect(@Model.UserId)">Отключить</button>/*TODO hide button until connection is established*/
                 }
                 else
                 {

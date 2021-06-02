@@ -16,11 +16,9 @@ namespace sem2.Controllers
             this.chatDatabase = chatDatabase;
         }
         
-        public async Task<ViewResult> SupportChat(int? userId = null)
+        public async Task<ViewResult> SupportChat(int userId = -1)
         {
-            if (User.HasSupportClaim() && userId != null)
-                return View(new SupportChatDTO{Messages = await chatDatabase.GetMessages(userId.Value), UserId = userId});
-            return View(new SupportChatDTO{Messages = await chatDatabase.GetMessages(User.GetId()), UserId = null});
+            return View(new SupportChatDTO{Messages = await chatDatabase.GetMessages(User.GetId()), UserId = userId});
         }
 
         public async Task<ViewResult> SupportAdminSelect()
@@ -33,6 +31,13 @@ namespace sem2.Controllers
         public async Task<ViewResult> SupportAdmin(int userId)
         {
             return View(userId);
+        }
+
+        public IActionResult SupportChatSelector()
+        {
+            if (User.HasSupportClaim())
+                return View();
+            return NotFound(); //Security through obscurity
         }
     }
 }

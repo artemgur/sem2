@@ -97,9 +97,12 @@ namespace SupportChat
             DeleteUserData(GetUserId(), database);
         }
 
-        public void ConnectIfNotConnected()
+        public void Disconnect(int targetUser)
         {
-            
+            if (targetUser == -1)
+                UserEnd();
+            else
+                DisconnectSupport(targetUser);
         }
 
         private int GetUserId() => Context.User.GetId();

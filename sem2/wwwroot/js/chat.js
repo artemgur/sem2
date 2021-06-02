@@ -2,8 +2,8 @@ var connection = null
 
 async function init() { //TODO button should appear to disconnect
     connection = new signalR.HubConnectionBuilder().withUrl("/chat").build();
-    connection.on('Receive', function (message, userName) {
-        add_message_to_page(userName, message)
+    connection.on('Receive', function (message) {
+        add_message_to_page(message)
     });
     try {
         await connection.start();
@@ -19,18 +19,20 @@ async function send(userId) {
         await init()
     
     let message =  $("#message_input").val();
-
+    
     connection.invoke("Send", message, userId).catch(function (err) {
         return console.log(err.toString());
     });
     
-    return false;
+    add_message_to_page(message)
 }
 
 async function disconnect(userId){
-    
+    connection.invoke("Disconnect", userId).catch(function (err) {
+        return console.log(err.toString());
+    });
 }
 
-function add_message_to_page(name, message){
+function add_message_to_page(message){
     document.getElementById("message_container").innerHTML += `<div class="message"><div class="content">${message}</div></div>`
 }
