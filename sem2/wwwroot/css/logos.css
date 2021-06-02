@@ -1,0 +1,11 @@
+.card_logo{
+    background-color: #303030;
+    border: #1d1a41 2px solid;
+    border-radius: 20px;
+    display: inline-block;
+    width: 200px;
+    height: 100px;
+    max-width: 300px;
+    margin: auto;
+    margin-top: 5%;
+}

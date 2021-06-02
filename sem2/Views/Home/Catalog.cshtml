@@ -5,7 +5,7 @@
 <div class="header-content">
     <div class="container">
         <!--<div class="row align-items-center justify-content-between">-->
-        <div id="multiCarousel" class="carousel slide w-100" data-ride="carousel">
+        <div id="multiCarousel" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner" role="listbox">
                 @* <div class="carousel-item active"> *@
                 @*     <a asp-area="" asp-controller="Home" asp-action="AboutFilm" class="btn d-block col-4" aria-expanded="false" aria-controls="collapseExample"> *@
@@ -55,3 +55,24 @@
     </div> <!-- Container -->
 </div>	<!-- header-content -->
 
+<script>
+    $('#multiCarousel').carousel({
+        interval: 10000
+    })
+    $('.carousel .carousel-item').each(function(){
+        var next = $(this).next();
+        if (!next.length) {
+            next = $(this).siblings(':first');
+        }
+        next.children(':first-child').clone().appendTo($(this));
+
+        for (var i=0;i<2;i++) {
+            next=next.next();
+            if (!next.length) {
+                next = $(this).siblings(':first');
+            }
+
+            next.children(':first-child').clone().appendTo($(this));
+        }
+    });
+</script>

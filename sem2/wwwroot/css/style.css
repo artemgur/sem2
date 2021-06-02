@@ -236,7 +236,7 @@ label {
 
 /*Content*/
 
-.content{
+#content{
     width: 90%;
     height: 60%;
     horiz-align: center;

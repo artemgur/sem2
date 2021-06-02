@@ -194,10 +194,18 @@
 .carousel-inner .carousel-item-left.active,.carousel-inner .carousel-item-prev{transform:translateX(-25%)}
 .carousel-inner .carousel-item-right,.carousel-inner .carousel-item-left{transform:translateX(0)}
 
-@media all and (min-width: 576px) { .film {background-image: url("../images/majorThunder.jpg")}
+@media all and (min-width: 460px) { .film {background-image: url("../images/majorThunder.jpg")}
+    .content_background_details{background-image: url("../images/majorThunder.jpg");}
     .content_background_details2-0{display: none}
-    .description{height: 70%}}
+    .content_background_details2{display: none}
+    .film_text{font-size: 12px; padding: 0}
+    p{font-size: 12px}
+    .description{height: 600px}}
 @media all and (min-width: 1400px) { .content_background_details2-0-img{box-shadow: inset 5px 5px 5px 5px black;}
-    .content_background_details2-0{padding-top: 10px; float: right; display: inline-block; height: 600px}
+    .content_background_details2-0{padding-top: 10px; float: right; display: inline-block; height: 600px;}
+    .content_background_details2{display: unset}
     .film {background-image: none}
+    .film_text{font-size: 18px; }
+    .content_background_details{background-image: none}
+    p{font-size: 16px}
     .description{height: 665px}}
