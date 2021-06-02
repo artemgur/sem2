@@ -1,4 +1,5 @@
 using System.Security.Claims;
+using Authentication.Infrastructure;
 using sem2_FSharp;
 
 namespace SupportChat

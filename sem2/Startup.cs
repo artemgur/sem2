@@ -79,9 +79,9 @@ namespace sem2
             services.AddControllersWithViews();
             services.AddHttpContextAccessor();
 
-            services.AddScoped<IChatDatabase, SupportChat.MongoDB>();
-            
-            services.AddSignalR();
+            services.AddSupportChat();
+
+            services.AddWebOptimizer(); //Minification https://github.com/ligershark/WebOptimizer
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -97,6 +97,8 @@ namespace sem2
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            
+            app.UseWebOptimizer(); //Minification
             
             app.UseHttpsRedirection();
 

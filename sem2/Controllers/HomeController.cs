@@ -19,6 +19,8 @@ namespace sem2.Controllers
             _context = dbContext;
         }
 
+        [Route("~/")]
+        [Route("~/Home")]
         public IActionResult Index()
         {
             return View();
