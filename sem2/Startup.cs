@@ -37,7 +37,7 @@ namespace sem2
             
             services.AddAuthenticationServices(opts =>
             {
-                opts.ConnectionString = Configuration.GetConnectionString("HerokuUser");
+                opts.ConnectionString = Configuration.GetConnectionString("HerokuUsers");
                 opts.DefaultRole = "user";
                 opts.AddRole("user");
                 opts.AddRole("admin");
