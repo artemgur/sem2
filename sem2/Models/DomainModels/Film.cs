@@ -14,8 +14,8 @@ namespace DomainModels
         public string Info { get; set; }
         public decimal Rating { get; set; }
         public ICollection<User> InFavoritesOfUsers { get; set; }
-        public string Producer;
-        public string OriginalName;
-        public string Actors;
+        public string Producer { get; set; }
+        public string OriginalName { get; set; }
+        public string Actors { get; set; }
     }
 }
