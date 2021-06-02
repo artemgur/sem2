@@ -1,18 +1,18 @@
 .collapse_image{
     border-radius: 10px;
 }
-/*#multiCarousel{
-    float: left;
-    margin-left: -100px;
+#multiCarousel{
     padding-left: 0;
-    width: 120%;
-}*/
+}
+#carouselExampleSlidesOnly{
+    margin-left: 50px;
+}
 @media all and (min-width: 576px) { #multiCarousel{margin-left: -50px; padding-left: 0; width: 120%; margin-top: 60px}
 }
 @media all and (min-width: 1400px) {
     #multiCarousel {
-        margin-left: -100px;
-        padding-left: 0;
+       /* margin-left: -50px;*/
+        padding-left: 20px;
         width: 120%;
         margin-top: 60px
     }
@@ -189,10 +189,6 @@
     position: relative;
 }
 
-.carousel-inner .carousel-item.active,.carousel-inner .carousel-item-next,.carousel-inner .carousel-item-prev{display:flex}
-.carousel-inner .carousel-item-right.active,.carousel-inner .carousel-item-next{transform:translateX(25%)}
-.carousel-inner .carousel-item-left.active,.carousel-inner .carousel-item-prev{transform:translateX(-25%)}
-.carousel-inner .carousel-item-right,.carousel-inner .carousel-item-left{transform:translateX(0)}
 
 @media all and (min-width: 460px) { .film {background-image: url("../images/majorThunder.jpg")}
     .content_background_details{background-image: url("../images/majorThunder.jpg");}
