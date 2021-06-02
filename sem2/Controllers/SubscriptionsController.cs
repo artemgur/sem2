@@ -108,7 +108,7 @@ namespace sem2.Controllers
             if (!subscribeResult.IsSuccessful)
                 return BadRequest(subscribeResult.ErrorMessage);
             
-            return Ok(Url.Action("Index", "Home"));
+            return Ok(Url.Action("Index"));
         }
     }
 }
