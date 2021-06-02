@@ -61,12 +61,21 @@ namespace Authentication.Infrastructure
                         EmailConfirmed = true
                     };
                     
-                    await userManager.CreateAsync(user, userBuilder.Password);
-                    
-                    if(defaultRole != null)
-                        await userManager.AddToRoleAsync(user, defaultRole);
-                    
-                    await userBuilder.ExternalBuild(user.Id, serviceProvider);
+                    var result = await userManager.CreateAsync(user, userBuilder.Password);
+
+                    if (result.Succeeded)
+                    {
+                        if (defaultRole != null)
+                            await userManager.AddToRoleAsync(user, defaultRole);
+
+                        await userBuilder.ExternalBuild(user.Id, serviceProvider);
+                    }
+                    else
+                    {
+                        throw new Exception(string.Join("; ",
+                            result.Errors
+                                .Select(error => error.Code + ":" + error.Description)));
+                    }
                 }
 
                 foreach (var role in userBuilder.Roles)
