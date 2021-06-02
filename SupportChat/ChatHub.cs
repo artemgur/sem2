@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Authentication.Infrastructure;
 using Microsoft.AspNetCore.SignalR;
-using sem2_FSharp;
 
 namespace SupportChat
 {
@@ -12,98 +11,104 @@ namespace SupportChat
     {
         private readonly IChatDatabase database;
 
-        private readonly Dictionary<int, string> clientGroup;
+        private static readonly Dictionary<int, int?> UsersToSupport = new();
 
-        private readonly Dictionary<string, string> supportConnectionGroup;
+        private static readonly Dictionary<int, DateTime> UserLastMessage = new();
+
+        private const int UserTimeoutSeconds = 20 * 60; //20 min
+
+        static ChatHub()
+        {
+            CleanInactiveUsers(); //Isn't awaited intentionally
+        }
+        
+        private static async Task CleanInactiveUsers()
+        {
+            var database = new MongoDB(); //TODO breaks dependency injection, fix!!!
+            while (true)
+            {
+                await Task.Delay(10000);
+                foreach (var (key, value) in UserLastMessage)
+                {
+                    if ((DateTime.Now - value).Seconds > UserTimeoutSeconds)
+                        DeleteUserData(key, database);
+                }
+            }
+        }
         
         public ChatHub(IChatDatabase database)
         {
             this.database = database;
-            database.ClearNotAnsweredUsers();
-            clientGroup = new Dictionary<int, string>();
-            supportConnectionGroup = new Dictionary<string, string>();
         }
 
-        public async Task ListenUser(int user)
+        public IEnumerable<int> GetNonAnsweredUsers()
         {
             if (Context.User.HasSupportClaim())
             {
-                supportConnectionGroup[Context.ConnectionId] = clientGroup[user];
-        
-                await database.RemoveNotAnsweredUser(user);
-                
+                return UsersToSupport.Where(x => x.Value == null).Select(x => x.Key);
             }
+            return Enumerable.Empty<int>();
         }
         
-        public async Task Send(string message)
+        public async Task Send(string message, int targetUser)
         {
-            if (!Context.User.HasSupportClaim())
+            if (targetUser != -1)
             {
-                await Clients.Group(clientGroup[GetUserId()]).SendAsync("Receive", message, Context.ConnectionId);
-                await database.AddMessage(GetUserId(), message, true);
-            }
-            else
-            {
-                var userId = GetUserFromGroup(supportConnectionGroup[Context.ConnectionId]);
-                await Clients.Group(supportConnectionGroup[Context.ConnectionId]).SendAsync("Receive", message, Context.ConnectionId);
-                if (userId != null)
-                    await database.AddMessage(userId.Value, message, false);
+                await SendSupport(message, targetUser);
+                return;
             }
             
-            //database.AddMessage()
-        }
-        
-        // public async Task SendAdmin(string message, int userId)
-        // {
-        //     await Clients.Caller.SendAsync("Receive", message, Context.ConnectionId);
-        //     //database.AddMessage()
-        // }
-        
-        public override async Task OnConnectedAsync()
-        {
+            var userId = GetUserId();
             if (GetUserId() == -1)
             {
                 return;
             }
-            if (!Context.User.HasSupportClaim())
+            if (!UsersToSupport.ContainsKey(userId))
+                UsersToSupport[userId] = null;
+            if (UsersToSupport.ContainsKey(userId) && UsersToSupport[userId] != null)
             {
-                clientGroup[GetUserId()] = Guid.NewGuid().ToString();
-                await database.AddNotAnsweredUser(GetUserId());
+                await Clients.Users(UsersToSupport[userId].ToString()).SendAsync("Receive", message);
             }
-            await base.OnConnectedAsync();
+            await database.AddMessage(userId, message, true);
+            UserLastMessage[userId] = DateTime.Now;
         }
         
-        public override async Task OnDisconnectedAsync(Exception exception)
+        public async Task SendSupport(string message, int targetUser)
         {
-            if (!Context.User.HasSupportClaim())
+            var userId = GetUserId();
+            if (Context.User.HasSupportClaim() && UsersToSupport.ContainsKey(targetUser))
             {
-                var group = clientGroup[GetUserId()];
-                clientGroup.Remove(GetUserId());
-                await Clients.Group(group).SendAsync("Notify", $"{Context.ConnectionId} покинул в чат");
-                await database.RemoveNotAnsweredUser(GetUserId());
+                UsersToSupport[targetUser] = userId; //Change in case of allowing multiple support members on 1 user
+                await Clients.Users(targetUser.ToString()).SendAsync("Receive", message);
             }
-            else
-            {
-                var group = supportConnectionGroup[Context.ConnectionId];
-                supportConnectionGroup.Remove(Context.ConnectionId);
-                var userId = GetUserFromGroup(group);
-                if (userId != null)
-                    await database.AddNotAnsweredUser(userId.Value);
-            }
+            await database.AddMessage(userId, message, false);
+        }
 
-            await database.RemoveNotAnsweredUser(GetUserId());
-            //await Clients.All.SendAsync("Notify", $"{Context.ConnectionId} покинул в чат");
-            await base.OnDisconnectedAsync(exception);
+        public void DisconnectSupport(int targetUser)
+        {
+            if (Context.User.HasSupportClaim() && UsersToSupport.ContainsKey(targetUser))
+            {
+                UsersToSupport[targetUser] = null;
+            }
+        }
+
+        public void UserEnd()
+        {
+            DeleteUserData(GetUserId(), database);
+        }
+
+        public void ConnectIfNotConnected()
+        {
+            
         }
 
         private int GetUserId() => Context.User.GetId();
 
-        private int? GetUserFromGroup(string group)
+        private static async void DeleteUserData(int userId, IChatDatabase database)
         {
-            var userIdPair = clientGroup.SingleOrDefault(x => x.Value == group);
-            if (!userIdPair.Equals(default(KeyValuePair<int, string>)))
-                return userIdPair.Key;
-            return null;
+            UserLastMessage.Remove(userId);
+            UsersToSupport.Remove(userId);
+            await database.RemoveAllUserMessages(userId);
         }
     }
 }

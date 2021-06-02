@@ -1,0 +1,28 @@
+@{
+    Layout = "_Layout";
+}
+
+<form action="" method="post">
+    <select id="chat_selector" name="targetUserId"></select>
+</form>
+
+<script src="https://cdn.jsdelivr.net/npm/@@microsoft/signalr/dist/browser/signalr.min.js"></script>
+<script>
+    connection = new signalR.HubConnectionBuilder().withUrl("/chat").build();
+    try {
+        await connection.start();
+        console.log("SignalR Connected.");
+    } catch (err) {
+        console.log(err);
+    }
+    connection.invoke("GetNonAnsweredUsers").done(function (users) {
+        let select = document.getElementById("chat_selector")
+        $.each(users, function () {
+                    let userId = this;
+                    select.innerHTML += `<option value="${userId}">${userId}</option>` 
+                });
+    });
+    $.connection.hub.stop().done(function() { //TODO check if actually works
+        console.log('stopped');
+    });
+</script>

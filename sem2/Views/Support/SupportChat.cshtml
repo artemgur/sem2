@@ -2,12 +2,7 @@
 @model SupportChatDTO
 
 <script src="https://cdn.jsdelivr.net/npm/@@microsoft/signalr/dist/browser/signalr.min.js"></script>
-<script src="~/js/send.js"></script>
-
-@if (Context.User.HasSupportClaim() && Model.UserId != null)
-{
-    <script>adminInit(@Model)</script>
-}
+<script src="~/js/chat.js"></script>
 
 <div class="header-content">
     <div class="container">
