@@ -41,8 +41,8 @@
                         <div class="panel-heading">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <input asp-for="CardInfo.Number" name="Number" type="text" class="form-control" placeholder="Enter Card Number"/>
-                                    <span asp-validation-for="CardInfo.Number"></span>
+                                    <input asp-for="CardInfo.Number" name="Number" class="form-control" placeholder="Enter Card Number"/>
+                                    <span asp-validation-for="CardInfo.Number" data-valmsg-for="Number"></span>
                                 </div>
                             </div>
 
