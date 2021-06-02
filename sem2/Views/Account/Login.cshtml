@@ -1,97 +1,56 @@
-@model sem2_FSharp.ViewModels.AuthtorizationModels.LoginModel
+@model sem2.Models.ViewModels.AccountModels.LoginModel
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-offset-3 col-md-6">
-            <div class="tab" role="tabpanel">
-                <!-- Nav tabs -->
-                <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab" data-toggle="tab">sign in</a></li>
-                </ul>
-                <!-- Tab panes -->
-                <div class="tab-content tabs">
-                    <div role="tabpanel" class="tab-pane fade in active" id="Section1">
-                        <form class="form-horizontal" action="" method="post">
-                            @* <div class="form-group"> *@
-                            @*     <label for="inputUserName">Email</label> *@
-                            @*     <input type="email" class="form-control" id="inputUserName"> *@
-                            @* </div> *@
-                            @* <div class="form-group"> *@
-                            @*     <label for="exampleInputPassword1">Password</label> *@
-                            @*     <input type="password" class="form-control" id="exampleInputPassword1"> *@
-                            @* </div> *@
-                            @if (!ViewData.ModelState.IsValid)
-                            {
-                                <div class="alert alert-danger">
-                                    @Html.ValidationSummary()
-                                </div>
-                            }
-                            <div class="form-group">
-                                @Html.LabelFor(m => m.Email, "Email")
-                                @Html.EditorFor(m => m.Email, new {htmlAttributes = new {@class = "form-control"}})
-                                @Html.ValidationMessageFor(m => m.Email)
-                            </div>
-                            <div class="form-group">
-                                @Html.LabelFor(m => m.Password, "Пароль")
-                                @Html.EditorFor(m => m.Password, new {htmlAttributes = new {@class = "form-control"}})
-                                @Html.ValidationMessageFor(m => m.Password)
-                            </div>
-                            <div class="form-group">
-                                <div class="main-checkbox">
-                                    <input value="None" id="checkbox1" name="check" type="checkbox">
-                                    <label for="checkbox1"></label>
-                                </div>
-                                <span class="text">Keep me Signed in</span>
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-default">Sign in</button>
-                            </div>
-                            @* <div class="form-group google"> *@
-                            @*     <p id="google">Or log with google</p> *@
-                            @*     <img class = "googleIcon" src="images/google.png" alt="google"> *@
-                            @* </div> *@
-                            <div class="form-group forgot-pass">
-                                <a asp-area="" asp-controller="Account" asp-action="ResetPassword" type="submit" class="btn btn-default">forgot password</a>
-                            </div>
-                            <div class="form-group create-account">
-                                <span id="look">Looking to</span>
-                                <a asp-area="" asp-controller="Account" asp-action="Register" type="submit" id="createAccount" class="btn btn-default">create an account ?</a>
-                            </div>
-                        </form>
-                    </div>
-                    <!--<div role="tabpanel" class="tab-pane fade" id="Section2">
-                        <form class="form-horizontal">
-                            <div class="form-group">
-                                <label for="inputFirstName">First Name</label>
-                                <input type="text" class="form-control" id="inputFirstName">
-                            </div>
-                            <div class="form-group">
-                                <label for="inputLastName">Last Name</label>
-                                <input type="text" class="form-control" id="inputLastName">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputEmail">Email address</label>
-                                <input type="email" class="form-control" id="exampleInputEmail">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputPhone">Phone</label>
-                                <input type="password" class="form-control" id="exampleInputPhone">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputPassword2">Password</label>
-                                <input type="password" class="form-control" id="exampleInputPassword2">
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputConfirmPassword2">Confirm Password</label>
-                                <input type="password" class="form-control" id="exampleInputConfirmPassword2">
-                            </div>
-                            <div class="form-group">
-                                <button type="submit" class="btn btn-default">Sign up</button>
-                            </div>
-                        </form>
-                    </div>-->
+@{
+    Layout = "_AccountLayout";
+}
+
+<!-- Nav tabs -->
+<ul class="nav nav-tabs" role="tablist">
+    <li role="presentation" class="active"><a href="#Section1" aria-controls="home" role="tab" data-toggle="tab">sign in</a></li>
+</ul>
+<!-- Tab panes -->
+<div class="tab-content tabs">
+    <div role="tabpanel" class="tab-pane fade in active" id="Section1">
+        <form class="form-horizontal" action="" method="post">
+            @if (!ViewData.ModelState.IsValid)
+            {
+                <div class="alert alert-danger">
+                    @Html.ValidationSummary()
                 </div>
+            }
+            <div class="form-group">
+                <label asp-for="Email">Email</label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" ></span>
             </div>
-        </div><!-- /.col-md-offset-3 col-md-6 -->
-    </div><!-- /.row -->
-</div><!-- /.container -->
+            <div class="form-group">
+                <label asp-for="Password">Пароль</label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" ></span>
+            </div>
+            <div class="form-group">
+                <div class="main-checkbox">
+                    <input value="None" id="checkbox1" name="rememberMe" type="checkbox">
+                    <label for="checkbox1"></label>
+                </div>
+                <span class="text">Keep me Signed in</span>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-default">Sign in</button>
+            </div>
+            <div class="form-group google">
+                <p id="google">Or log with google</p>
+                <a asp-controller="Account" asp-action="GoogleLogin">
+                <img class = "googleIcon" src="~/images/google.png" alt="google">
+                </a>
+            </div>
+            <div class="form-group forgot-pass">
+                <a asp-area="" asp-controller="Account" asp-action="ResetPassword" type="submit" class="btn btn-default">forgot password</a>
+            </div>
+            <div class="form-group create-account">
+                <span id="look">Looking to</span>
+                <a asp-area="" asp-controller="Account" asp-action="Register" type="submit" id="createAccount" class="btn btn-default">create an account ?</a>
+            </div>
+        </form>
+    </div>
+</div>

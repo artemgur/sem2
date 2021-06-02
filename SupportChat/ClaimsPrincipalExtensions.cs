@@ -1,5 +1,4 @@
 using System.Security.Claims;
-using DomainModels;
 using sem2_FSharp;
 
 namespace SupportChat

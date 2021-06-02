@@ -9,23 +9,20 @@ namespace sem2.Controllers
 {
     public class ApiController: Controller
     {
-        private readonly ApplicationContext context;
+        private readonly ApplicationContext _context;
 
         public ApiController(ApplicationContext context)
         {
-            this.context = context;
+            this._context = context;
         }
 
         [Route("~/api/get_film_info")]
-        public string GetFilmInfo([FromQuery(Name = "filmId")] int filmId = -1)
+        public IActionResult GetFilmInfo([FromQuery(Name = "filmId")] int filmId = -1)
         {
-            var film = context.Films.ById(filmId).SingleOrDefault();
+            var film = _context.Films.SingleOrDefault(f => f.Id == filmId);
             if (film == null)
-            {
-                HttpContext.Response.StatusCode = 400;
-                return "{}";
-            }
-            return JsonConvert.SerializeObject(FilmHelpers.FromFilm(film));
+                return BadRequest("{}");
+            return Ok(JsonConvert.SerializeObject(FilmHelpers.FromFilm(film)));
         }
     }
 }
