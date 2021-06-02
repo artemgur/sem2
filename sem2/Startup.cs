@@ -55,7 +55,7 @@ namespace sem2
                     opts.SignInScheme = IdentityConstants.ExternalScheme;
                 });
             
-            var connectionString = Configuration.GetConnectionString("DefaultConnection");
+            var connectionString = Configuration.GetConnectionString("LocalTest");
             services.AddDbContext<ApplicationContext>(option =>
                 option.UseNpgsql(connectionString, b => b.MigrationsAssembly("sem2")));
 
