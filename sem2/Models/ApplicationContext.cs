@@ -17,5 +17,12 @@ namespace sem2
         {
             Database.EnsureCreated();
         }
+        
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Film>()
+                .Property(b => b.Rating)
+                .HasDefaultValue(0);
+        }
     }
 }
