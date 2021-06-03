@@ -10,6 +10,24 @@
     z-index: 5000;
 }
 
+.carousel-item .row{
+    flex-wrap: initial;
+}
+
+.carousel-overflow {
+    overflow: hidden;
+}
+
+.carousel-item .item{
+    height: 300px;
+    object-fit: contain;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+    width: 300px;
+}
+
 .modal-header{
     display: grid;
     grid-template-columns: 5fr 1fr;
