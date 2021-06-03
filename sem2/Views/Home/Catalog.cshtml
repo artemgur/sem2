@@ -1,56 +1,25 @@
 @using sem2.Views
-@model IEnumerable<FilmDTO>
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model sem2.Models.ViewModels.HomeModels.CatalogViewModel
 
 <link rel="stylesheet" href="~/css/collapse.css">
 
+<input type="hidden" name="query" id="search-query" value="@Model.Query">
 <div class="header-content">
     <div class="container">
         <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
             <div class="carousel-inner">
                 @{ var activeString = "active";}
-                @foreach (var filmGroup in Model.Select(x => x.Id).GroupByN(3))
+                @foreach (var filmGroup in Model.Films.GroupByN(3))
                 {
                     <div class="carousel-item @activeString">
                         <div class="row <!--no-gutters-->">
-                                <div class="col-4 item">
-                                    <a class="btn d-block col-4" href="@Url.Content($"~/AboutFilm/{filmGroup[0]}")" aria-expanded="false" aria-controls="collapseExample">
-                                        <div class="block_with_image">
-                                            <div class="estimation_block">
-                                                <p class="estimation">7,4</p>
-                                                <img class="img-fluid" src="@Url.Content($"~/{FilmHelpers.BackgroundImagePath(filmGroup[0])}")" alt="">
-                                            </div>
-                                        </div>
-                                    </a>
-                                </div>
-                                @if (filmGroup.Count > 1)
-                                {
-                                    <div class="col-4 item">
-                                        <a class="btn d-block col-4" href="@Url.Content($"~/AboutFilm/{filmGroup[1]}")" aria-expanded="false" aria-controls="collapseExample">
-                                            <div class="block_with_image">
-                                                <div class="estimation_block">
-                                                    <p class="estimation">7,4</p>
-                                                    <img class="img-fluid" src="@Url.Content($"~/{FilmHelpers.BackgroundImagePath(filmGroup[1])}")" alt="">
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                }
-                                @if (filmGroup.Count > 2)
-                                {
-                                    <div class="col-4 item">
-                                        <a class="btn d-block col-4" href="@Url.Content($"~/AboutFilm/{filmGroup[2]}")" aria-expanded="false" aria-controls="collapseExample">
-                                            <div class="block_with_image">
-                                                <div class="estimation_block">
-                                                    <p class="estimation">7,4</p>
-                                                    <img class="img-fluid" src="@Url.Content($"~/{FilmHelpers.BackgroundImagePath(filmGroup[2])}")" alt="">
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </div>
-                                }
-                            </div>                        
+                            @foreach (var film in filmGroup)
+                            {
+                                @Html.Partial("CatalogCarouselFilmItemPartial", film)
+                            }
+                        </div>                        
                     </div>
-                    
                     
                     activeString = "";
                 }
@@ -65,9 +34,9 @@
                 </a>
         </div>
         <div id="products-container" class="row products">
-            @foreach (var p in Model)
+            @foreach (var p in Model.Films)
             {
-                @Html.Partial("ProductCardPartial", p)
+                @Html.Partial("FilmCardPartial", p)
             }
 
             <!-- /.products-->

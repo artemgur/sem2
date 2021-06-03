@@ -8,6 +8,6 @@ namespace DomainModels
         public int Id { get; set; }
 
         public string ImagePath { get; set; }
-        public string ContentType { get; set; }
+        public string ContentType { get; set; } = "application/octet-stream";
     }
 }

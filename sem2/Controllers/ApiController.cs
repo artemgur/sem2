@@ -1,4 +1,5 @@
 using System.Linq;
+using Authentication.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using sem2_FSharp;
@@ -20,9 +21,14 @@ namespace sem2.Controllers
         public IActionResult GetFilmInfo([FromQuery(Name = "filmId")] int filmId = -1)
         {
             var film = _context.Films.SingleOrDefault(f => f.Id == filmId);
+            var userId = User.GetId();
+            var isInFavorites = _context.Users
+                .Where(user => user.Id == userId)
+                .SelectMany(user => user.FavoriteFilms)
+                .Any(f => f.Id == filmId);
             if (film == null)
                 return BadRequest("{}");
-            return Ok(JsonConvert.SerializeObject(FilmHelpers.FromFilm(film)));
+            return Ok(JsonConvert.SerializeObject(FilmHelpers.FromFilm(film, isInFavorites)));
         }
     }
 }

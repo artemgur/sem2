@@ -38,10 +38,11 @@ namespace sem2
 
             services.AddAuthenticationServices(opts =>
                 {
-                    opts.ConnectionString = Configuration.GetConnectionString("HerokuUsers");
+                    opts.ConnectionString = Configuration.GetConnectionString("LocalUserTest");
                     opts.DefaultRole = "user";
                     opts.AddRole("user");
                     opts.AddRole("admin");
+                    opts.AddRole("manager");
                     opts.AddRole("support");
                     
                     opts.AddUser(userBuilder =>
@@ -51,6 +52,15 @@ namespace sem2
                         userBuilder.AdditionalInfo["FirstName"] = "Artur";
                         userBuilder.AdditionalInfo["Surname"] = "Zagitov";
                         userBuilder.AddRole("support");
+                    });
+                    
+                    opts.AddUser(userBuilder =>
+                    {
+                        userBuilder.Email = "admin@itis.sem2.ru";
+                        userBuilder.Password = "Qwerty1.";
+                        userBuilder.AdditionalInfo["FirstName"] = "Artur";
+                        userBuilder.AdditionalInfo["Surname"] = "Zagitov";
+                        userBuilder.AddRole("admin");
                     });
                 },
                 async (id, userInfo, serviceProvider) =>
@@ -91,14 +101,14 @@ namespace sem2
                     opts.SignInScheme = IdentityConstants.ExternalScheme;
                 });
             
-            var connectionString = Configuration.GetConnectionString("Heroku");
+            var connectionString = Configuration.GetConnectionString("LocalTest");
             services.AddDbContext<ApplicationContext>(option =>
                 option.UseNpgsql(connectionString, b => b.MigrationsAssembly("sem2")));
 
             services.AddSingleton<CommandService>();
             services.AddAuthorization(opts =>
             {
-                opts.AddPolicy("HasEditPermission", policy =>
+                opts.AddPolicy("HasAdminPanelAccess", policy =>
                 {
                     policy.RequireAuthenticatedUser();
                     policy.RequireRole("manager", "admin");

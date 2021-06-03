@@ -7,5 +7,10 @@ async function addToFavorite(filmId){
         },
         credentials: 'include',
     });
+    if(response.ok){
+        $('#favorites-button').attr('fill', 'orange');
+    }
+    
     let result = await response.json();
+    
 }

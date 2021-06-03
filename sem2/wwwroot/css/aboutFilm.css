@@ -1,0 +1,15 @@
+﻿.backdrop{
+    padding: 10px;
+    backdrop-filter: blur(10px);
+    background-color: rgba(0,0,0,0.3);
+    border-radius: 0.5rem;
+}
+
+.roles{
+    margin-left: 68%;
+    margin-top: 5%;
+}
+
+.film_rate2{
+    padding-left: 48px;
+}
