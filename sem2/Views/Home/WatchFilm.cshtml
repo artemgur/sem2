@@ -1,0 +1,12 @@
+﻿@model sem2.Models.ViewModels.HomeModels.WatchFilmModel
+
+<div class="video-player-conteiner">
+    <video width="960" height="640" controls>
+        <source src="@Url.Content($"~/{Model.VideoPath}")">
+    </video>
+</div>
+
+@section Scripts
+{
+    <link rel="stylesheet" href="~/css/watchFilm.css">
+}

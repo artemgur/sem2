@@ -2,7 +2,7 @@
 @model FilmDTO
 
 
-<a href="@Url.Content($"~/AboutFilm/{Model.Id}")" style="display: contents">
+<a href="@Url.Content($"~/AboutFilm/{Model.Id}")#pills-tab" style="display: contents">
 <img class="card_logo" src="@Url.Content(@Url.Content($"~/{Model.LogoImagePath}"))" alt="" style="width:100%">
 </a>
 

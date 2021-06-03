@@ -5,11 +5,11 @@
         await showSubscribeForm(planId);
     })
     
-    $('.modal').on('shown.bs.modal', function (e){
+    $('.modal').on('show.bs.modal', function (e){
         $('html').addClass('modal-open');
     });
 
-    $('.modal').on('hidden.bs.modal', function (e){
+    $('.modal').on('hide.bs.modal', function (e){
         $('html').removeClass('modal-open');
     });
 });
@@ -41,6 +41,7 @@ async function showSubscribeForm(planId){
         form.off('submit');
         form.on('submit', async function (e) {
             e.preventDefault();
+            alert.attr('hidden', 'hidden');
             let formData = new FormData(form[0]);
             let response = await fetch(window.location.origin + `/subscribe/${planId}`, {
                 method: 'POST',

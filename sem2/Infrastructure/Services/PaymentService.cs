@@ -14,7 +14,7 @@ namespace sem2.Infrastructure.Services
 
         public Result Pay(decimal money, CreditCardInfo info)
         {
-            return _random.Next(100) >= 100 ? Result.Success() : Result.Failure("Недостаточно денег");
+            return _random.Next(100) >= 50 ? Result.Success() : Result.Failure("Недостаточно денег");
         }
     }
 }

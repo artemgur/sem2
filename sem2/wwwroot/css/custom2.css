@@ -10,6 +10,10 @@
     z-index: 5000;
 }
 
+.modal-body{
+    color: black;
+}
+
 .carousel-item .row{
     flex-wrap: initial;
 }
@@ -26,6 +30,24 @@
     align-items: center;
     margin-left: 10px;
     width: 300px;
+}   
+
+.fade.show{
+    opacity: 1;
+}
+
+.modal-backdrop.show {
+    opacity: .5;
+}
+
+.btn-lg.disabled{
+    background-color: rgb(230, 148, 85);
+    box-shadow: 0px 25px 35px rgba(230, 148, 85, 0.3);
+}
+
+.btn-lg.disabled:hover{
+    background-color: rgb(230, 148, 85);
+    box-shadow: 0px 25px 35px rgba(230, 148, 85, 0.3);
 }
 
 .modal-header{
@@ -40,6 +62,7 @@
 .modal-title{
     grid-area: ModalTitle;
     font-size: 20px;
+    color: black;
 }  
 
 .close{
