@@ -12,5 +12,6 @@ namespace AOP
             ((TAdviceType) proxy).SetParameters(decorated, scheduler);
 
             return (T) proxy;
-        }    }
+        }    
+    }
 }

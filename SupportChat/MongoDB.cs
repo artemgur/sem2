@@ -21,10 +21,10 @@ namespace SupportChat
             messagesCollection = database.GetCollection<MessageDTO>("messages");
         }
         
-        public async Task<IOrderedEnumerable<MessageDTO>> GetMessages(int userId)
+        public async Task<List<MessageDTO>> GetMessages(int userId)
         {
             var messagesOfUser = await messagesCollection.FindAsync(x => x.UserId == userId);
-            return messagesOfUser.ToList().OrderBy(x => x.Time);
+            return messagesOfUser.ToList().OrderBy(x => x.Time).ToList();
         }
 
         public async Task AddMessage(int userId, string text, bool isMessageFromUser)

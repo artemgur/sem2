@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace AOP
@@ -13,7 +12,7 @@ namespace AOP
 
         protected override object Invoke(MethodInfo targetMethod, object[] args)
         {
-            if (targetMethod == null) throw new ArgumentException(nameof(targetMethod));
+            if (targetMethod == null) throw new ArgumentException("Target method is null", nameof(targetMethod));
             
             Before(targetMethod, args);
 
@@ -56,7 +55,7 @@ namespace AOP
             }
 
             _decorated = decorated;
-            _loggingScheduler = loggingScheduler ?? TaskScheduler.FromCurrentSynchronizationContext();
+            _loggingScheduler = loggingScheduler ?? TaskScheduler.Default;
         }
 
         protected abstract void After(MethodInfo methodInfo, object[] args, object result);
