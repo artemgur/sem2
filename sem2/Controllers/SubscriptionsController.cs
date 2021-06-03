@@ -54,32 +54,24 @@ namespace sem2.Controllers
             return View(model);
         }
 
-        [HttpGet("~/subscribe/{planId}")]
+        [HttpGet("~/subscriptionInfo/{planId}")]
         [Authorize]
         public IActionResult Subscribe(int planId)
         {
             var sub = _dbContext.SubscriptionPlans
                 .Where(plan => plan.Id == planId)
-                .Select(plan => new SubscriptionViewModel(){
-                    Id = plan.Id,
-                    Name = plan.Name,
-                    Description = plan.Description,
-                    ImagePath = plan.Image.ImagePath,
-                    Price = plan.Price,
-                    Duration = plan.Duration
+                .Select(plan => new
+                {
+                    name = plan.Name,
+                    price = plan.Price,
+                    duration = plan.Duration
                 })
                 .FirstOrDefault();
 
             if (sub == null)
-                return RedirectToAction("Index");
+                return BadRequest();
 
-            var model = new SubscribeActionViewModel()
-            {
-                CardInfo = new CreditCardInfo(),
-                SubscriptionViewModel = sub
-            };
-
-            return View(model);
+            return Json(sub);
         }
 
         [HttpPost("~/subscribe/{planId}")]

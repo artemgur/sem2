@@ -10,6 +10,12 @@
 .credit-card-div .pad-adjust {
     padding-top:10px;
 }
+a[subscribe]{
+    cursor: pointer;
+}
+#pay-modal{
+    color: black;
+}
 body{
     background-color: #171f41;
 }

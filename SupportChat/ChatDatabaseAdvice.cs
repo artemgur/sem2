@@ -8,7 +8,7 @@ namespace AOP
     //Caches messages to make calls to the database rarer
     public class ChatDatabaseAdvice: Advice<IChatDatabase>
     {
-        private static Dictionary<int, List<MessageDTO>> messageCache = new ();
+        private static Dictionary<int, List<MessageDTO>> messageCache = new Dictionary<int, List<MessageDTO>>();
         
         protected override void After(MethodInfo methodInfo, object[] args, object result)
         {

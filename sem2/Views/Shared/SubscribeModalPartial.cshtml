@@ -1,0 +1,66 @@
+﻿@model CreditCardInfo
+
+<div class="modal" id="pay-modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title">Оплата подписки</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <form id="cardInfo-form" method="post">
+            <div class="modal-body">
+                <div class="alert alert-danger" id="error-container" hidden></div>
+                <div class="w-100">
+                    <h1 class="text-center">Вы покупаете подписку <span id="subPay-name"></span></h1>
+                    <h3 class="text-center">Цена подписки: <span id="subPay-price"></span> руб</h3>
+                    <h3 class="text-center">Длительность подписки: <span id="subPay-duration"></span> дней</h3>
+                </div>
+                <div class="credit-card-div">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <input asp-for="Number" class="form-control" placeholder="Enter Card Number"/>
+                                    <span asp-validation-for="Number"></span>
+                                </div>
+                            </div>
+
+                            <div class="row ">
+                                <div class="col-md-3 col-sm-3 col-xs-3">
+                                    <span class="help-block text-muted small-font"> Expiry Month</span>
+                                    <input asp-for="ExpirationDate.ExpirationMonth" class="form-control" placeholder="MM"/>
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-xs-3">
+                                    <span class="help-block text-muted small-font"> Expiry Year</span>
+                                    <input asp-for="ExpirationDate.ExpirationYear" class="form-control" placeholder="YY"/>
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-xs-3">
+                                    <span class="help-block text-muted small-font"> CCV</span>
+                                    <input asp-for="CCV" class="form-control" placeholder="CCV"/>
+                                </div>
+                                <div class="col-md-3 col-sm-3 col-xs-3">
+                                    <img src="https://bootstraptema.ru/snippets/form/2016/form-card/card.png" class="img-rounded"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- ./credit-card-div -->
+            </div>
+            <div class="modal-footer">
+                <div class="row ">
+                    <div class="col-md-6 col-sm-6 col-xs-6 pad-adjust">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">
+                            CANCEL
+                        </button>
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-xs-6 pad-adjust">
+                        <input type="submit" class="btn btn-warning btn-block" value="PAY NOW"/>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+  </div>
+</div>
