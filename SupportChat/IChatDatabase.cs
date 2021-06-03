@@ -6,7 +6,7 @@ namespace SupportChat
 {
     public interface IChatDatabase
     {
-        public Task<List<MessageDTO>> GetMessages(int userId);
+        public List<MessageDTO> GetMessages(int userId);
 
         public Task AddMessage(int userId, string text, bool isMessageFromUser);
 

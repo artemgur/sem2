@@ -17,14 +17,16 @@ namespace sem2.Controllers
         
         public async Task<ViewResult> SupportChat(int userId = -1)
         {
-            return View(new SupportChatDTO{Messages = await chatDatabase.GetMessages(User.GetId()), UserId = userId});
+            var userToGetMessages = userId == -1 ? User.GetId() : userId;
+            var messages = chatDatabase.GetMessages(userToGetMessages);
+            return View(new SupportChatDTO{Messages = messages, UserId = userId});
         }
 
         public IActionResult SupportChatSelector()
         {
-            // if (User.HasSupportClaim()) //TODO uncomment both lines before presentation
-            return View();
-            // return NotFound(); //Security through obscurity
+            if (User.HasSupportClaim())
+                return View();
+            return NotFound(); //Security through obscurity
         }
     }
 }

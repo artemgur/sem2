@@ -53,6 +53,16 @@ namespace sem2
                         userBuilder.AdditionalInfo["Surname"] = "Zagitov";
                         userBuilder.AddRole("support");
                     });
+
+
+                    opts.AddUser(userBuilder =>
+                    {
+                        userBuilder.Email = "armgnv@gmail.com";
+                        userBuilder.Password = "Aaaa1!";
+                        userBuilder.AdditionalInfo["FirstName"] = "Artem";
+                        userBuilder.AdditionalInfo["Surname"] = "Gurianov";
+                        userBuilder.AddRole("support");
+
                     
                     opts.AddUser(userBuilder =>
                     {
@@ -60,6 +70,7 @@ namespace sem2
                         userBuilder.Password = "Qwerty1.";
                         userBuilder.AdditionalInfo["FirstName"] = "Artur";
                         userBuilder.AdditionalInfo["Surname"] = "Zagitov";
+
                         userBuilder.AddRole("admin");
                     });
                 },

@@ -30,13 +30,23 @@
                             @* <div class="film_age"> *@
                             @*     12+ *@
                             @* </div> *@
-                            <p class="film_text backdrop">@Model.ShortDescription</p>
-                            <button class="watch">Начать просмотр</button>
-                            <button class="add" onclick="addToFavorite(@Model.Id)">
-                                <svg id="favorites-button" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="@(Model.IsInFavorites? "orange" : "currentColor")" class="bi bi-bookmark-fill" viewBox="0 0 16 16">
-                                    <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/>
-                                </svg>
-                            </button>
+                            <p class="film_text">@Model.ShortDescription</p>
+                            <a href="@Url.Content($"~/FilmPlayer/{Model.Id}")" style="display: contents"><button class="watch">Начать просмотр</button></a>
+                                @if (Model.IsInFavorites)
+                                {
+                                    <button class="add" onclick="removeFromFavorite(@Model.Id)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-bookmark-empty" viewBox="0 0 16 16">
+                                            <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/>
+                                        </svg>
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button class="add" onclick="addToFavorite(@Model.Id)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-bookmark-empty" viewBox="0 0 16 16">
+                                            <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/>
+                                        </svg>
+                                    </button>                                }
                         </div>
                         <div class="content_background_details1"></div>
                         <div class="content_background_details2-0">

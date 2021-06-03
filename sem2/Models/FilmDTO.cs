@@ -14,8 +14,10 @@ namespace sem2.Models
         public string OriginalName;
         public decimal Rating;
         public string[] Actors;
+
         public string LogoImagePath;
         public string BackgroundImagePath;
         public bool IsInFavorites;
+
     }
 }

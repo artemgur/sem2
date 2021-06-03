@@ -21,9 +21,9 @@ namespace SupportChat
             messagesCollection = database.GetCollection<MessageDTO>("messages");
         }
         
-        public async Task<List<MessageDTO>> GetMessages(int userId)
+        public List<MessageDTO> GetMessages(int userId)
         {
-            var messagesOfUser = await messagesCollection.FindAsync(x => x.UserId == userId);
+            var messagesOfUser = messagesCollection.Find(x => x.UserId == userId);
             return messagesOfUser.ToList().OrderBy(x => x.Time).ToList();
         }
 
