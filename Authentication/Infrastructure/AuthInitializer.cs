@@ -21,6 +21,7 @@ namespace Authentication.Infrastructure
                 var options = services.GetRequiredService<AuthenticationServiceOptions>();
 
                 await AuthInitializer.InitializeRolesAsync(userManager, rolesManager, options.Roles.ToList());
+                await AuthInitializer.InitializeUsersAsync(userManager, rolesManager, options.Users.ToList(), options.DefaultRole, services);
             }
             catch (Exception ex)
             {
@@ -36,8 +37,52 @@ namespace Authentication.Infrastructure
         {
             foreach (var role in roles)
             {
-                if (await roleManager.FindByNameAsync(role) == null)
+                if (!(await roleManager.RoleExistsAsync(role)))
                     await roleManager.CreateAsync(new IdentityRole<int>(role));
+            }
+        }
+
+        public static async Task InitializeUsersAsync(
+            UserManager<ApplicationUser> userManager,
+            RoleManager<IdentityRole<int>> roleManager,
+            List<UserBuilder> userBuilders,
+            string defaultRole,
+            IServiceProvider serviceProvider)
+        {
+            foreach (var userBuilder in userBuilders)
+            {
+                var user = await userManager.FindByEmailAsync(userBuilder.Email);
+                if (user == null)
+                {
+                    user = new ApplicationUser()
+                    {
+                        UserName = userBuilder.Email,
+                        Email = userBuilder.Email,
+                        EmailConfirmed = true
+                    };
+                    
+                    var result = await userManager.CreateAsync(user, userBuilder.Password);
+
+                    if (result.Succeeded)
+                    {
+                        if (defaultRole != null)
+                            await userManager.AddToRoleAsync(user, defaultRole);
+
+                        await userBuilder.ExternalBuild(user.Id, serviceProvider);
+                    }
+                    else
+                    {
+                        throw new Exception(string.Join("; ",
+                            result.Errors
+                                .Select(error => error.Code + ":" + error.Description)));
+                    }
+                }
+
+                foreach (var role in userBuilder.Roles)
+                {
+                    if(!(await userManager.IsInRoleAsync(user, role)))
+                        await userManager.AddToRoleAsync(user, role);
+                }
             }
         }
     }
