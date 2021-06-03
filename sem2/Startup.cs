@@ -37,7 +37,7 @@ namespace sem2
             
             services.AddAuthenticationServices(opts =>
             {
-                opts.ConnectionString = Configuration.GetConnectionString("HerokuUsers");
+                opts.ConnectionString = Configuration.GetConnectionString("LocalUserTest");
                 opts.DefaultRole = "user";
                 opts.AddRole("user");
                 opts.AddRole("admin");
@@ -55,7 +55,7 @@ namespace sem2
                     opts.SignInScheme = IdentityConstants.ExternalScheme;
                 });
             
-            var connectionString = Configuration.GetConnectionString("Heroku");
+            var connectionString = Configuration.GetConnectionString("LocalTest");
             services.AddDbContext<ApplicationContext>(option =>
                 option.UseNpgsql(connectionString, b => b.MigrationsAssembly("sem2")));
 
