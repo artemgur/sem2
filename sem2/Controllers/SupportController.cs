@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
 using Authentication.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
-using sem2_FSharp;
 using sem2.Models;
 using SupportChat;
 
@@ -19,11 +18,6 @@ namespace sem2.Controllers
         public async Task<ViewResult> SupportChat(int userId = -1)
         {
             return View(new SupportChatDTO{Messages = await chatDatabase.GetMessages(User.GetId()), UserId = userId});
-        }
-
-        public async Task<ViewResult> SupportAdmin(int userId)
-        {
-            return View(userId);
         }
 
         public IActionResult SupportChatSelector()
