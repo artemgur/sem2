@@ -25,5 +25,46 @@
       <ProjectReference Include="..\SupportChat\SupportChat.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="wwwroot\film_backgrounds\img1.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\film_backgrounds\img10.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\film_backgrounds\img11.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\film_backgrounds\img12.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\film_backgrounds\img2.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\film_backgrounds\img3.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\film_backgrounds\img4.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\film_backgrounds\img5.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\film_backgrounds\img6.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\film_backgrounds\img7.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\film_backgrounds\img8.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\film_backgrounds\img9.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\film_logos\logo1.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\film_logos\logo10.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\film_logos\logo11.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\film_logos\logo12.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\film_logos\logo2.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\film_logos\logo3.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\film_logos\logo4.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\film_logos\logo5.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\film_logos\logo6.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\film_logos\logo7.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\film_logos\logo8.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\film_logos\logo9.png" />
+      <_ContentIncludedByDefault Remove="wwwroot\films\1.mp4" />
+      <_ContentIncludedByDefault Remove="wwwroot\films\10.mp4" />
+      <_ContentIncludedByDefault Remove="wwwroot\films\2.mp4" />
+      <_ContentIncludedByDefault Remove="wwwroot\films\3.mp4" />
+      <_ContentIncludedByDefault Remove="wwwroot\films\4.mp4" />
+      <_ContentIncludedByDefault Remove="wwwroot\films\5.mp4" />
+      <_ContentIncludedByDefault Remove="wwwroot\films\6.mp4" />
+      <_ContentIncludedByDefault Remove="wwwroot\films\7.mp4" />
+      <_ContentIncludedByDefault Remove="wwwroot\films\8.mp4" />
+      <_ContentIncludedByDefault Remove="wwwroot\films\9.mp4" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="wwwroot\applicationData\subscriptions_logos" />
+    </ItemGroup>
+
 
 </Project>

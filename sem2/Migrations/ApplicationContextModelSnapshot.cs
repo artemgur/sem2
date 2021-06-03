@@ -29,7 +29,13 @@ namespace sem2.Migrations
                     b.Property<string>("Actors")
                         .HasColumnType("text");
 
+                    b.Property<string>("BackgroundImagePath")
+                        .HasColumnType("text");
+
                     b.Property<string>("Info")
+                        .HasColumnType("text");
+
+                    b.Property<string>("LogoImagePath")
                         .HasColumnType("text");
 
                     b.Property<string>("LongDescription")
@@ -45,9 +51,14 @@ namespace sem2.Migrations
                         .HasColumnType("text");
 
                     b.Property<decimal>("Rating")
-                        .HasColumnType("numeric");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("numeric")
+                        .HasDefaultValue(0m);
 
                     b.Property<string>("ShortDescription")
+                        .HasColumnType("text");
+
+                    b.Property<string>("VideoPath")
                         .HasColumnType("text");
 
                     b.HasKey("Id");

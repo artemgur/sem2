@@ -17,5 +17,9 @@ namespace DomainModels
         public string Producer { get; set; }
         public string OriginalName { get; set; }
         public string Actors { get; set; }
+
+        public string LogoImagePath { get; set; }
+        public string BackgroundImagePath { get; set; }
+        public string VideoPath { get; set; }
     }
 }
