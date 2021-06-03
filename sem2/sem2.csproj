@@ -62,5 +62,9 @@
       <_ContentIncludedByDefault Remove="wwwroot\films\9.mp4" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="wwwroot\applicationData\subscriptions_logos" />
+    </ItemGroup>
+
 
 </Project>

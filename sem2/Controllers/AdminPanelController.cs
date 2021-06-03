@@ -51,6 +51,63 @@ namespace sem2.Controllers
         }*/
         
         [HttpGet]
+        [Authorize(Roles = "admin")]
+        public IActionResult CreateSubscription()
+        {
+            return View(new CreateSubscriptionModel());
+        }
+
+        [HttpPost]
+        [Authorize(Roles = "admin")]
+        public async Task<IActionResult> CreateSubscription(CreateSubscriptionModel data)
+        {
+            var existingPermissions = _dbContext.Permissions
+                .ToDictionary(perm => perm.Name,
+                    perm => perm);
+
+            data.Permissions = data.Permissions.Distinct().ToList();
+            var permissions = new List<Permission>();
+            foreach (var permissionName in data.Permissions)
+            {
+                Permission permission = null;
+                if (!existingPermissions.ContainsKey(permissionName))
+                {
+                    permission = new Permission()
+                    {
+                        Name = permissionName
+                    };
+                    existingPermissions.Add(permissionName, permission);
+                    _dbContext.Permissions.Add(permission);
+                }
+
+                permissions.Add(existingPermissions[permissionName]);
+            }
+
+            var subscription = new SubscriptionPlan()
+            {
+                Description = data.Description,
+                Duration = data.Duration,
+                Name = data.Name,
+                Price = data.Price,
+                ProvidedPermissions = permissions
+            };
+            
+            var image = await CreateImageMetadata(data.LogoImage, 
+                Path.GetRandomFileName(), 
+                "subscriptions_logos");
+
+            _dbContext.ImageMetadata.Add(image);
+            await _dbContext.SaveChangesAsync();
+            
+            subscription.ImageId = image.Id;
+            _dbContext.SubscriptionPlans.Add(subscription);
+
+            await _dbContext.SaveChangesAsync();
+            
+            return RedirectToAction("Index", "Subscriptions");
+        }
+        
+        [HttpGet]
         public IActionResult CreateFilm()
         {
             return View(new CreateFilmModel());
@@ -84,6 +141,16 @@ namespace sem2.Controllers
             await _dbContext.SaveChangesAsync();
             
             return Redirect(Url.Content($"~/AboutFilm/{film.Id}"));
+        }
+
+        [HttpGet("~/adminpanel/permissions")]
+        public IActionResult GetExistingPermissions()
+        {
+            var permissions = _dbContext.Permissions
+                .Select(perm => perm.Name)
+                .ToList();
+            
+            return Json(permissions);
         }
         
         // public IActionResult Products(string category, string query, int filterOption = 0)
@@ -220,7 +287,7 @@ namespace sem2.Controllers
 
         public async Task<ImageMetadata> CreateImageMetadata(IFormFile imageFile, string name, string folderName)
         {
-            var imageName = name + Path.GetExtension(imageFile.FileName);
+            var imageName = Path.GetFileNameWithoutExtension(name) + Path.GetExtension(imageFile.FileName);
             var virtualImagePath = Path.Combine($"applicationData/{folderName}", imageName);
             var imagePath = Path.Combine(_appEnvironment.WebRootPath, virtualImagePath);
         

@@ -68,6 +68,18 @@
     margin-bottom: 0;
 }
 
+.option-field {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.icon-tab {
+    display: flex;
+}
+
 .admin-panel-form .form-group label{
     margin-top: 0.5rem;
     border: none;
@@ -79,6 +91,23 @@
 .admin-panel-form .form-group input[type="text"]{
     border-radius: 0 0.5rem 0.5rem 0;
 }
+
+.admin-panel-form #permissions-container input[type="text"]{
+    border-radius: 0.5rem;
+}
+
+.admin-panel-form .form-group input[type="number"]{
+    border-radius: 0 0.5rem 0.5rem 0;
+}
+
+#permissions-container .option-field:nth-child(n + 2){
+    margin-top: 5px;
+}
+
+.plus, .minus{
+    cursor: pointer;
+}
+
 
 .admin-panel-form .form-group.vertical label{
     margin-top: 0.5rem;

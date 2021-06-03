@@ -1,45 +1,42 @@
-﻿@model sem2.Models.ViewModels.AdminPanelModels.CreateFilmModel
+﻿@model sem2.Models.ViewModels.AdminPanelModels.CreateSubscriptionModel
 
 <div class="header-content">
     <div class="container">
-        <div class="admin-panel-main-text">Добавить фильм</div>
-        <form method="post" action="" enctype="multipart/form-data" class="admin-panel-form">
+        <div class="admin-panel-main-text">Добавить подписку</div>
+        <form autocomplete="off" id="form" method="post" action="" enctype="multipart/form-data" class="admin-panel-form">
             <div class="form-group">
                 <label asp-for="Name">Название</label>
-                <input asp-for="Name" class="form-control" placeholder="Название фильма" />
+                <input asp-for="Name" class="form-control" placeholder="Название подписки" />
             </div>
             <span asp-validation-for="Name"></span>
             
             <div class="form-group">
-                <label asp-for="OriginalName" style="width: 22%;">Оригинальное Название</label>
-                <input asp-for="OriginalName" class="form-control" placeholder="Оригинальное Название фильма" />
+                <label asp-for="Price">Цена</label>
+                <input asp-for="Price" class="form-control" />
             </div>
-            <span asp-validation-for="OriginalName"></span>
+            <span asp-validation-for="Price"></span>
             
             <div class="form-group">
-                <label asp-for="Producer">Режисер</label>
-                <input asp-for="Producer" class="form-control" />
+                <label asp-for="Duration">Длительность</label>
+                <input asp-for="Duration" class="form-control" placeholder="Длительность подписки в днях"/>
             </div>
-            <span asp-validation-for="Producer"></span>
+            <span asp-validation-for="Duration"></span>
+
+            <div class="form-group vertical">
+                <label asp-for="Description">Описание</label>
+                <textarea asp-for="Description" class="form-control"></textarea>
+            </div>
+            <span asp-validation-for="Description"></span>
             
-            <div class="form-group">
-                <label asp-for="Actors">Актеры</label>
-                <input asp-for="Actors" class="form-control" placeholder="Перечислите актеров через запятую" />
-            </div>
-            <span asp-validation-for="Actors"></span>
+            <span asp-validation-for="Permissions"></span>
             
             <div class="form-group vertical">
-                <label asp-for="ShortDescription">Короткое описание</label>
-                <textarea asp-for="ShortDescription" class="form-control"></textarea>
+                <label>Разрешения</label>
             </div>
-            <span asp-validation-for="ShortDescription"></span>
-            
-            <div class="form-group vertical">
-                <label asp-for="LongDescription">Полное описание</label>
-                <textarea asp-for="LongDescription" class="form-control"></textarea>
+            <div class="mt-1" id="permissions-container">
+                
             </div>
-            <span asp-validation-for="LongDescription"></span>
-            
+
             <div class="form-group mt-4 mb-1">
                 <label for="inputGroupFile01">Лого</label>
                 <input type="file" class="custom-file-input" id="inputGroupFile01" name="LogoImage">
@@ -47,35 +44,16 @@
                 <label for="inputGroupFile01" class="custom-file-label-after">Browse</label>
             </div>
 
-            <div class="form-group mb-1">
-                <label for="inputGroupFile01">Фон</label>
-                <input type="file" class="custom-file-input" id="inputGroupFile02" name="BackgroundImage">
-                <label class="custom-file-label" for="inputGroupFile02">Выберите файл</label>
-                <label for="inputGroupFile02" class="custom-file-label-after">Browse</label>
-            </div>
-
-            <div class="form-group mb-1">
-                <label for="inputGroupFile01">Фильм</label>
-                <input type="file" class="custom-file-input" id="inputGroupFile03" name="Video">
-                <label class="custom-file-label" for="inputGroupFile03">Выберите файл</label>
-                <label for="inputGroupFile03" class="custom-file-label-after">Browse</label>
-            </div>
-
-            <button type="submit" class="admin-panel-submit-button mt-4">Добавить фильм</button>
+            <button type="submit" class="admin-panel-submit-button mt-4">Добавить подписку</button>
         </form>
     </div> <!-- Container -->
 </div>	<!-- header-content -->
 
 @section Scripts
 {
-    <script>
-        $(()=>{
-            $('input[type="file"]').change(function (){
-               let $this = $(this);
-               $this.parent().find('.custom-file-label').text($this[0].files[0].name);
-            });
-        })
-    </script>
+    <script src="~/js/createSubscription.js"></script>
+    <script src="~/js/autocomplete.js"></script>
     <link rel="stylesheet" href="~/css/adminPanel.css">
     <link rel="stylesheet" href="~/css/validation.css">
+    <link rel="stylesheet" href="~/css/autocomplete.css">
 }
