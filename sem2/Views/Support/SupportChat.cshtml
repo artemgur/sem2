@@ -10,10 +10,8 @@
                 <div id="message_container" style="display: contents">
                     @foreach (var message in Model.Messages)
                     {
-                        @{
-                            var classString = message.IsMessageFromUser ? "" : "peer_message";
-                            <div class="content @{classString}">@message.Message</div>
-                        }
+                        var classString = message.IsMessageFromUser ? "" : "peer_message";
+                        <div class="content @classString">@message.Message</div>
                     }
                 </div>
 

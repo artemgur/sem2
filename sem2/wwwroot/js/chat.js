@@ -1,7 +1,7 @@
 var connection = null
+var isSupportChatColors
 
 async function init() {
-    //TODO кнопка должна становиться активной
     let button = document.querySelector('#chat-button');
     button.style.visibility = 'unset';
     connection = new signalR.HubConnectionBuilder().withUrl("/chat").build();
@@ -18,6 +18,7 @@ async function init() {
 }
 
 async function send(userId) {
+    isSupportChatColors = userId !== -1
     if (connection === null)
         await init()
     
@@ -31,7 +32,6 @@ async function send(userId) {
 }
 
 async function disconnect(userId){
-    //TODO кнопка должна становиться неактивной
     let button = document.querySelector('#chat-button');
     button.style.visibility = 'hidden';
     connection.invoke("Disconnect", userId).catch(function (err) {
@@ -40,6 +40,6 @@ async function disconnect(userId){
 }
 
 function add_message_to_page(message, isPeerMessage){
-    let classString = isPeerMessage ? 'peer_message' : ''
+    let classString = (isPeerMessage !== isSupportChatColors) ? 'peer_message' : ''
     document.getElementById("message_container").innerHTML += `<div class="content ${classString}">${message}</div>`
 }

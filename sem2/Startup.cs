@@ -52,6 +52,16 @@ namespace sem2
                         userBuilder.AdditionalInfo["Surname"] = "Zagitov";
                         userBuilder.AddRole("support");
                     });
+
+                    opts.AddUser(userBuilder =>
+                    {
+                        userBuilder.Email = "armgnv@gmail.com";
+                        userBuilder.Password = "Aaaa1!";
+                        userBuilder.AdditionalInfo["FirstName"] = "Artem";
+                        userBuilder.AdditionalInfo["Surname"] = "Gurianov";
+                        userBuilder.AddRole("support");
+                        userBuilder.AddRole("admin");
+                    });
                 },
                 async (id, userInfo, serviceProvider) =>
                 {
