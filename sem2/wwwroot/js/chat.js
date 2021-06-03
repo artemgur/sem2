@@ -2,9 +2,11 @@ var connection = null
 
 async function init() {
     //TODO кнопка должна становиться активной
+    let button = document.querySelector('#chat-button');
+    button.style.visibility = 'unset';
     connection = new signalR.HubConnectionBuilder().withUrl("/chat").build();
     connection.on('Receive', function (message) {
-        add_message_to_page(message)
+        add_message_to_page(message, true)
     });
     try {
         await connection.start();
@@ -25,16 +27,19 @@ async function send(userId) {
         return console.log(err.toString());
     });
     
-    add_message_to_page(message)
+    add_message_to_page(message, false)
 }
 
 async function disconnect(userId){
     //TODO кнопка должна становиться неактивной
+    let button = document.querySelector('#chat-button');
+    button.style.visibility = 'hidden';
     connection.invoke("Disconnect", userId).catch(function (err) {
         return console.log(err.toString());
     });
 }
 
-function add_message_to_page(message){
-    document.getElementById("message_container").innerHTML += `<div class="message"><div class="content">${message}</div></div>`
+function add_message_to_page(message, isPeerMessage){
+    let classString = isPeerMessage ? 'peer_message' : ''
+    document.getElementById("message_container").innerHTML += `<div class="content ${classString}">${message}</div>`
 }
