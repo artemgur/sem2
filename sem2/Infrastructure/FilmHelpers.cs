@@ -29,5 +29,10 @@ namespace sem2.Views
         {
             return "film_backgrounds/img" + filmId + ".png";
         }
+        
+        public static string FilmImagePath(int filmId)
+        {
+            return "films/" + filmId + ".mp4";
+        }    
     }
 }

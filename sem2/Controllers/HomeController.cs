@@ -2,7 +2,6 @@
 using Authentication.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using sem2_FSharp;
 using sem2.Models;
 using sem2.Views;
 
@@ -44,7 +43,8 @@ namespace sem2.Controllers
             var user = _context.Users.FirstOrDefault(u => u.Id == userId);
             if (user == null)
                 return RedirectToAction("Index", "Home");
-            var films = user.FavoriteFilms.Select(x => FilmHelpers.FromFilm(x));
+            //var films = user.FavoriteFilms.Select(x => FilmHelpers.FromFilm(x));//Null for some reason TODO fix
+            var films = Enumerable.Empty<FilmDTO>();
             return View("Catalog", films);
         }
         
@@ -55,6 +55,7 @@ namespace sem2.Controllers
             if (film == null)
                 return RedirectToAction("Catalog");
             var dto = FilmHelpers.FromFilm(film);
+            dto.IsInFavorites = film.InFavoritesOfUsers.Any(x => x.Id == User.GetId());
             return View("AboutFilm", dto);
         }
         
@@ -78,22 +79,34 @@ namespace sem2.Controllers
         //     return File(data.ImagePath, data.ContentType);
         // }
         
-        [Route("~/add_to_favorite")]
-        public void AddToFavorite([FromQuery (Name = "filmId")] int filmId = -1)
+        [Route("~/AddToFavorite")]
+        [HttpPost]
+        public IActionResult AddToFavorite([FromQuery (Name = "filmId")] int filmId = -1)
         {
-            if (filmId == -1)
-                return;
             var userId = User.GetId();
-            var user = _context.Users.FirstOrDefault(u => u.Id == userId);
-            if (user == null)
-                return;
+            var user = _context.Users.SingleOrDefault(u => u.Id == userId);
             var film = _context.Films.SingleOrDefault(f => f.Id == filmId);
-            if (film == null)
-                return;
+            if (film == null || user == null)
+                return BadRequest();
             user.FavoriteFilms.Add(film);
+            //film.InFavoritesOfUsers.Add(user);
             _context.SaveChanges();
+            return Ok();
         }
-
+        [Route("~/RemoveFromFavorite")]
+        [HttpPost]
+        public IActionResult RemoveFromFavorite([FromQuery (Name = "filmId")] int filmId = -1)
+        {
+            var userId = User.GetId();
+            var user = _context.Users.SingleOrDefault(u => u.Id == userId);
+            var film = _context.Films.SingleOrDefault(f => f.Id == filmId);
+            if (film == null || user == null)
+                return BadRequest();
+            user.FavoriteFilms.Remove(film);
+            //film.InFavoritesOfUsers.Remove(user);
+            _context.SaveChanges();
+            return Ok();
+        }
         public IActionResult Search(string query)
         {
             query = query.ToLower();
@@ -102,6 +115,12 @@ namespace sem2.Controllers
                 .Select(x => FilmHelpers.FromFilm(x))
                 .ToList();
             return View("Catalog", films);
+        }
+        
+        [Route("~/FilmPlayer/{id:int}")]
+        public IActionResult FilmPlayer(int id)
+        {
+            return View(id);
         }
     }
 }

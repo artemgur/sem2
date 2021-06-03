@@ -21,7 +21,7 @@
                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                     <div class="film">
                         <div class="film_logo">
-                            <img src="@Url.Content(FilmHelpers.LogoImagePath(Model.Id))" style="height: 158px; width: 160px" alt="img">
+                            <img src="@Url.Content($"~/{FilmHelpers.LogoImagePath(Model.Id)}")" style="height: 158px; width: 160px" alt="img">
                         </div>
                         <div class="film_rate">
                             @* <div class="rate"> *@
@@ -34,26 +34,36 @@
                             @*     12+ *@
                             @* </div> *@
                             <p class="film_text">@Model.ShortDescription</p>
-                            <button class="watch">Начать просмотр</button>
-                            <button class="add" onclick="addToFavorite(@Model.Id)">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bookmark-fill" viewBox="0 0 16 16">
-                                    <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/>
-                                </svg>
-                            </button>
+                            <a href="@Url.Content($"~/FilmPlayer/{Model.Id}")" style="display: contents"><button class="watch">Начать просмотр</button></a>
+                                @if (Model.IsInFavorites)
+                                {
+                                    <button class="add" onclick="removeFromFavorite(@Model.Id)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="red" class="bi bi-bookmark-empty" viewBox="0 0 16 16">
+                                            <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/>
+                                        </svg>
+                                    </button>
+                                }
+                                else
+                                {
+                                    <button class="add" onclick="addToFavorite(@Model.Id)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="black" class="bi bi-bookmark-empty" viewBox="0 0 16 16">
+                                            <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2z"/>
+                                        </svg>
+                                    </button>                                }
                         </div>
                         <div class="content_background_details1"></div>
                         <div class="content_background_details2-0">
-                            <img class="content_background_details2-0-img" src="@Url.Content(FilmHelpers.BackgroundImagePath(Model.Id))" style="height: 400px; width:500px" alt="img">
+                            <img class="content_background_details2-0-img" src="@Url.Content($"~/{FilmHelpers.BackgroundImagePath(Model.Id)}")" style="height: 400px; width:500px" alt="img">
                         </div>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                     <div class="content_background_details">
                         <div class="film_logo">
-                            <img src="@Url.Content(FilmHelpers.LogoImagePath(Model.Id))" style="height: 110px; width: 130px" alt="img">
+                            <img src="@Url.Content($"~/{FilmHelpers.LogoImagePath(Model.Id)}")" style="height: 110px; width: 130px" alt="img">
                         </div>
                         <div class="content_background_details2">
-                            <img src="@Url.Content(FilmHelpers.BackgroundImagePath(Model.Id))" style="height: 400px" alt="img">
+                            <img src="@Url.Content($"~/{FilmHelpers.BackgroundImagePath(Model.Id)}")" style="height: 400px" alt="img">
                         </div>
                         <div class="film_rate2">
                             @* <div class="rate"> *@

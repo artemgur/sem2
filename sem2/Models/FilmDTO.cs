@@ -19,5 +19,7 @@ namespace sem2.Models
 
         public int BackgroundId;
         public ImageMetadata Background;
+
+        public bool IsInFavorites = false;
     }
 }
