@@ -42,6 +42,7 @@ namespace sem2
                     opts.DefaultRole = "user";
                     opts.AddRole("user");
                     opts.AddRole("admin");
+                    opts.AddRole("manager");
                     opts.AddRole("support");
                     
                     opts.AddUser(userBuilder =>
@@ -53,6 +54,7 @@ namespace sem2
                         userBuilder.AddRole("support");
                     });
 
+
                     opts.AddUser(userBuilder =>
                     {
                         userBuilder.Email = "armgnv@gmail.com";
@@ -60,6 +62,15 @@ namespace sem2
                         userBuilder.AdditionalInfo["FirstName"] = "Artem";
                         userBuilder.AdditionalInfo["Surname"] = "Gurianov";
                         userBuilder.AddRole("support");
+
+                    
+                    opts.AddUser(userBuilder =>
+                    {
+                        userBuilder.Email = "admin@itis.sem2.ru";
+                        userBuilder.Password = "Qwerty1.";
+                        userBuilder.AdditionalInfo["FirstName"] = "Artur";
+                        userBuilder.AdditionalInfo["Surname"] = "Zagitov";
+
                         userBuilder.AddRole("admin");
                     });
                 },
@@ -108,7 +119,7 @@ namespace sem2
             services.AddSingleton<CommandService>();
             services.AddAuthorization(opts =>
             {
-                opts.AddPolicy("HasEditPermission", policy =>
+                opts.AddPolicy("HasAdminPanelAccess", policy =>
                 {
                     policy.RequireAuthenticatedUser();
                     policy.RequireRole("manager", "admin");

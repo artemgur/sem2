@@ -1,9 +1,6 @@
 @using sem2.Views
 @model FilmDTO
 
-<script src="~/js/favorite.js"></script>
-
-<link rel="stylesheet" href="~/css/collapse.css?ver=100">
 @* <button type="submit" class="btn btn-default" onclick="addToFavorite(@Model.Id)">Добавить в избранное</button> *@
 <div class="header-content">
     <div class="container">
@@ -21,15 +18,15 @@
                 <div class="tab-pane fade show active" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
                     <div class="film">
                         <div class="film_logo">
-                            <img src="@Url.Content($"~/{FilmHelpers.LogoImagePath(Model.Id)}")" style="height: 158px; width: 160px" alt="img">
+                            <img src="@Url.Content($"~/{Model.LogoImagePath}")" style="height: 158px; width: 160px" alt="img">
                         </div>
                         <div class="film_rate">
-                            @* <div class="rate"> *@
-                            @*     7.3&ensp;&ensp; *@
-                            @* </div> *@
-                            <div class="about_film">
-                                @Model.Info
+                            <div class="rate">
+                                @(Model.Rating == 0 ? "Без рейтинга" : $"{Model.Rating:#.#}") &ensp;&ensp;
                             </div>
+                            @* <div class="about_film"> *@
+                            @*     @Model.Info *@
+                            @* </div> *@
                             @* <div class="film_age"> *@
                             @*     12+ *@
                             @* </div> *@
@@ -53,37 +50,40 @@
                         </div>
                         <div class="content_background_details1"></div>
                         <div class="content_background_details2-0">
-                            <img class="content_background_details2-0-img" src="@Url.Content($"~/{FilmHelpers.BackgroundImagePath(Model.Id)}")" style="height: 400px; width:500px" alt="img">
+                            <img class="content_background_details2-0-img" src="@Url.Content($"~/{Model.BackgroundImagePath}")" style="height: 400px; width:500px" alt="img">
                         </div>
                     </div>
                 </div>
                 <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
                     <div class="content_background_details">
                         <div class="film_logo">
-                            <img src="@Url.Content($"~/{FilmHelpers.LogoImagePath(Model.Id)}")" style="height: 110px; width: 130px" alt="img">
+                            <img src="@Url.Content($"~/{Model.LogoImagePath}")" style="height: 110px; width: 130px" alt="img">
                         </div>
                         <div class="content_background_details2">
-                            <img src="@Url.Content($"~/{FilmHelpers.BackgroundImagePath(Model.Id)}")" style="height: 400px" alt="img">
+                            <img src="@Url.Content($"~/{Model.BackgroundImagePath}")" style="height: 400px" alt="img">
                         </div>
                         <div class="film_rate2">
                             @* <div class="rate"> *@
                             @*     7.3&ensp; *@
                             @* </div> *@
-                            <p class="film_text">@Model.LongDescription</p>
+                            <div class="backdrop" style="max-width: 40%;">
+                                <p class="film_text mb-0" style="width: auto">@Model.LongDescription</p>
+                            </div>
                         </div>
-                        <div class="content_background_details1"></div>
-                        <div class="roles">
-                            <p id="main_roles"><p style="color: #7f8291; font-size: 14px">В главных ролях<p>
+                        <div class="content_background_details1">
+                            <div class="roles backdrop">
+                                <p style="color: #7f8291; font-size: 14px">В главных ролях<p>
                                 @foreach (var film in Model.Actors)
                                 {
                                     <p>@film</p>
                                 }
-                            <p class="producer"><p style="color: #7f8291; font-size: 14px">Режиссеры<p>
-                            @Model.Producer<br>
-                        </p>
-                            <p class="name"><p style="color: #7f8291; font-size: 14px">Оригинальное название<p>
-                            @Model.OriginalName
-                        </p>
+                                <p class="producer"><p style="color: #7f8291; font-size: 14px">Режиссеры<p>
+                                    @Model.Producer<br>
+                                </p>
+                                <p class="name"><p style="color: #7f8291; font-size: 14px">Оригинальное название<p>
+                                    @Model.OriginalName
+                                </p>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -92,3 +92,11 @@
         <!--</div> &lt;!&ndash; row &ndash;&gt;-->
     </div> <!-- Container -->
 </div>	<!-- header-content -->
+
+@section Scripts
+{
+    <script src="~/js/favorite.js"></script>
+    
+    <link rel="stylesheet" href="~/css/collapse.css?ver=100">
+    <link rel="stylesheet" href="~/css/aboutFilm.css?ver=100">
+}

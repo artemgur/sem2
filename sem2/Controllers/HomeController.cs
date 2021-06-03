@@ -1,14 +1,15 @@
-﻿using System.Linq;
+using System.Linq;
 using Authentication.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using sem2.Models;
+using sem2.Models.ViewModels.HomeModels;
 using sem2.Views;
 
 namespace sem2.Controllers
 {
     public class HomeController : Controller
-    {
+ 
         private readonly ILogger<HomeController> _logger;
         private readonly ApplicationContext _context;
 
@@ -29,12 +30,21 @@ namespace sem2.Controllers
         // {
         //     return View();
         // }
-        public IActionResult Catalog()
+        public IActionResult Catalog(string query)
         {
             var films = _context.Films
-                .Select(x => FilmHelpers.FromFilm(x))
-                .ToList();//TODO DTO?
-            return View(films);
+                .Select(x => FilmHelpers.FromFilm(x));
+
+            if (!string.IsNullOrWhiteSpace(query))
+                films = films.Where(x => x.Name.ToLower().Contains(query.ToLower()));
+
+            var model = new CatalogViewModel()
+            {
+                Films = films.ToList(),
+                Query = query
+            };
+            
+            return View(model);
         }
 
         public IActionResult Favorite()
@@ -43,19 +53,33 @@ namespace sem2.Controllers
             var user = _context.Users.FirstOrDefault(u => u.Id == userId);
             if (user == null)
                 return RedirectToAction("Index", "Home");
-            //var films = user.FavoriteFilms.Select(x => FilmHelpers.FromFilm(x));//Null for some reason TODO fix
-            var films = Enumerable.Empty<FilmDTO>();
-            return View("Catalog", films);
+
+            var films = user.FavoriteFilms.Select(x => FilmHelpers.FromFilm(x));
+
+            var model = new CatalogViewModel()
+            {
+                Films = films
+            };
+            
+            return View("Catalog", model);
+
         }
         
         [Route("~/AboutFilm/{id:int}")]
         public IActionResult AboutFilm(int id)
         {
+            var userId = User.GetId();
+            var isInFavorites = _context.Users
+                .Where(user => user.Id == userId)
+                .SelectMany(user => user.FavoriteFilms)
+                .Any(f => f.Id == id);
+            
             var film = _context.Films.SingleOrDefault(f => f.Id == id);
             if (film == null)
                 return RedirectToAction("Catalog");
-            var dto = FilmHelpers.FromFilm(film);
-            dto.IsInFavorites = film.InFavoritesOfUsers.Any(x => x.Id == User.GetId());
+
+            var dto = FilmHelpers.FromFilm(film, isInFavorites);
+
             return View("AboutFilm", dto);
         }
         
@@ -107,6 +131,7 @@ namespace sem2.Controllers
             _context.SaveChanges();
             return Ok();
         }
+
         public IActionResult Search(string query)
         {
             query = query.ToLower();

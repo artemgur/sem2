@@ -12,14 +12,12 @@ namespace sem2.Models
         public string Info;
         public string Producer;
         public string OriginalName;
+        public decimal Rating;
         public string[] Actors;
 
-        public int LogoId;
-        public ImageMetadata Logo;
+        public string LogoImagePath;
+        public string BackgroundImagePath;
+        public bool IsInFavorites;
 
-        public int BackgroundId;
-        public ImageMetadata Background;
-
-        public bool IsInFavorites = false;
     }
 }
