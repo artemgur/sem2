@@ -1,4 +1,7 @@
 body {font-family: 'Poppins', serif; font-size: 14px; line-height: 1.875; font-weight: normal; color: white; background-color: #1d1a41; position: relative; min-width: 320px; width: 100%}
+html{
+    font-size: initial;
+}
 
 @media all and (min-width: 576px) { body { font-size: 15px; } }
 @media all and (min-width: 1400px) { body { font-size: 16px; } }
@@ -193,7 +196,7 @@ label {
     color: white;
 }
 
-.form-control{
+.form-control.custom{
     background-color: #dddddd;
     color: #1d1a41;
     border-radius: 20px;
@@ -263,13 +266,14 @@ label {
 #form {
     margin-top: 10px;
 }
+/*.button{
+    margin-top: 10px;
+}*/
 #message_input {
     width: 400px;
 }
-.button{
-    margin-top: 10px;
-}
-.input{
+
+.input.custom{
     background-color: #dddddd;
     border-radius: 20px;
     margin-top: 5px;

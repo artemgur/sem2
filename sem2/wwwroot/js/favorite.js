@@ -12,7 +12,7 @@ async function removeFromFavorite(filmId){
         credentials: 'include',
     });
     if(response.ok){
-        $('#favorites-button').attr('fill', 'orange');
+        $('#favorites-button').attr('fill', 'red');
     }
     
     let result = await response.json();

@@ -6,3 +6,67 @@
     margin-top: 10%;
 }
 
+.modal{
+    z-index: 5000;
+}
+
+.modal-body{
+    color: black;
+}
+
+.carousel-item .row{
+    flex-wrap: initial;
+}
+
+.carousel-overflow {
+    overflow: hidden;
+}
+
+.carousel-item .item{
+    height: 300px;
+    object-fit: contain;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+    width: 300px;
+}   
+
+.fade.show{
+    opacity: 1;
+}
+
+.modal-backdrop.show {
+    opacity: .5;
+}
+
+.btn-lg.disabled{
+    background-color: rgb(230, 148, 85);
+    box-shadow: 0px 25px 35px rgba(230, 148, 85, 0.3);
+}
+
+.btn-lg.disabled:hover{
+    background-color: rgb(230, 148, 85);
+    box-shadow: 0px 25px 35px rgba(230, 148, 85, 0.3);
+}
+
+.modal-header{
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+    grid-template-rows: 1fr;
+    gap: 0px 0px;
+    grid-template-areas:
+    "ModalTitle ModalCloseButton";
+}
+
+.modal-title{
+    grid-area: ModalTitle;
+    font-size: 20px;
+    color: black;
+}  
+
+.close{
+    grid-area: ModalCloseButton;
+    justify-content: flex-end;
+    display: flex;
+}

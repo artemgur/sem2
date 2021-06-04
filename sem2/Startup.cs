@@ -62,7 +62,7 @@ namespace sem2
                         userBuilder.AdditionalInfo["FirstName"] = "Artem";
                         userBuilder.AdditionalInfo["Surname"] = "Gurianov";
                         userBuilder.AddRole("support");
-
+                    });
                     
                     opts.AddUser(userBuilder =>
                     {

@@ -8,19 +8,19 @@
 <div class="header-content">
     <div class="container">
         <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-            <div class="carousel-inner">
+            <div class="carousel-inner carousel-overflow">
                 @{ var activeString = "active";}
                 @foreach (var filmGroup in Model.Films.GroupByN(3))
                 {
                     <div class="carousel-item @activeString">
-                        <div class="row <!--no-gutters-->">
-                            @foreach (var film in filmGroup)
-                            {
-                                @Html.Partial("CatalogCarouselFilmItemPartial", film)
-                            }
-                        </div>                        
-                    </div>
-                    
+                        
+                            <div class="row <!--no-gutters-->">
+                                @foreach (var film in filmGroup)
+                                {
+                                    @Html.Partial("CatalogCarouselFilmItemPartial", film)
+                                }
+                            </div>
+                        </div>
                     activeString = "";
                 }
             </div>
@@ -50,7 +50,7 @@
     $('#multiCarousel').carousel({
         interval: 10000
     })
-    $('.carousel .carousel-item').each(function(){
+    /*$('.carousel .carousel-item').each(function(){
         var next = $(this).next();
         if (!next.length) {
             next = $(this).siblings(':first');
@@ -65,5 +65,5 @@
 
             next.children(':first-child').clone().appendTo($(this));
         }
-    });
+    });*/
 </script>
