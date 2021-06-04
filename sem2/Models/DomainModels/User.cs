@@ -24,6 +24,7 @@ namespace DomainModels
         public string Surname { get; set; }
         
         public ICollection<UserPermission> UserPermissions { get; set; } = new List<UserPermission>();
+        //public ICollection<int> FavoriteFilmsId { get; set; }
         public ICollection<Film> FavoriteFilms { get; set; }
     }
 }

@@ -141,6 +141,7 @@ namespace sem2.Controllers
             var film = _context.Films.SingleOrDefault(f => f.Id == filmId);
             if (film == null || user == null)
                 return BadRequest();
+            _context.Entry(user).Collection(u => u.FavoriteFilms).Load();
             user.FavoriteFilms.Add(film);
             //film.InFavoritesOfUsers.Add(user);
             _context.SaveChanges();
@@ -155,6 +156,8 @@ namespace sem2.Controllers
             var film = _context.Films.SingleOrDefault(f => f.Id == filmId);
             if (film == null || user == null)
                 return BadRequest();
+            _context.Entry(user).Collection(u => u.FavoriteFilms).Load();
+            var a = user.FavoriteFilms;
             user.FavoriteFilms.Remove(film);
             //film.InFavoritesOfUsers.Remove(user);
             _context.SaveChanges();
