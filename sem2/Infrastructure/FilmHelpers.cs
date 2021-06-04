@@ -43,20 +43,11 @@ namespace sem2.Views
                 IsInFavorites = isInFavorites
             };
         }
-        //
-        // public static string LogoImagePath(int filmId)
-        // {
-        //     return "film_logos/logo" + filmId + ".png";
-        // }
-        //
-        // public static string BackgroundImagePath(int filmId)
-        // {
-        //     return "film_backgrounds/img" + filmId + ".png";
-        // }
-        //
-        // public static string FilmVideoPath(int filmId)
-        // {
-        //     return "films/" + filmId + ".png";
-        // }
+
+        
+        public static string FilmImagePath(int filmId)
+        {
+            return "films/" + filmId + ".mp4";
+        }    
     }
 }

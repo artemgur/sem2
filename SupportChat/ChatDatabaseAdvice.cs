@@ -15,7 +15,7 @@ namespace AOP
             if (methodInfo.Name == "GetMessages")
             {
                 var userId = (int)args[0];
-                if (userId != -1 && !messageCache.ContainsKey(userId))
+                if (userId != -1 && !messageCache.ContainsKey(userId) && result != null)
                 {
                     messageCache[userId] = (List<MessageDTO>) result;
                 }

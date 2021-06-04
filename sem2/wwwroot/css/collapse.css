@@ -6,8 +6,10 @@
 }
 #carouselExampleSlidesOnly{
     margin-left: 50px;
+    width: 100%;
 }
-@media all and (min-width: 576px) { #multiCarousel{margin-left: -50px; padding-left: 0; width: 120%; margin-top: 60px}
+@media all and (min-width: 576px) {
+    #multiCarousel{margin-left: -50px; padding-left: 0; width: 120%; margin-top: 60px}
 }
 @media all and (min-width: 1400px) {
     #multiCarousel {
@@ -20,13 +22,20 @@
 .block_with_image{
     border-radius: 20px;
     width: 350px;
-    padding-left: 0
+    height: 200px;
 }
-.slide{
+.item{
+    padding-right: 10px;
+}
+.img-fluid {
+    height: 180px;
+    border-radius: 20px;
+}
+/*.slide{
     display: inline-block;
     margin: 0;
     padding: 0;
-}
+}*/
 .description{
     width: 100%;
     background-color: black;

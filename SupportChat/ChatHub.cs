@@ -81,7 +81,7 @@ namespace SupportChat
                 UsersToSupport[targetUser] = userId; //Change in case of allowing multiple support members on 1 user
                 await Clients.Users(targetUser.ToString()).SendAsync("Receive", message);
             }
-            await database.AddMessage(userId, message, false);
+            await database.AddMessage(targetUser, message, false);
         }
 
         public void DisconnectSupport(int targetUser)

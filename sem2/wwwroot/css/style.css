@@ -168,10 +168,18 @@ a:hover { color: #fff; text-decoration: none; }
 }
 @media all and (min-width: 576px) { .image {float: left} label{margin-top: 30%} .heading-2{margin-top: 30px}}
 @media all and (min-width: 1400px) { .image {float: left; margin-top: 50px} .heading-2{margin-top: 120px}}
-/*#upload-img{
-    max-width: 150px;
-    max-height: 200px;
-}*/
+
+.image .upload-img {
+    width: 150px;
+    height: 200px;
+    margin-left: 50px
+}
+.upload-img {
+    width: 200px;
+    height: 350px;
+    margin-left: 50px
+}
+
 
 #fileId {
     display:none;
@@ -247,36 +255,31 @@ label {
 
 
 /*Content*/
-
-.content{
-    width: 90%;
+.content {
+    width: 60%;
     height: 60%;
-    horiz-align: center;
     background-color: #7c98e7;
     border: #1d1a41 solid 2px;
     border-radius: 20px;
     padding-left: 30px;
 }
-
-#form{
+#form {
     margin-top: 10px;
 }
-#input{
-    width: 200px;
-}
-#textarea{
+/*.button{
+    margin-top: 10px;
+}*/
+#message_input {
     width: 400px;
 }
+
 .input.custom{
     background-color: #dddddd;
     border-radius: 20px;
     margin-top: 5px;
 }
-.message{
-    horiz-align: center;
-    margin-top: 10%;
+#message{
     width: 50%;
-    /*margin-left: 30%;*/
 }
 .button{
     background-color: #7c98e7;
@@ -288,5 +291,20 @@ label {
 .col-lg-6{
     display: inline-block;
     padding: 0;
+}
+
+#chat-form {
+    margin-top: 100px;
+    padding-left: 5%;
+}
+
+.chat-btn {
+    background-color: #7c98e7;
+    border-radius: 20px;
+    border-color: #7c98e7;
+}
+
+.peer_message{
+    background-color: peachpuff;
 }
 /*END*/
