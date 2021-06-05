@@ -38,7 +38,7 @@ namespace sem2.Controllers
         // {
         //     return View();
         // }
-        public IActionResult Catalog(string query)
+        public IActionResult Catalog([FromQuery (Name = "query")] string query)
         {
             var films = _context.Films
                 .Select(x => FilmHelpers.FromFilm(x));
