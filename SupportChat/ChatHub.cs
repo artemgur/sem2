@@ -7,38 +7,20 @@ using Microsoft.AspNetCore.SignalR;
 
 namespace SupportChat
 {
-    public class ChatHub: Hub
+    public partial class ChatHub: Hub
     {
         private readonly IChatDatabase database;
 
-        private static readonly Dictionary<int, int?> UsersToSupport = new Dictionary<int, int?>();
+        private static readonly Dictionary<int, int?> UsersToSupport = new ();
 
-        private static readonly Dictionary<int, DateTime> UserLastMessage = new Dictionary<int, DateTime>();
+        private static readonly Dictionary<int, DateTime> UserLastMessage = new ();
 
         private const int UserTimeoutSeconds = 20 * 60; //20 min
-
-        static ChatHub()
-        {
-            CleanInactiveUsers(); //Isn't awaited intentionally
-        }
-        
-        private static async Task CleanInactiveUsers()
-        {
-            var database = new MongoDB(); //TODO breaks dependency injection, fix!!!
-            while (true)
-            {
-                await Task.Delay(10000);
-                foreach (var (key, value) in UserLastMessage)
-                {
-                    if ((DateTime.Now - value).Seconds > UserTimeoutSeconds)
-                        DeleteUserData(key, database);
-                }
-            }
-        }
         
         public ChatHub(IChatDatabase database)
         {
             this.database = database;
+            UserCleaner.StartIfNotStarted(database);
         }
 
         public IEnumerable<int> GetNonAnsweredUsers()
